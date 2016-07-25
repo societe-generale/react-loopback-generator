@@ -2,6 +2,7 @@ module.exports = {
 
   port: function() {
     if (!this.options['server-required']) {
+      this.log('the server is not required');
       return;
     }
     if (this.options['server-port']) {
