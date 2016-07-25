@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/theodo/generator-sg-fastit#readme",
   "dependencies": {
+    "lodash.kebabcase": "^4.0.1",
     "yeoman-generator": "^0.24.1"
   }
 }
