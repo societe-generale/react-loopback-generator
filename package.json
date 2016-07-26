@@ -22,5 +22,8 @@
   "dependencies": {
     "lodash.kebabcase": "^4.0.1",
     "yeoman-generator": "^0.24.1"
+  },
+  "engines": {
+    "node": ">= 6.2"
   }
 }
