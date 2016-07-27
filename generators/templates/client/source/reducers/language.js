@@ -17,7 +17,7 @@ var initialState = {
   selected: 'en'
 };
 
-if (navigator.language) {
+if (global.navigator && global.navigator.language) {
   var key = navigator.language.match(/^[a-z]{2}/)[0];
   if (_.find(initialState.available, {key})) {
     initialState.selected = key;
@@ -26,7 +26,6 @@ if (navigator.language) {
 
 setLocale(initialState.selected);
 
-export setLocale;
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.SELECT:
