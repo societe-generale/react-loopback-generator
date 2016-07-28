@@ -1,0 +1,13 @@
+machine:
+  node:
+    version: 6.2
+
+dependencies:
+  override:
+    - npm install --dev
+  cache_directories:
+    - "node_modules"
+
+test:
+  override:
+    - npm test
