@@ -4,7 +4,7 @@
   "description": "FastIT generator",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,11 @@
   },
   "engines": {
     "node": ">= 6.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "fs-extra": "^0.30.0",
+    "mocha": "^2.5.3",
+    "yeoman-test": "^1.4.0"
   }
 }
