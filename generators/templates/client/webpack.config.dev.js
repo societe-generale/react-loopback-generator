@@ -1,3 +1,4 @@
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require('path');
 const webpack = require('webpack');
 
@@ -44,13 +45,20 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json'
-      }
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      },
     ],
     preLoaders: [
       {
         test: /\.(js|jsx)$/,
         loader: 'eslint'
       }
-    ]
-  }
+    ],
+  },
+  plugins: [
+    new ExtractTextPlugin("[name].css")
+  ]
 };

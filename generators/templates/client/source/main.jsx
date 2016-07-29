@@ -18,6 +18,9 @@ import {deepOrange500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import 'flexboxgrid';
+import './main.css';
+
 const store = configureStore(hashHistory);
 const history = syncHistoryWithStore(hashHistory, store);
 
