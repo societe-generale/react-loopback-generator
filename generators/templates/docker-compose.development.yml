@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./provisioning/docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - 80:80
+    depends_on:
+<% if (clientRequired) { %>
+      - client
+<% } %>
+<% if (serverRequired) { %>
+      - server
+<% } %>
+
+<% if (clientRequired) { %>
+  client:
+    build: .
+    volumes:
+      - .:/code
+    command: npm run client:watch -- --host 0.0.0.0
+<% } %>
+
+<% if (serverRequired) { %>
+  server:
+    build: .
+    volumes:
+      - .:/code
+    command: npm run server:watch
+<% } %>
