@@ -6,6 +6,7 @@ const buildPath = path.join(clientPath, 'build');
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     path.join(clientPath, 'source/main.jsx')
   ],
   resolve: {
