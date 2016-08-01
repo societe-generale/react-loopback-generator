@@ -1,0 +1,15 @@
+{
+  "name": "plop",
+  "version": "0.0.1",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node .",
+    "client:build": "webpack --config client/webpack.config.js",
+    "client:watch": "webpack-dev-server --config client/webpack.config.dev.js --hot",
+    "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">= 6.2"
+  }
+}
