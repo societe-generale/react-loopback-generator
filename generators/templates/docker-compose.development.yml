@@ -5,9 +5,11 @@ services:
   gaia-mock:
     image: gaia-mock
     volumes:
-      - ./provisioning/docker/gaia-mock/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./provisioning/docker/gaia-mock/nginx.subconf:/etc/nginx/sites-enabled/application.subconf:ro
+      - ./provisioning/docker/gaia-mock/users.json:/data/users.json
+      - ./provisioning/docker/gaia-mock/applications.json:/data/applications.json
     ports:
-      - 8000:80
+      - 8000:443
 
   nginx:
     image: nginx
