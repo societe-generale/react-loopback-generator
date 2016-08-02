@@ -4,7 +4,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node .",
-    "server:watch": "nodemode server/server.js",
+    "server:watch": "nodemon server/server.js",
     "pretest": "eslint .",
     "posttest": "nsp check"
   },
