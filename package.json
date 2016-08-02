@@ -4,7 +4,7 @@
   "description": "FastIT generator",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --reporter spec --timeout 10000"
+    "test": "NODE_ENV=test mocha --reporter spec --timeout 10000 test/**"
   },
   "repository": {
     "type": "git",
