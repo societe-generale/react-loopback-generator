@@ -19,10 +19,14 @@
     "url": "https://github.com/theodo/generator-sg-fastit/issues"
   },
   "homepage": "https://github.com/theodo/generator-sg-fastit#readme",
+  "peerDependencies": {
+    "generator-loopback": "^1.23.2"
+  },
   "dependencies": {
     "fs": "0.0.2",
     "lodash": "^4.14",
     "loopback-workspace": "^3.32.0",
+    "util": "^0.10.3",
     "yeoman-generator": "^0.24.1"
   },
   "engines": {
