@@ -4,7 +4,7 @@
   "description": "FastIT generator",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --reporter spec --timeout 10000 test/**"
+    "test": "NODE_ENV=test istanbul cover _mocha -- --recursive --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "fs-extra": "^0.30.0",
+    "istanbul": "^0.4.4",
     "mocha": "^2.5.3",
     "yeoman-assert": "^2.2.1",
     "yeoman-test": "^1.4.0"

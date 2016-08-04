@@ -1,0 +1,29 @@
+verbose: false
+instrumentation:
+    root: generators/
+    extensions:
+        - .js
+    default-excludes: true
+    excludes: []
+    embed-source: false
+    variable: __coverage__
+    compact: true
+    preserve-comments: false
+    complete-copy: false
+    save-baseline: false
+    baseline-file: ./coverage/coverage-baseline.json
+    include-all-sources: true
+    include-pid: false
+    es-modules: false
+reporting:
+    print: summary
+    reports:
+        - lcov
+    dir: ./coverage
+    watermarks:
+        statements: [50, 80]
+        lines: [50, 80]
+        functions: [50, 80]
+        branches: [50, 80]
+hooks:
+    hook-run-in-context: false
