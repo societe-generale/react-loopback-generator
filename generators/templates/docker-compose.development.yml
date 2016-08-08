@@ -6,7 +6,7 @@ services:
     image: registry.pepinie.re:5000/gaia-mock:1.0.0
     volumes:
       - ./provisioning/docker/gaia-mock/nginx.subconf:/etc/nginx/sites-enabled/application.subconf:ro
-      - ./provisioning/docker/gaia-mock/users.json:/data/users.json
+      - ./provisioning/docker/gaia-mock/users.json:/users/users.json
       - ./provisioning/docker/gaia-mock/applications.json:/data/applications.json
     ports:
       - 8000:443
