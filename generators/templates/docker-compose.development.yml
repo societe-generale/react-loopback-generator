@@ -3,7 +3,7 @@ version: '2'
 services:
 
   gaia-mock:
-    image: gaia-mock
+    image: registry.pepinie.re:5000/gaia-mock:1.0.0
     volumes:
       - ./provisioning/docker/gaia-mock/nginx.subconf:/etc/nginx/sites-enabled/application.subconf:ro
       - ./provisioning/docker/gaia-mock/users.json:/data/users.json
