@@ -39,7 +39,7 @@ module.exports = {
           path.join(clientPath, 'source')
         ],
         query: {
-          cacheDirectory: true,
+          cacheDirectory: '/tmp',
           presets: ['es2015', 'react']
         }
       },
