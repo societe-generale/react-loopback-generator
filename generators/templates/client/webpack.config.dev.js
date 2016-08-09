@@ -1,4 +1,5 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -59,6 +60,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin("[name].css")
+    new ExtractTextPlugin("[name].css"),
+    new LiveReloadPlugin({appendScriptTag: true}),
   ]
 };
