@@ -3,3 +3,4 @@ node_modules/
 npm-debug.log
 test/.tmp-*/
 .coverage/
+.nyc_output/
