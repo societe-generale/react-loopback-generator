@@ -52,6 +52,10 @@ services:
 #
 #  postgresql:
 #    image: postgres
+#    environment:
+#      - POSTGRES_USER=<%= applicationFolder %>
+#      - POSTGRES_PASSWORD=<%= applicationFolder %>
+#      - POSTGRES_DB=<%= applicationFolder %>
 #
 ###
 
