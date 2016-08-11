@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+import * as AuthenticationAction from '../../actions/authentication';
+
 class HomeView extends Component {
 
   constructor(props) {
