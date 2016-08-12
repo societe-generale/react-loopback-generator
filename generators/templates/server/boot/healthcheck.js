@@ -1,69 +1,45 @@
+const _ = require('lodash');
+const Promise = require('bluebird');
+
 module.exports = function(server) {
-  // @TODO: add healthchecks https://github.com/fastit/health-check#database-health-check
   var config = {};
 
-  // @TODO: UNCOMMENT THIS IF YOU HAVE POSTGRESQL DATABASE
-  //
-  // PostgreSQL
-  //
-  // const pg = require('pg');
-  // db = {
-  //   name: '@TODO',
-  //   host: '@TODO',
-  //   port: '@TODO',
-  //   username: '@TODO',
-  //   password: '@TODO'
-  // };
-  // connectionString = "postgres://" + db.username + ":" + db.password + "@" + db.host + ":" + db.port + "/" + db.name;
-  //
-  // config.postgres = {
-  //   client: new pg.Client(connectionString)
-  //};
+  var addDatasourceConfig = function(adapter, adapterName) {
+    return new Promise(function(resolve, reject) {
+      let connectorName = adapter.settings.connector;
 
+      if (connectorName === 'postgresql') {
+        config['postgres'] = {
+          client: function() {
+            console.log(adapter.connector)
+            return adapter.connector.pg;
+          }
+        }
+      } else if (connectorName === 'mongodb') {
+        config['mongo'] = {
+          client: function() {
+            return adapter.connector.db;
+          }
+        }
+      } else if (connectorName === 'elasticsearch') {
+        config['elasticsearch'] = {
+          client: function() {
+            return adapter.connector.db;
+          }
+        }
+      }
+      resolve();
+    });
+  };
 
-  // @TODO: UNCOMMENT THIS IF YOU HAVE MONGODB DATABASE
-  //
-  // MongoDB
-  //
-  // const mongodb = require('mongodb');
-  // db = {
-  //   name: '@TODO',
-  //   host: '@TODO',
-  //   port: '@TODO',
-  //   username: '@TODO',
-  //   password: '@TODO'
-  // };
-  // connectionString = "mongodb://" + db.username + ":" + db.password + "@" + db.host + ":" + db.port + "/" + db.name;
-  // MongoClient = mongodb.MongoClient;
-  // mongoClient = new MongoClient();
-  // mongo.mongoClient.connect(url, function(err, db) {
-  //   if (err != null) {
-  //     return;
-  //   }
-  //   config.mongo = {
-  //     client: db
-  //   };
-  // });
+  let promises = [];
 
-  // @TODO: UNCOMMENT THIS IF YOU HAVE ELASTICSEARCH DATABASE
-  //
-  // Elasticsearch
-  //
-  //
-  // elasticsearch = require('elasticsearch');
-  //
-  // db = {
-  //   host: '@TODO',
-  //   port: 9200
-  // };
-  //
-  // config.elasticsearch = {
-  //   client: new elasticsearch.Client({
-  //     host: db.host + ':' + db.port,
-  //     log: 'debug'
-  //   })
-  // };
+  _.each(server.datasources, function(adapter, adapterName) {
+    promises.push(addDatasourceConfig(adapter, adapterName));
+  });
 
-  healthcheck = require('healthcheck-fastit')(config);
-  server.use(healthcheck);
+  Promise.all(promises)
+  .then(function() {
+    server.use(require('healthcheck-fastit')(config));
+  });
 };
