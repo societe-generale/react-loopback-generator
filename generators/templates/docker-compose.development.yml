@@ -40,7 +40,7 @@ services:
     build: .
     volumes:
       - .:/code
-    depends_on:
+#    depends_on:
 #      - postgresql
 #      - mongodb
 #      - elasticsearch

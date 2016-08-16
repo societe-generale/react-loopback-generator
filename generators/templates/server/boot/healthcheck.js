@@ -1,45 +1,37 @@
 const _ = require('lodash');
-const Promise = require('bluebird');
 
 module.exports = function(server) {
   var config = {};
 
-  var addDatasourceConfig = function(adapter, adapterName) {
-    return new Promise(function(resolve, reject) {
-      let connectorName = adapter.settings.connector;
+  var addDatasourceConfig = function(adapter) {
+    let connectorName = adapter.settings.connector;
 
-      if (connectorName === 'postgresql') {
-        config['postgres'] = {
-          client: function() {
-            console.log(adapter.connector)
-            return adapter.connector.pg;
-          }
-        }
-      } else if (connectorName === 'mongodb') {
-        config['mongo'] = {
-          client: function() {
-            return adapter.connector.db;
-          }
-        }
-      } else if (connectorName === 'elasticsearch') {
-        config['elasticsearch'] = {
-          client: function() {
-            return adapter.connector.db;
-          }
+    if (connectorName === 'postgresql') {
+      config.postgres = {
+        client: function() {
+          return adapter.connector.pg;
         }
       }
-      resolve();
-    });
+    } else if (connectorName === 'mongodb') {
+      config.mongo = {
+        client: function() {
+          return adapter.connector.db;
+        }
+      }
+    } else if (connectorName === 'elasticsearch') {
+      config.elasticsearch = {
+        client: function() {
+          return adapter.connector.db;
+        }
+      }
+    }
   };
 
-  let promises = [];
-
-  _.each(server.datasources, function(adapter, adapterName) {
-    promises.push(addDatasourceConfig(adapter, adapterName));
+  _.each(server.datasources, function(adapter) {
+    addDatasourceConfig(adapter);
   });
 
-  Promise.all(promises)
-  .then(function() {
-    server.use(require('healthcheck-fastit')(config));
-  });
+
+  healthcheck = require('healthcheck-fastit')(config);
+  server.use(healthcheck);
 };
