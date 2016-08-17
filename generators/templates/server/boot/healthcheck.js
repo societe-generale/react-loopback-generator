@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const healthcheck = require('healthcheck-fastit');
 
 module.exports = function(server) {
   var config = {};
@@ -31,7 +32,5 @@ module.exports = function(server) {
     addDatasourceConfig(adapter);
   });
 
-
-  healthcheck = require('healthcheck-fastit')(config);
-  server.use(healthcheck);
+  server.use(healthcheck(config));
 };
