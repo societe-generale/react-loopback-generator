@@ -10,13 +10,13 @@ Database migrations
    Then you can edit your migration through the 'up' and 'down' SQL files located
    in `migrations/sqls/DATE-MIGRATION_NAME-*.sql`.
 
-  * Run missing migrations:
+ * Run missing migrations:
 
    ``` bash
    npm run database:migrate`
    ```
 
-  * Cancel last migration:
+ * Cancel last migration:
 
    ``` bash
    npm run database:migrate:down
