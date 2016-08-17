@@ -1,3 +1,28 @@
+Database migrations
+===================
+
+ * Create a migration:
+
+   ``` bash
+   node_modules/.bin/db-migrate create MIGRATION_NAME
+   ```
+
+   Then you can edit your migration through the 'up' and 'down' SQL files located
+   in `migrations/sqls/DATE-MIGRATION_NAME-*.sql`.
+
+  * Run missing migrations:
+
+   ``` bash
+   npm run database:migrate`
+   ```
+
+  * Cancel last migration:
+
+   ``` bash
+   npm run database:migrate:down
+   ```
+
+
 Logger
 ======
 
