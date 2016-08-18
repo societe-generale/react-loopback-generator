@@ -19,7 +19,7 @@ module.exports = function(server) {
           return adapter.connector.db;
         }
       }
-    } else if (connectorName === 'elasticsearch') {
+    } else if (connectorName === 'es') {
       config.elasticsearch = {
         client: function() {
           return adapter.connector.db;
