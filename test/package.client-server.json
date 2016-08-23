@@ -8,6 +8,8 @@
     "client:watch": "webpack-dev-server --config client/webpack.config.dev.js --hot",
     "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'",
     "server:watch": "nodemode server/server.js",
+    "package-push": "REPO_URL=\"$(git remote get-url origin)\"; ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$REPO_URL\"",
+    "package": "npm install; npm run client:build",
     "pretest": "eslint .",
     "posttest": "nsp check"
   },

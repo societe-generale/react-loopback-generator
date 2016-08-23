@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "main": "server/server.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "package-push": "REPO_URL=\"$(git remote get-url origin)\"; ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$REPO_URL\"",
+    "package": "npm install; npm run client:build"
   },
   "dependencies": {},
   "engines": {
