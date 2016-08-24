@@ -22,7 +22,6 @@ Database migrations
    npm run database:migrate:down
    ```
 
-
 Logger
 ======
 
