@@ -1,5 +1,4 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const LiveReloadPlugin = require('webpack-livereload-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -10,6 +9,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'webpack/hot/dev-server',
+    'webpack-dev-server/client?http://localhost:8001',
     path.join(clientPath, 'source/main.jsx')
   ],
   resolve: {
@@ -20,15 +20,10 @@ module.exports = {
     filename: './bundle.js'
   },
   devtool: 'source-map',
-  devServer: { <% if (serverport) { %>
-    proxy: {
-      '/api*': {
-        target: 'http://localhost:<%= serverport %>',
-        secure: false
-      }
-    }, <% } %>
+  devServer: {
     contentBase: buildPath,
-    hot: true
+    hot: true,
+    https: true,
   },
   module: {
     loaders: [
@@ -61,6 +56,5 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin("[name].css"),
-    new LiveReloadPlugin({appendScriptTag: true}),
   ]
 };
