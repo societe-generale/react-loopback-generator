@@ -4,6 +4,9 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node .",
+    "ansible:pull": "ansible-galaxy install -r provisioning/ansible/requirements.https.yml -p provisioning/ansible/roles",
+    "ansible:deploy": "ansible-playbook -i provisioning/ansible/hosts/staging provisioning/ansible/deploy.yml",
+    "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
     "client:build": "webpack --config client/webpack.config.js",
     "client:watch": "webpack-dev-server --config client/webpack.config.dev.js --hot",
     "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'",
