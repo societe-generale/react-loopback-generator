@@ -30,9 +30,10 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.SELECT:
       setLocale(action.lang);
-      return Object.assign({}, initialState, {
+      return {
+        ...initialState,
         selected: action.lang
-      }); 
+      };
     default:
       return state;
   }

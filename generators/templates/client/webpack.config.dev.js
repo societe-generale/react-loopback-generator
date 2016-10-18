@@ -35,7 +35,6 @@ module.exports = {
         ],
         query: {
           cacheDirectory: '/tmp',
-          presets: ['es2015', 'react']
         }
       },
       {
