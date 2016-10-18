@@ -1,4 +1,4 @@
-import * as cst from '../constants/networking';
+import cst from '../constants/networking';
 import fetch from 'isomorphic-fetch';
 import {merge} from 'lodash';
 

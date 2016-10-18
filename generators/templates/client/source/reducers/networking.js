@@ -1,4 +1,4 @@
-import * as cst from '../constants/networking';
+import cst from '../constants/networking';
 
 export default function reducer(state = 0, action) {
   switch (action.type) {

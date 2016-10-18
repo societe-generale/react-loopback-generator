@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import counterpart from 'counterpart';
 
-import * as types from '../constants/language';
+import types from '../constants/language';
 
 function setLocale(lang) {
   counterpart.setLocale(lang);

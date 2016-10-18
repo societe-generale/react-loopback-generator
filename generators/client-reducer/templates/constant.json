@@ -1,0 +1,4 @@
+{
+  "PUSH": "<%= constantPrefix %>_PUSH",
+  "POP": "<%= constantPrefix %>_POP"
+}

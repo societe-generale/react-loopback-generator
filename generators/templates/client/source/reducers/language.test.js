@@ -2,7 +2,7 @@ import expect from 'expect'
 
 import reducer from './language'
 import * as actions from '../actions/language';
-import * as constants from '../constants/language';
+import constants from '../constants/language';
 
 describe('reducers/language', () => {
 

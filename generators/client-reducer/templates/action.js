@@ -1,9 +1,5 @@
-import * as cst from '../contants/<%= reducerFilename %>';
+import cst from '../contants/<%= reducerFilename %>';
 
-export const pop = function(data) {
-  return {type: cst.POP, data};
-};
+export const pop = (data) => ({type: cst.POP, payload: data});
 
-export const push = function(data) {
-  return {type: cst.PUSH, data};
-};
+export const push = (data) => ({type: cst.PUSH, payload: data});
