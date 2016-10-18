@@ -1,3 +1,6 @@
 {
-  "application-name": "<%= applicationname %>"
+  "application-name": "<%= applicationName %>",
+  "authentication": {
+    "logout": "Déconnexion"
+  }
 }

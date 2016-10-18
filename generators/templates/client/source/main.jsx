@@ -6,6 +6,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import counterpart from 'counterpart'
 import moment from 'moment'
 
+import Root from './containers/root'
 import HomeView from './containers/home-view'
 
 import configureStore from './stores/configure-store'
@@ -41,7 +42,7 @@ render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
       <Router history={history}>
-        <Route path="/">
+        <Route path="/" component={Root}>
           <IndexRoute component={HomeView} />
         </Route>
       </Router>
