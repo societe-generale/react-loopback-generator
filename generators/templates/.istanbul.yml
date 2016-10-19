@@ -1,0 +1,8 @@
+instrumentation:
+  root: client/source
+  extension: .js
+  include-all-sources: true
+  verbose: true
+  excludes: [["**/__tests__/**"]]
+reporting:
+  dir: "coverage"
