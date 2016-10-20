@@ -1,4 +1,4 @@
-import cst from '../contants/<%= reducerFilename %>';
+import cst from '../constants/<%= reducerFilename %>';
 
 const initialState = {
   list: []

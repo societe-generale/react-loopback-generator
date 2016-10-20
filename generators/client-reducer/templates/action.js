@@ -1,4 +1,4 @@
-import cst from '../contants/<%= reducerFilename %>';
+import cst from '../constants/<%= reducerFilename %>';
 
 export const pop = (data) => ({type: cst.POP, payload: data});
 
