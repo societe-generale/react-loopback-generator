@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+import HelloCard from '../../components/hello-card';
+
 class HomeView extends Component {
 
   render() {
@@ -9,7 +11,7 @@ class HomeView extends Component {
       <div className="container">
         <div className="row center-xs">
           <div className="col-xs-12 col-md-6">
-            <h1>Hello World</h1>
+            <HelloCard user={this.props.user} />
           </div>
         </div>
       </div>
@@ -23,6 +25,7 @@ HomeView.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    user: state.authentication.user,
   }
 }
 
