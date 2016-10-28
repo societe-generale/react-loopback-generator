@@ -15,7 +15,7 @@ import {syncHistoryWithStore} from 'react-router-redux'
 import localeFr from './locale/locale-fr.json'
 import localeEn from './locale/locale-en.json'
 
-import {deepOrange500} from 'material-ui/styles/colors';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -32,11 +32,7 @@ counterpart.registerTranslations('fr', localeFr);
 
 injectTapEventPlugin();
 
-const muiTheme = getMuiTheme({
-  palette: {
-    accent1Color: deepOrange500,
-  }
-});
+const muiTheme = getMuiTheme(lightBaseTheme);
 
 render(
   <Provider store={store}>
