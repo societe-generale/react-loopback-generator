@@ -8,7 +8,7 @@ import SideBar from '../../components/side-bar';
 import * as AuthenticationAction from '../../actions/authentication';
 import * as SideBarAction from '../../actions/side-bar';
 
-class Root extends Component {
+export class Root extends Component {
 
   constructor(props) {
     super(props);
