@@ -11,7 +11,7 @@
     "client:watch": "webpack-dev-server --config client/webpack.config.dev.js --hot",
     "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'",
     "client:test:coverage": "node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- 'client/source/**/{*,}test.js'",
-    "test": "npm run client:test:coverage",
+    "test": "nyc npm run client:test:coverage",
     "package-push": "REPO_URL=\"$(git remote get-url origin)\"; ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$REPO_URL\"",
     "package": "npm install; npm run client:build"
   },
