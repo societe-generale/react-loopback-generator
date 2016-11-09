@@ -13,6 +13,7 @@
     "client:test:coverage": "node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- 'client/source/**/{*,}test.js'",
     "test": "nyc npm run client:test:coverage",
     "lint": "eslint . --ext .jsx,.js",
+    "e2e": "nightwatch",
     "package-push": "REPO_URL=\"$(git remote get-url origin)\"; ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$REPO_URL\"",
     "package": "npm install; npm run client:build"
   },
