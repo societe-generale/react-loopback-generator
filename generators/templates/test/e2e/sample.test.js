@@ -1,4 +1,4 @@
-var URL = "https://localhost:8000/<%= applicationName %>/";
+var URL = "https://localhost:8000/<%= applicationFolder %>/";
 
 module.exports = {
   'Should display Gaia authentification page': function (client) {
@@ -8,8 +8,8 @@ module.exports = {
       .waitForElementVisible('body', 1000)
       .waitForElementPresent('input#sg-email', 1000)
       .waitForElementPresent('input#sg-password', 1000)
-      .setValue('input#sg-email', 'user@socgen.com')
-      .setValue('input#sg-password', 'user')
+      .setValue('input#sg-email', 'user-test-test@socgen.com')
+      .setValue('input#sg-password', 'user-test')
       .waitForElementPresent("button[type=submit]", 1000)
   },
   'Should display Main page of the Application': function (client) {
@@ -22,7 +22,7 @@ module.exports = {
         } else {
           client.setValue('input#sg-pin', '1212121')
             .click('button[type=submit]')
-            .assert.urlContains('<%= applicationName %>');
+            .assert.urlContains('<%= applicationFolder %>');
         }
       })
 

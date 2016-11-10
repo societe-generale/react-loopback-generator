@@ -14,6 +14,7 @@
     "test": "nyc npm run client:test:coverage",
     "lint": "eslint . --ext .jsx,.js",
     "e2e": "nightwatch",
+    "pree2e": "sh ./test/e2e/nightwatch.sh",
     "package-push": "REPO_URL=\"$(git remote get-url origin)\"; ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$REPO_URL\"",
     "package": "npm install; npm run client:build"
   },
