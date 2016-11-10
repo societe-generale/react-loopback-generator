@@ -7,7 +7,7 @@
     "ansible:deploy": "ansible-playbook -i provisioning/ansible/hosts/staging provisioning/ansible/deploy.yml",
     "fast-deploy": "ssh tnusadm@sg-m4 \"fast-deploy --app-name=plop --repository=$(git remote get-url origin)\"",
     "package": "npm install; npm run client:build",
-    "package-push": "ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$(git remote get-url origin)\"",
+    "package-push": "ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --version=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') --repository=$(git remote get-url origin)\"",
     "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
     "start": "node ."
   },
