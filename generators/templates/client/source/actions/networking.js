@@ -1,29 +1,30 @@
-import cst from '../constants/networking';
 import fetch from 'isomorphic-fetch';
-import {merge} from 'lodash';
+import { merge } from 'lodash';
 
-export const start = _ => ({type: cst.START});
-export const stop = _ => ({type: cst.STOP});
+import cst from '../constants/networking';
+
+export const start = () => ({ type: cst.START });
+export const stop = () => ({ type: cst.STOP });
 
 export function request(url, options) {
   return (dispatch, getState) => {
-    let requestOptions = merge({
+    const requestOptions = merge({
       credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
     }, options);
-    for (let key in requestOptions.headers) {
+    for (const key in requestOptions.headers) {
       if (requestOptions.headers[key] == null) {
         delete requestOptions.headers[key];
       }
     }
-    let {authentication} = getState();
+    const { authentication } = getState();
     if (authentication) {
       requestOptions.headers.authorization = authentication.id;
     }
-    var status;
+    let status;
     return Promise.resolve(fetch(url, requestOptions))
     .then((response) => {
       status = response.status;
@@ -32,15 +33,14 @@ export function request(url, options) {
     .then((response) => {
       var result = {
         status,
-        data: response
+        data: response,
       };
       if (status >= 200 && status < 300) {
         return result;
-      } else {
-        let err = new Error(response.error ? response.error.name : JSON.stringify(response));
-        err.data = response;
-        throw err;
       }
+      const err = new Error(response.error ? response.error.name : JSON.stringify(response));
+      err.data = response;
+      throw err;
     });
   };
-};
+}

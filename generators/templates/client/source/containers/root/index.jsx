@@ -1,6 +1,6 @@
-import React, {Component, PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import HeaderBar from '../../components/header-bar';
 import SideBar from '../../components/side-bar';
@@ -12,22 +12,22 @@ export class Root extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {ready: false};
+    this.state = { ready: false };
   }
 
   componentWillMount() {
     this.props.authenticationActions.doLogin()
-      .then(res => {
-        this.setState({ready: true})
+      .then(() => {
+        this.setState({ ready: true });
       });
   }
 
   doLogout() {
-    this.props.authenticationActions.doLogout(this.state.authentication.userId)
+    this.props.authenticationActions.doLogout(this.state.authentication.userId);
   }
 
   render() {
-    if (!this.state.ready) return (<div></div>);
+    if (!this.state.ready) return (<div />);
     return (
       <div>
         <HeaderBar
@@ -47,11 +47,11 @@ export class Root extends Component {
 
 Root.propTypes = {
   authentication: PropTypes.shape({
-    id: PropTypes.string
+    id: PropTypes.string,
   }),
   authenticationActions: PropTypes.shape({
     doLogin: PropTypes.func.isRequired,
-    doLogout: PropTypes.func.isRequired
+    doLogout: PropTypes.func.isRequired,
   }).isRequired,
 };
 
@@ -59,17 +59,17 @@ function mapStateToProps(state) {
   return {
     authentication: state.authentication,
     sideBar: state['side-bar'],
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     authenticationActions: bindActionCreators(AuthenticationAction, dispatch),
     sideBarActions: bindActionCreators(SideBarAction, dispatch),
-  }
+  };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Root);

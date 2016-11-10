@@ -1,6 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import HelloCard from '../../components/hello-card';
 
@@ -26,15 +25,9 @@ HomeView.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.authentication.user,
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-  }
+  };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(HomeView);

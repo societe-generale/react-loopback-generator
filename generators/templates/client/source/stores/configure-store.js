@@ -1,18 +1,17 @@
-import { applyMiddleware, createStore, compose } from 'redux'
-import { routerMiddleware } from 'react-router-redux'
-import thunk from 'redux-thunk'
-import createLogger from 'redux-logger'
-import rootReducer from '../reducers'
+import { applyMiddleware, createStore, compose } from 'redux';
+import { routerMiddleware } from 'react-router-redux';
+import thunk from 'redux-thunk';
+import createLogger from 'redux-logger';
+import persistState, { mergePersistedState } from 'redux-localstorage';
+import adapter from 'redux-localstorage/lib/adapters/localStorage';
+import filter from 'redux-localstorage-filter';
 
-import persistState, { mergePersistedState } from 'redux-localstorage'
-import adapter from 'redux-localstorage/lib/adapters/localStorage'
-import filter from 'redux-localstorage-filter'
+import rootReducer from '../reducers';
 
 export default function configureStore(history) {
-
   const logger = createLogger({
     level: process.env.NODE_ENV === 'production' ? 'error' : 'log',
-    collapsed: true
+    collapsed: true,
   });
   const reduxRouterMiddleware = routerMiddleware(history);
 
@@ -22,13 +21,13 @@ export default function configureStore(history) {
 
   var createCustomStore = compose(
     persistState(storageAuth, 'authentication'),
-    persistState(storageLang, 'language')
+    persistState(storageLang, 'language'),
   )(createStore);
 
   createCustomStore = applyMiddleware(
     reduxRouterMiddleware,
     thunk,
-    logger
+    logger,
   )(createCustomStore);
 
   const store = createCustomStore(reducers);
@@ -38,7 +37,7 @@ export default function configureStore(history) {
     module.hot.accept('../reducers', () => {
       const nextReducer = require('../reducers');
       store.replaceReducer(nextReducer);
-    })
+    });
   }
 
   return store;

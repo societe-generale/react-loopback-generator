@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardText} from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 
 export default props => (
   <div className="box">

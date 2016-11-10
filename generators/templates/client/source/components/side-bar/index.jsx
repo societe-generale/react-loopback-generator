@@ -2,7 +2,7 @@ import React from 'react';
 
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 
 import Translate from 'react-translate-component';
 

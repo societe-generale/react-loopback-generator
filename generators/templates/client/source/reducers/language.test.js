@@ -1,49 +1,41 @@
-import expect from 'expect'
+import expect from 'expect';
 
-import reducer from './language'
-import * as actions from '../actions/language';
+import reducer from './language';
 import constants from '../constants/language';
 
 describe('reducers/language', () => {
-
   describe('initial state', () => {
-
     it('should return default if unknown action', () => {
-      var initialState = undefined;
-      var action = {type: 'NOTHING'};
+      var action = { type: 'NOTHING' };
       var expectedState = {
         available: [
-          {key: 'en', label: 'English'},
-          {key: 'fr', label: 'Français'}
+          { key: 'en', label: 'English' },
+          { key: 'fr', label: 'Français' },
         ],
-        selected: 'en'
+        selected: 'en',
       };
-      expect(reducer(initialState, action)).toEqual(expectedState);
+      expect(reducer(undefined, action)).toEqual(expectedState);
     });
-
   });
 
   describe('changing language', () => {
-
     it('should return the new state with the selected lang', () => {
       var initialState = {
         available: [
-          {key: 'en', label: 'English'},
-          {key: 'fr', label: 'Français'}
+          { key: 'en', label: 'English' },
+          { key: 'fr', label: 'Français' },
         ],
-        selected: 'en'
+        selected: 'en',
       };
-      var action = {type: constants.SELECT, lang: 'fr'};
+      var action = { type: constants.SELECT, lang: 'fr' };
       var expectedState = {
         available: [
-          {key: 'en', label: 'English'},
-          {key: 'fr', label: 'Français'}
+          { key: 'en', label: 'English' },
+          { key: 'fr', label: 'Français' },
         ],
-        selected: 'fr'
+        selected: 'fr',
       };
       expect(reducer(initialState, action)).toEqual(expectedState);
     });
-
   });
-
 });

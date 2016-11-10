@@ -9,17 +9,17 @@ function setLocale(lang) {
   moment.locale(lang);
 }
 
-var initialState = {
+const initialState = {
   available: [
-    {key: 'en', label: 'English'},
-    {key: 'fr', label: 'Français'}
+    { key: 'en', label: 'English' },
+    { key: 'fr', label: 'Français' },
   ],
-  selected: 'en'
+  selected: 'en',
 };
 
 if (global.navigator && global.navigator.language) {
-  var key = navigator.language.match(/^[a-z]{2}/)[0];
-  if (_.find(initialState.available, {key})) {
+  const key = navigator.language.match(/^[a-z]{2}/)[0];
+  if (_.find(initialState.available, { key })) {
     initialState.selected = key;
   }
 }
@@ -32,9 +32,9 @@ export default function reducer(state = initialState, action) {
       setLocale(action.lang);
       return {
         ...initialState,
-        selected: action.lang
+        selected: action.lang,
       };
     default:
       return state;
   }
-};
+}
