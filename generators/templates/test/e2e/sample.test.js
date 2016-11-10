@@ -15,16 +15,13 @@ module.exports = {
   'Should display Main page of the Application': function (client) {
     client
       .click('button[type=submit]')
+      .useCss()
       .waitForElementPresent('input#sg-pin', 1000)
-      .element('css selector', 'input#sg-pin-2', function (result) {
-        if (result.status !== -1) {
-          console.log("--------------IT'S YOUR FIRST TIME-----------\n You must set");
-        } else {
-          client.setValue('input#sg-pin', '1212121')
-            .click('button[type=submit]')
-            .assert.urlContains('<%= applicationFolder %>');
-        }
-      })
-
+      .setValue('input#sg-pin', '1212121')
+      .click('button[type=submit]')
+      .waitForElementPresent('script[src*=bundle]', 1000)
+      .waitForElementVisible('body', 1000)
+      .assert.urlContains('<%= applicationFolder %>/#/')
+      .end();
   }
 };
