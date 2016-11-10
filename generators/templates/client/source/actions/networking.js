@@ -15,11 +15,11 @@ export function request(url, options) {
         'Content-Type': 'application/json',
       },
     }, options);
-    for (const key in requestOptions.headers) {
+    Object.keys(requestOptions.headers).forEach((key) => {
       if (requestOptions.headers[key] == null) {
         delete requestOptions.headers[key];
       }
-    }
+    });
     const { authentication } = getState();
     if (authentication) {
       requestOptions.headers.authorization = authentication.id;

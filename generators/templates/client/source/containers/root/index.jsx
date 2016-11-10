@@ -53,6 +53,14 @@ Root.propTypes = {
     doLogin: PropTypes.func.isRequired,
     doLogout: PropTypes.func.isRequired,
   }).isRequired,
+  sideBar: PropTypes.shape({
+    open: PropTypes.bool,
+  }),
+  sideBarActions: PropTypes.shape({
+    open: PropTypes.func,
+    close: PropTypes.func,
+  }),
+  children: PropTypes.element,
 };
 
 function mapStateToProps(state) {

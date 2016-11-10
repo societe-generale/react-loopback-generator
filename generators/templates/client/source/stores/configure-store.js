@@ -14,12 +14,11 @@ export default function configureStore(history) {
     collapsed: true,
   });
   const reduxRouterMiddleware = routerMiddleware(history);
-
   const reducers = compose(mergePersistedState())(rootReducer);
   const storageAuth = compose(filter('authentication'))(adapter(window.localStorage));
   const storageLang = compose(filter('language'))(adapter(window.localStorage));
 
-  var createCustomStore = compose(
+  let createCustomStore = compose(
     persistState(storageAuth, 'authentication'),
     persistState(storageLang, 'language'),
   )(createStore);
@@ -35,7 +34,7 @@ export default function configureStore(history) {
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
-      const nextReducer = require('../reducers');
+      const nextReducer = require('../reducers'); // eslint-disable-line
       store.replaceReducer(nextReducer);
     });
   }

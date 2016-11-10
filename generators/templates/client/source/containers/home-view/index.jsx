@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import HelloCard from '../../components/hello-card';
@@ -20,6 +20,9 @@ class HomeView extends Component {
 }
 
 HomeView.propTypes = {
+  user: PropTypes.shape({
+    firstName: PropTypes.string,
+  }),
 };
 
 function mapStateToProps(state) {
