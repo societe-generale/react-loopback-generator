@@ -7,7 +7,7 @@ db.users.findAndModify({
       'mailAddress' : 'user-test-test@socgen.com',
       'sesame' : 'user-test',
       'sgservicename' : 'RESG/GTS',
-      'roles' : { 'helloworld' : [ ] },
+      'roles' : { '<%= applicationFolder %>' : [ ] },
       'lastName' : 'Plop',
       'firstName' : 'User demo',
       '__v' : 0,

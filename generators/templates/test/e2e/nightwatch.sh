@@ -4,7 +4,7 @@ if [ -z "${CONTAINER_ID}" ];
 then
   echo "[DOCKER CONTAINER NOT STARTED] : gaia-mock"
 else
-  cat ./createTestUserMongo.txt | docker exec -i ${CONTAINER_ID} mongo gaia-mock
+  cat ./test/e2e/createTestUserMongo.txt | docker exec -i ${CONTAINER_ID} mongo gaia-mock
 fi
 
 
