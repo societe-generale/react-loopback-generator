@@ -3,20 +3,21 @@
   "version": "0.0.1",
   "main": "server/server.js",
   "scripts": {
-    "start": "node .",
     "ansible:pull": "ansible-galaxy install -r provisioning/ansible/requirements.https.yml -p provisioning/ansible/roles",
     "ansible:deploy": "ansible-playbook -i provisioning/ansible/hosts/staging provisioning/ansible/deploy.yml",
+    "fast-deploy": "ssh tnusadm@sg-m4 \"fast-deploy --app-name=plop --repository=$(git remote get-url origin)\"",
+    "package": "npm install; npm run client:build",
+    "package-push": "ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$(git remote get-url origin)\"",
     "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
+    "start": "node .",
     "client:build": "webpack --config client/webpack.config.js",
     "client:watch": "webpack-dev-server --config client/webpack.config.dev.js --hot",
     "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'",
     "client:test:coverage": "node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- 'client/source/**/{*,}test.js'",
-    "test": "nyc npm run client:test:coverage",
-    "lint": "eslint . --ext .jsx,.js",
     "e2e": "nightwatch",
+    "lint": "eslint . --ext .jsx,.js",
     "pree2e": "sh ./test/e2e/nightwatch.sh",
-    "package-push": "REPO_URL=\"$(git remote get-url origin)\"; ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$REPO_URL\"",
-    "package": "npm install; npm run client:build"
+    "test": "nyc npm run client:test:coverage"
   },
   "dependencies": {},
   "engines": {

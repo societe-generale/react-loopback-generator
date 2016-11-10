@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "main": "server/server.js",
   "scripts": {
-    "start": "node .",
     "ansible:pull": "ansible-galaxy install -r provisioning/ansible/requirements.https.yml -p provisioning/ansible/roles",
     "ansible:deploy": "ansible-playbook -i provisioning/ansible/hosts/staging provisioning/ansible/deploy.yml",
+    "fast-deploy": "ssh tnusadm@sg-m4 \"fast-deploy --app-name=plop --repository=$(git remote get-url origin)\"",
+    "package": "npm install; npm run client:build",
+    "package-push": "ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$(git remote get-url origin)\"",
     "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
-    "package-push": "REPO_URL=\"$(git remote get-url origin)\"; ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$REPO_URL\"",
-    "package": "npm install; npm run client:build"
+    "start": "node ."
   },
   "dependencies": {},
   "engines": {
