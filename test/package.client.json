@@ -17,7 +17,8 @@
     "e2e": "nightwatch",
     "lint": "eslint . --ext .jsx,.js",
     "pree2e": "sh ./test/e2e/nightwatch.sh",
-    "test": "npm run client:test:coverage"
+    "test": "npm run client:test:coverage",
+    "postinstall": "npm run client:build"
   },
   "dependencies": {},
   "engines": {
