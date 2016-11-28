@@ -6,8 +6,8 @@ import constants from '../constants/language';
 describe('reducers/language', () => {
   describe('initial state', () => {
     it('should return default if unknown action', () => {
-      var action = { type: 'NOTHING' };
-      var expectedState = {
+      let action = { type: 'NOTHING' };
+      let expectedState = {
         available: [
           { key: 'en', label: 'English' },
           { key: 'fr', label: 'Français' },
@@ -20,15 +20,15 @@ describe('reducers/language', () => {
 
   describe('changing language', () => {
     it('should return the new state with the selected lang', () => {
-      var initialState = {
+      let initialState = {
         available: [
           { key: 'en', label: 'English' },
           { key: 'fr', label: 'Français' },
         ],
         selected: 'en',
       };
-      var action = { type: constants.SELECT, lang: 'fr' };
-      var expectedState = {
+      let action = { type: constants.SELECT, lang: 'fr' };
+      let expectedState = {
         available: [
           { key: 'en', label: 'English' },
           { key: 'fr', label: 'Français' },
