@@ -1,5 +1,4 @@
 import expect from 'expect';
-
 import reducer from './networking';
 import constants from '../constants/networking';
 

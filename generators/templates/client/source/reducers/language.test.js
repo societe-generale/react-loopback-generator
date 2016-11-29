@@ -1,5 +1,4 @@
 import expect from 'expect';
-
 import reducer from './language';
 import constants from '../constants/language';
 
