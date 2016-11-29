@@ -1,11 +1,12 @@
 import expect from 'expect';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as action from './authentication';
 import nock from 'nock';
+import * as action from './authentication';
+import url from '../constants/url-config';
+
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
-import url from '../constants/url-config';
 
 
 describe('Actions authentication', () => {
@@ -18,23 +19,21 @@ describe('Actions authentication', () => {
 
   it('logout should create AUTHENTICATION_LOGOUT', () => {
     expect(action.logout()).toEqual({
-      type: 'AUTHENTICATION_LOGOUT'
+      type: 'AUTHENTICATION_LOGOUT',
     });
   });
 
   it('should call request and  dispatch AUTHENTICATION_LOGIN', () => {
-    url.AUTH = "http://localhost/api/auth";
+    url.AUTH = 'http://localhost/api/auth';
     const store = mockStore({});
-    const expected = [{type: 'AUTHENTICATION_LOGIN', payload: {user: "myUser"}}];
+    const expected = [{ type: 'AUTHENTICATION_LOGIN', payload: { user: 'myUser' } }];
     nock('http://localhost')
       .get('/api/auth')
-      .reply(200, {user: "myUser"} );
+      .reply(200, { user: 'myUser' });
 
     return store.dispatch(action.doLogin())
-      .then(()=> {
-
+      .then(() => {
         expect(store.getActions()).toEqual(expected);
       });
-
-  })
+  });
 });
