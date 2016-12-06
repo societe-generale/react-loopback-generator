@@ -25,7 +25,7 @@ export function request(url, options) {
       requestOptions.headers.authorization = authentication.id;
     }
     let status;
-    return Promise.resolve(fetch(url, requestOptions))
+    return fetch(url, requestOptions)
     .then((response) => {
       status = response.status;
       return status === 204 ? null : response.json();
