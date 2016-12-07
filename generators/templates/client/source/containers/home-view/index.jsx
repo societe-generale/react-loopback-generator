@@ -27,7 +27,7 @@ HomeView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    user: state.authentication.user,
+    user: (state.authentication) ? state.authentication.user : { firstName: 'Anonymous' },
   };
 }
 
