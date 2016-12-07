@@ -27,7 +27,7 @@ export class Root extends Component {
   }
 
   render() {
-    if (!this.state.ready) return (<div />);
+    if (!this.props.authentication) return (<div />);
     return (
       <div>
         <HeaderBar
