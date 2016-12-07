@@ -71,8 +71,10 @@ describe('<Root/>', () => {
         childContextTypes: { muiTheme: React.PropTypes.object },
       },
     );
-    wrapper.setState({
-      ready: true,
+    wrapper.setProps({
+      authentication: { user: {
+        firstName: 'Test',
+      } },
     });
 
     expect(wrapper.find('AppBar').length).toEqual(2);

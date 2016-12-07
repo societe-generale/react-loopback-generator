@@ -10,20 +10,12 @@ import * as SideBarAction from '../../actions/side-bar';
 
 export class Root extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = { ready: false };
-  }
-
   componentWillMount() {
-    this.props.authenticationActions.doLogin()
-      .then(() => {
-        this.setState({ ready: true });
-      });
+    this.props.authenticationActions.doLogin();
   }
 
   doLogout() {
-    this.props.authenticationActions.doLogout(this.state.authentication.userId);
+    this.props.authenticationActions.doLogout();
   }
 
   render() {
