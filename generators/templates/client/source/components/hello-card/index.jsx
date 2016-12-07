@@ -6,14 +6,15 @@ const HelloCard = props => (
     <Card>
       <CardText>
         <h1>Hello {props.user.firstName}</h1>
+        <h2>Your roles: {props.user.roles.map(role => role.name).join(', ')}</h2>
       </CardText>
     </Card>
   </div>);
 
-
 HelloCard.propTypes = {
   user: PropTypes.shape({
     firstName: PropTypes.string,
+    roles: PropTypes.array,
   }),
 };
 
