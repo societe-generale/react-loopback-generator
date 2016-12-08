@@ -32,6 +32,21 @@ create table acl (
   principalid text
 );
 
+create table role (
+  id serial not null primary key,
+  name text not null unique,
+  description text,
+  created timestamp with time zone default now(),
+  modified timestamp with time zone
+);
+
+create table rolemapping (
+  id serial not null primary key,
+  principaltype text not null,
+  principalid text not null,
+  roleid text not null
+);
+
 create function update_modified_column()
 returns trigger as $$
 begin
