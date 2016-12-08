@@ -1,4 +1,4 @@
-create table "user" (
+create table sguser (
   id serial not null primary key,
   email text not null unique,
   password text not null,
@@ -8,16 +8,18 @@ create table "user" (
   emailverified boolean,
   verificationtoken boolean,
   status text,
-  created timestamp with time zone default now(),
-  lastupdated timestamp with time zone,
-  realm text
+  modified timestamp with time zone default now(),
+  realm text,
+  firstname text,
+  lastname text,
+  roles json
 );
 
 create table accesstoken (
   id text not null unique primary key,
   ttl integer not null,
   created timestamp with time zone default now(),
-  userid integer not null references "user"(id)
+  userid integer not null references sguser(id)
 );
 
 create table acl (
@@ -30,17 +32,13 @@ create table acl (
   principalid text
 );
 
-create table role (
-  id text not null unique primary key,
-  name text not null unique,
-  description text,
-  created timestamp with time zone default now(),
-  lastupdated timestamp with time zone
-);
+create function update_modified_column()
+returns trigger as $$
+begin
+    NEW.modified = now();
+    return NEW;
+end;
+$$ language 'plpgsql';
 
-create table rolemapping (
-  id text not null unique primary key,
-  principaltype text not null,
-  principalid text not null,
-  roleid text not null
-);
+create trigger update_sguser_modified_column
+before update on sguser for each row execute procedure update_modified_column();
