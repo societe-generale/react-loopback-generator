@@ -1,0 +1,22 @@
+{
+  "name": "SgUser",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "firstName": "string",
+    "lastName": "string",
+    "roles": "object"
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [{
+    "accessType": "READ",
+    "principalType": "ROLE",
+    "principalId": "ADMIN",
+    "permission": "ALLOW"
+  }],
+  "methods": {}
+}

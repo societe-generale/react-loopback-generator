@@ -1,0 +1,9 @@
+{
+  "User": {
+    "dataSource": "db",
+    "public": false
+  },
+  "SgUser": {
+    "dataSource": "db"
+  }
+}
