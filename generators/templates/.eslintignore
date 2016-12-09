@@ -2,5 +2,3 @@
 /node_modules
 /provisioning
 /server
-/client/webpack.config.js
-/client/webpack.config.dev.js
