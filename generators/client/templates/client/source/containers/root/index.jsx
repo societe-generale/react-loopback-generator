@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import _ from 'lodash';
 import HeaderBar from '../../components/header-bar';
 import SideBar from '../../components/side-bar';
 
@@ -19,7 +19,7 @@ export class Root extends Component {
   }
 
   render() {
-    if (!this.props.authentication) return (<div />);
+    if (_.isEmpty(this.props.authentication)) return (<div />);
     return (
       <div>
         <HeaderBar

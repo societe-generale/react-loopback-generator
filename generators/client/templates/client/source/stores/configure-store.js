@@ -34,7 +34,7 @@ export default function configureStore(history) {
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
-      const nextReducer = require('../reducers'); // eslint-disable-line
+      const nextReducer = require('../reducers/index'); // eslint-disable-line
       store.replaceReducer(nextReducer);
     });
   }

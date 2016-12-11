@@ -1,28 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import HelloCard from '../../components/hello-card';
 
 class HomeView extends Component {
+
   render() {
-    const { authentication = {} } = this.props;
     return (
       <div className="container">
         <div className="row center-xs">
           <div className="col-xs-12 col-md-6">
-            <HelloCard authentication={authentication} />
+            <HelloCard user={this.props.user} />
           </div>
         </div>
       </div>
     );
   }
+
 }
 
-HomeView.propTypes = HelloCard.propTypes;
+HomeView.propTypes = {
+  user: PropTypes.shape({
+    firstName: PropTypes.string,
+  }),
+};
 
 function mapStateToProps(state) {
   return {
-    authentication: state.authentication,
+    user: state.authentication.user,
   };
 }
 

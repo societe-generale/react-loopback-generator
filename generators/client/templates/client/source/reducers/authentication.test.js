@@ -24,7 +24,7 @@ describe('authentication reducer', () => {
       reducer(null, {
         type: type.LOGOUT,
       })).toEqual(
-      {},
+      null,
     );
   });
 });

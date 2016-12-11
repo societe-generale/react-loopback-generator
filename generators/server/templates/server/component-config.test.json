@@ -1,0 +1,23 @@
+{
+  "loopback-component-explorer": {
+    "basePath": "/<%= applicationFolder %>/api",
+    "mountPath": "/explorer"
+  },
+  "./components/logger": {
+    "default": "technical",
+    "channels": {
+      "technical": {
+        "console": {
+          "level": "error",
+          "label": "technical"
+        }
+      },
+      "functionnal": {
+        "console": {
+          "level": "error",
+          "label": "functionnal"
+        }
+      }
+    }
+  }
+}
