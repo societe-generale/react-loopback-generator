@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "walmart/configurations/es5",
+    "walmart/rules/eslint/node/on"
+  ],
+  "parser":"babel-eslint",
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "strict": [2, "global"],
+    "quotes": ["error", "single"]
+  }
+}

@@ -1,11 +1,13 @@
+'use strict';
+
 const _ = require('lodash');
 const winston = require('winston');
 
-const getToken = function(ctx) {
+const getToken = function (ctx) {
   return ctx.req.headers.authorization || 'anonymous';
 };
 
-module.exports = function(server, config) {
+module.exports = function (server, config) {
   server.log = {};
   // Initialize channels
   _.each(config.channels, (loggerConfig, loggerName) => {
@@ -14,18 +16,22 @@ module.exports = function(server, config) {
   });
   // Add logging hooks on models
   _.each(server.models, (model, name) => {
-    model.beforeRemote('*', function(ctx, instance, next) {
-      server.log[config.default].debug(getToken(ctx), `${name}.${ctx.method.name}#beforeRemote`, ctx.req.params);
+    model.beforeRemote('*', function (ctx, instance, next) {
+      server.log[config.default]
+        .debug(getToken(ctx), `${name}.${ctx.method.name}#beforeRemote`, ctx.req.params);
       next();
     });
-    model.afterRemote('*', function(ctx, instance, next) {
-      server.log[config.default].debug(getToken(ctx), `${name}.${ctx.method.name}#afterRemote`, ctx.req.params, instance);
+    model.afterRemote('*', function (ctx, instance, next) {
+      server.log[config.default]
+        .debug(getToken(ctx), `${name}.${ctx.method.name}#afterRemote`, ctx.req.params, instance);
       next();
     });
-    model.afterRemoteError('*', function(ctx, next) {
-      server.log[config.default].error(getToken(ctx), `${name}.${ctx.method.name}#afterRemoteError`, ctx.req.params, ctx.error);
+    model.afterRemoteError('*', function (ctx, next) {
+      server.log[config.default]
+        .error(getToken(ctx), `${name}.${ctx.method.name}#afterRemoteError`,
+          ctx.req.params, ctx.error);
       next();
     });
   });
   return;
-}
+};

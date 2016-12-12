@@ -1,4 +1,6 @@
-import expect from 'expect';
+'use strict';
+
+const expect = require('expect');
 
 describe('server test', () => {
   describe('fake test for demonstration', () => {
