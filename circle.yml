@@ -11,4 +11,3 @@ dependencies:
 test:
   override:
     - "DEBUG=yeoman:generator npm test"
-    - "npm run test"
