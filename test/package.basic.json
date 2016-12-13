@@ -9,7 +9,8 @@
     "package": "npm install; npm run client:build",
     "package-push": "ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --version=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') --repository=$(git remote get-url origin)\"",
     "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
-    "start": "node ."
+    "start": "node .",
+    "posttest": "npm run lint && nsp check"
   },
   "dependencies": {},
   "devDependencies": {

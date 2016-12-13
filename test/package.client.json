@@ -10,16 +10,17 @@
     "package-push": "ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --version=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') --repository=$(git remote get-url origin)\"",
     "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
     "start": "node .",
+    "posttest": "npm run lint && nsp check",
     "client:build": "webpack --config client/webpack.config.js",
     "client:watch": "webpack-dev-server --config client/webpack.config.dev.js --hot",
+    "client:lint": "eslint --ext .jsx,.js -c client/.eslintrc client/source",
     "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'",
     "client:test:coverage": "nyc node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- 'client/source/**/{*,}test.js'",
     "e2e": "nightwatch",
     "lint": "npm run client:lint",
     "pree2e": "sh ./test/e2e/nightwatch.sh",
     "test": "npm run client:test:coverage",
-    "postinstall": "npm run client:build",
-    "client:lint": "eslint --ext .jsx,.js -c client/.eslintrc client/source"
+    "postinstall": "npm run client:build"
   },
   "dependencies": {},
   "devDependencies": {
