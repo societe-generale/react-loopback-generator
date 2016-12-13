@@ -15,10 +15,11 @@
     "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'",
     "client:test:coverage": "nyc node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- 'client/source/**/{*,}test.js'",
     "e2e": "nightwatch",
-    "lint": "eslint . --ext .jsx,.js",
+    "lint": "npm run client:lint",
     "pree2e": "sh ./test/e2e/nightwatch.sh",
     "test": "npm run client:test:coverage",
-    "postinstall": "npm run client:build"
+    "postinstall": "npm run client:build",
+    "client:lint": "eslint --ext .jsx,.js -c client/.eslintrc client/source"
   },
   "dependencies": {},
   "devDependencies": {

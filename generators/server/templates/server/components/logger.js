@@ -33,5 +33,4 @@ module.exports = function (server, config) {
       next();
     });
   });
-  return;
 };
