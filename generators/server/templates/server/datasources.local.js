@@ -2,7 +2,7 @@
 
 module.exports = {
   db: {
-      name: 'db',
-      connector: 'memory'
+    name: 'db',
+    connector: 'memory'
   }
 };

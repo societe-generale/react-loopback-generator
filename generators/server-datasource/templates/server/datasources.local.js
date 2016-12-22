@@ -9,5 +9,3 @@ module.exports = {
     port: process.env.DATABASE_PORT,
   }
 };
-
-
