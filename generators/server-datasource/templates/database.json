@@ -1,19 +1,39 @@
 {
   "development": {
     "driver": "pg",
-    "database": {"ENV": "DATABASE_DB"},
-    "user": {"ENV": "DATABASE_USER"},
-    "password": {"ENV": "DATABASE_PASSWORD"},
+    "database": "<%= applicationName %>",
+    "user": "<%= applicationName %>",
+    "password": "<%= applicationName %>",
+    "schema": "<%= applicationName %>",
     "host": {"ENV": "DATABASE_HOST"},
-    "port": {"ENV": "DATABASE_PORT"}
+    "port": {"ENV": "DATABASE_PORT"},
+  },
+  "staging": {
+    "driver": "pg",
+    "database": "<%= applicationName %>",
+    "user": "<%= applicationName %>",
+    "password": "<%= applicationName %>",
+    "schema": "<%= applicationName %>",
+    "host": "m4-db.pepinie.re",
+    "port": 12400,
+  },
+  "homologation": {
+    "driver": "pg",
+    "database": "<%= applicationName %>",
+    "user": "<%= applicationName %>",
+    "password": "<%= applicationName %>",
+    "schema": "<%= applicationName %>",
+    "host": "fill me with homologation db host",
+    "port": 12400,
   },
   "production": {
     "driver": "pg",
-    "database": {"ENV": "DATABASE_DB"},
-    "host": {"ENV": "DATABASE_HOST"},
-    "port": {"ENV": "DATABASE_PORT"},
-    "user": {"ENV": "DATABASE_USER"},
-    "password": {"ENV": "DATABASE_PASSWORD"}
+    "database": "<%= applicationName %>",
+    "user": "<%= applicationName %>",
+    "password": "<%= applicationName %>",
+    "schema": "<%= applicationName %>",
+    "host": "fill me with production db host",
+    "port": 12400,
   },
   "defaultEnv": "development",
   "sql-file": true
