@@ -1,6 +1,6 @@
 {
   "loopback-component-explorer": {
-    "basePath": "/<%= applicationFolder %>/api",
+    "basePath": "/<%= applicationName %>/api",
     "mountPath": "/explorer"
   },
   "./components/logger": {

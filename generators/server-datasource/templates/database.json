@@ -6,7 +6,7 @@
     "password": "<%= applicationName %>",
     "schema": "<%= applicationName %>",
     "host": {"ENV": "DATABASE_HOST"},
-    "port": {"ENV": "DATABASE_PORT"},
+    "port": {"ENV": "DATABASE_PORT"}
   },
   "staging": {
     "driver": "pg",
@@ -15,7 +15,7 @@
     "password": "<%= applicationName %>",
     "schema": "<%= applicationName %>",
     "host": "m4-db.pepinie.re",
-    "port": 12400,
+    "port": 12400
   },
   "homologation": {
     "driver": "pg",
@@ -24,7 +24,7 @@
     "password": "<%= applicationName %>",
     "schema": "<%= applicationName %>",
     "host": "fill me with homologation db host",
-    "port": 12400,
+    "port": 12400
   },
   "production": {
     "driver": "pg",
@@ -33,7 +33,7 @@
     "password": "<%= applicationName %>",
     "schema": "<%= applicationName %>",
     "host": "fill me with production db host",
-    "port": 12400,
+    "port": 12400
   },
   "defaultEnv": "development",
   "sql-file": true
