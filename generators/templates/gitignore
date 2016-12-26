@@ -2,3 +2,4 @@ provisioning/ansible/roles
 node_modules/
 coverage/
 client/build
+*.retry
