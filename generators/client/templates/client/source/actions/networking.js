@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { merge } from 'lodash';
+import Cookies from 'js-cookie';
 
 import cst from '../constants/networking';
 
@@ -23,6 +24,10 @@ export function request(url, options) {
     const { authentication } = getState();
     if (authentication) {
       requestOptions.headers.authorization = authentication.id;
+    }
+    const csrfToken = Cookies.get('XSRF-TOKEN');
+    if (csrfToken) {
+      requestOptions.headers['XSRF-TOKEN'] = csrfToken;
     }
     let status;
     return fetch(url, requestOptions)
