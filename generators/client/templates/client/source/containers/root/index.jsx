@@ -5,17 +5,17 @@ import _ from 'lodash';
 import HeaderBar from '../../components/header-bar';
 import SideBar from '../../components/side-bar';
 
-import * as AuthenticationAction from '../../actions/authentication';
+import * as AuthenticationEffect from '../../effects/authentication';
 import * as SideBarAction from '../../actions/side-bar';
 
 export class Root extends Component {
 
   componentWillMount() {
-    this.props.authenticationActions.doLogin();
+    this.props.authenticationEffects.login();
   }
 
   doLogout() {
-    this.props.authenticationActions.doLogout();
+    this.props.authenticationEffects.logout();
   }
 
   render() {
@@ -28,7 +28,7 @@ export class Root extends Component {
         <SideBar
           open={this.props.sideBar.open}
           onCloseSideBar={this.props.sideBarActions.close}
-          onLogout={this.props.authenticationActions.doLogout}
+          onLogout={this.props.authenticationEffects.logout}
         />
         {this.props.children}
       </div>
@@ -41,9 +41,9 @@ Root.propTypes = {
   authentication: PropTypes.shape({
     id: PropTypes.string,
   }),
-  authenticationActions: PropTypes.shape({
-    doLogin: PropTypes.func.isRequired,
-    doLogout: PropTypes.func.isRequired,
+  authenticationEffects: PropTypes.shape({
+    login: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
   }).isRequired,
   sideBar: PropTypes.shape({
     open: PropTypes.bool,
@@ -64,7 +64,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    authenticationActions: bindActionCreators(AuthenticationAction, dispatch),
+    authenticationEffects: bindActionCreators(AuthenticationEffect, dispatch),
     sideBarActions: bindActionCreators(SideBarAction, dispatch),
   };
 }
