@@ -7,17 +7,6 @@ const csrf = require('csurf');
 
 const app = module.exports = loopback();
 
-if (process.env.NODE_ENV !== 'test') {
-  app.use(cookieParser());
-  app.use(csrf({ cookie: true }));
-  app.use((req, res, next) => {
-    const token = req.csrfToken();
-    res.cookie('XSRF-TOKEN', token, { secure: true });
-    res.locals.csrftoken = token;
-    next();
-  });
-}
-
 app.start = function () {
   // start the web server
   return app.listen(function () {

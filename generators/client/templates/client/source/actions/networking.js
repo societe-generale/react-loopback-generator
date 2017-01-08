@@ -1,6 +1,6 @@
+import Cookies from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 import { merge } from 'lodash';
-import Cookies from 'js-cookie';
 
 import cst from '../constants/networking';
 
