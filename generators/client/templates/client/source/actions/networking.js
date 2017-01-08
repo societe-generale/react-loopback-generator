@@ -7,28 +7,35 @@ import cst from '../constants/networking';
 export const start = () => ({ type: cst.START });
 export const stop = () => ({ type: cst.STOP });
 
+const getRequestOptions = (options, authentication) => {
+  let requestOptions = merge({
+    credentials: 'same-origin',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  }, options);
+  Object.keys(requestOptions.headers).forEach((key) => {
+    if (requestOptions.headers[key] == null) {
+      delete requestOptions.headers[key];
+    }
+  });
+  if (authentication) {
+    requestOptions.headers.authorization = authentication.id;
+  }
+  const csrfToken = Cookies.get('XSRF-TOKEN');
+  if (csrfToken) {
+    requestOptions.headers['XSRF-TOKEN'] = csrfToken;
+  }
+
+  return requestOptions;
+};
+
 export function request(url, options) {
   return (dispatch, getState) => {
-    const requestOptions = merge({
-      credentials: 'same-origin',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }, options);
-    Object.keys(requestOptions.headers).forEach((key) => {
-      if (requestOptions.headers[key] == null) {
-        delete requestOptions.headers[key];
-      }
-    });
     const { authentication } = getState();
-    if (authentication) {
-      requestOptions.headers.authorization = authentication.id;
-    }
-    const csrfToken = Cookies.get('XSRF-TOKEN');
-    if (csrfToken) {
-      requestOptions.headers['XSRF-TOKEN'] = csrfToken;
-    }
+    const requestOptions = getRequestOptions(options, authentication);
+
     let status;
     return fetch(url, requestOptions)
     .then((response) => {
