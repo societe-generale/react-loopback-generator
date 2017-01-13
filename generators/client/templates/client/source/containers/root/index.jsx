@@ -11,7 +11,11 @@ import * as SideBarAction from '../../actions/side-bar';
 export class Root extends Component {
 
   componentWillMount() {
-    this.props.authenticationEffects.login();
+    this.props.authenticationEffects.login()
+    .catch((err) => {
+      // To avoid 401 error when page loaded from cache
+      window.location.reload(true);
+    });
   }
 
   doLogout() {
