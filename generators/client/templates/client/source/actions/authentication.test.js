@@ -14,5 +14,4 @@ describe('Actions authentication', () => {
       type: 'AUTHENTICATION_LOGOUT',
     });
   });
-
 });

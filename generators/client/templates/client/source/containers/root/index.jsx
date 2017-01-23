@@ -12,7 +12,7 @@ export class Root extends Component {
 
   componentWillMount() {
     this.props.authenticationEffects.login()
-    .catch((err) => {
+    .catch(() => {
       // To avoid 401 error when page loaded from cache
       window.location.reload(true);
     });

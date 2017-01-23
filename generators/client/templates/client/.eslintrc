@@ -1,4 +1,4 @@
-  {
+{
   "extends": "airbnb",
   "env": {
     "browser": true,
@@ -35,6 +35,9 @@
     "react/jsx-filename-extension": 0,
     "react/no-unused-prop-types": 0,
     "react/prefer-stateless-function": 0,
-    "react/no-string-refs": 0
+    "react/no-string-refs": 0,
+    "no-await-in-loop": 0,
+    "no-return-await": 0,
+    "react/require-default-props": 0
   }
 }
