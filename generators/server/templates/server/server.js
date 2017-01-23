@@ -2,8 +2,6 @@
 
 const loopback = require('loopback');
 const boot = require('loopback-boot');
-const cookieParser = require('cookie-parser');
-const csrf = require('csurf');
 
 const app = module.exports = loopback();
 

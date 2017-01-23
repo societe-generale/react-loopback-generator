@@ -8,7 +8,7 @@ export const start = () => ({ type: cst.START });
 export const stop = () => ({ type: cst.STOP });
 
 const getRequestOptions = (options, authentication) => {
-  let requestOptions = merge({
+  const requestOptions = merge({
     credentials: 'same-origin',
     headers: {
       Accept: 'application/json',
@@ -43,7 +43,7 @@ export function request(url, options) {
       return status === 204 ? null : response.json();
     })
     .then((response) => {
-      var result = {
+      const  result = {
         status,
         data: response,
       };
