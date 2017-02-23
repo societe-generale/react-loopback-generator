@@ -8,7 +8,8 @@
   "properties": {
     "firstName": "string",
     "lastName": "string",
-    "roles": "object"
+    "roles": "object",
+    "uid": "string"
   },
   "validations": [],
   "relations": {},

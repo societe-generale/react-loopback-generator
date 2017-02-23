@@ -12,7 +12,8 @@ create table sguser (
   realm text,
   firstname text,
   lastname text,
-  roles json
+  roles json,
+  uid text
 );
 
 create table accesstoken (
