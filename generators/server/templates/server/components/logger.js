@@ -3,6 +3,8 @@
 const _ = require('lodash');
 const winston = require('winston');
 
+const logger = require('../services/winston-config')();
+
 module.exports = function (server, config) {
   server.log = {};
   // Add logging hooks on models
