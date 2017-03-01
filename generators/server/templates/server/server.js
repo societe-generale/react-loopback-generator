@@ -11,10 +11,10 @@ app.start = function () {
   return app.listen(function () {
     app.emit('started');
     const baseUrl = app.get('url').replace(/\/$/, '');
-    logger.log('Web server listening at: %s', baseUrl); //eslint-disable-line no-console
+    logger.log('Web server listening at: %s', baseUrl);
     if (app.get('loopback-component-explorer')) {
       const explorerPath = app.get('loopback-component-explorer').mountPath;
-      logger.log('Browse your REST API at %s%s', baseUrl, explorerPath); //eslint-disable-line
+      logger.log('Browse your REST API at %s%s', baseUrl, explorerPath);
     }
   });
 };
