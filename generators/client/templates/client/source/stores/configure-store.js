@@ -23,11 +23,16 @@ export default function configureStore(history) {
     persistState(storageLang, 'language'),
   )(createStore);
 
-  createCustomStore = applyMiddleware(
+  const middlewares = [
     reduxRouterMiddleware,
     thunk,
-    logger,
-  )(createCustomStore);
+  ];
+
+  if (process.env.NODE_ENV !== 'production') {
+    middlewares.push(logger);
+  }
+
+  createCustomStore = applyMiddleware(...middlewares)(createCustomStore);
 
   const store = createCustomStore(reducers);
 
