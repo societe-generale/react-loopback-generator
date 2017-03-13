@@ -26,7 +26,8 @@
   "dependencies": {},
   "devDependencies": {
     "eslint": "3.9.1",
-    "babel-eslint": "^7.1.1"
+    "babel-eslint": "^7.1.1",
+    "nsp": "^2.6.3"
   },
   "engines": {
     "node": ">= 6.2"
