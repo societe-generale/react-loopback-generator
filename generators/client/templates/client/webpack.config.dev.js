@@ -12,7 +12,7 @@ module.exports = {
     path.join(clientPath, 'source/main.jsx'),
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
+    extensions: ['', '.js', '.jsx', '.json', '.ts', '.tsx'],
   },
   output: {
     path: buildPath,
@@ -37,6 +37,14 @@ module.exports = {
         },
       },
       {
+        test: /\.(ts|tsx)$/,
+        loaders: ['react-hot-loader/webpack', 'awesome-typescript-loader?configFileName=./client/tsconfig.json'],
+        include: [
+          path.join(clientPath, 'source'),
+        ],
+        exclude: /node_modules/,
+      },
+      {
         test: /\.json$/,
         loader: 'json',
       },
@@ -49,6 +57,10 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         loader: 'eslint',
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        loader: 'tslint-loader',
       },
     ],
   },

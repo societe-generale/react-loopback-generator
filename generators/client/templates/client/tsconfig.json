@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es2015", "es6", "dom"],
+    "jsx": "react",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true
+  },
+  "include": [
+    "./source/**/*"
+  ],
+  "exclude": [
+    "."
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
+}
