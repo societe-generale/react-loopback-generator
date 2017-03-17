@@ -8,7 +8,7 @@
     "client:watch": "webpack-dev-server --config client/webpack.config.dev.js --hot",
     "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'",
     "server:watch": "nodemode server/server.js --ignore client/",
-    "package-push": "REPO_URL=\"$(git remote get-url origin)\"; ssh tnusadm@sg-m4 \"package-and-push --rpm-name=plop --repository=$REPO_URL\"",
+    "package-push": "docker-compose exec package-push ./opt/app-packager/package-and-push.sh --rpm-name=plop --version=$npm_package_version --repository=$(git remote get-url origin)",
     "package": "npm install; npm run client:build",
     "pretest": "eslint .",
     "posttest": "nsp check"
