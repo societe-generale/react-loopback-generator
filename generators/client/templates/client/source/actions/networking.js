@@ -43,7 +43,7 @@ export function request(url, options) {
       return status === 204 ? null : response.json();
     })
     .then((response) => {
-      const  result = {
+      const result = {
         status,
         data: response,
       };
