@@ -24,16 +24,23 @@ module.exports = {
     hot: true,
     https: true,
   },
+  externals: {
+   'react/addons': true,
+   'react/lib/ExecutionEnvironment': true,
+   'react/lib/ReactContext': true
+  },
   module: {
     loaders: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         include: [
           path.join(clientPath, 'source'),
         ],
         query: {
           cacheDirectory: '/tmp',
+          presets: ['es2015', 'react', 'stage-0', 'react-hmre'],
+          plugins: ['transform-runtime']
         },
       },
       {
