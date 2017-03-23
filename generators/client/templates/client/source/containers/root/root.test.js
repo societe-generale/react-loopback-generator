@@ -1,5 +1,6 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
@@ -9,7 +10,6 @@ import jsdom from 'jsdom';
 import sinon from 'sinon';
 
 import RootConnected, { Root } from './index';
-import * as action from '../../actions/authentication';
 import * as network from '../../actions/networking';
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
@@ -21,10 +21,19 @@ const initialState = {};
 const mockStore = configureMockStore(middleware);
 const store = mockStore(initialState);
 
+injectTapEventPlugin();
+
 describe('<Root/>', () => {
+  const login = sinon.stub();
+  login.resolves({});
+  const logout = sinon.spy();
   const props = {
     sideBar: {
       open: false,
+    },
+    authenticationEffects: {
+      login,
+      logout,
     },
   };
 
@@ -48,12 +57,10 @@ describe('<Root/>', () => {
 
 
   it('should call action doLogin on mounting', () => {
-    const doLogin = sinon.spy(action, 'doLogin');
     const request = sinon.spy(network, 'request');
-
     mount(<MuiThemeProvider><RootConnected store={store} /></MuiThemeProvider>);
 
-    expect(doLogin.calledOnce);
+    expect(login.calledOnce);
     expect(request.calledOnce);
   });
 

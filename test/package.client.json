@@ -15,21 +15,48 @@
     "client:build": "webpack --config client/webpack.config.js",
     "client:watch": "webpack-dev-server --config client/webpack.config.dev.js --hot",
     "client:lint": "eslint --ext .jsx,.js -c client/.eslintrc client/source",
-    "client:test": "mocha --compilers js:babel-core/register 'client/source/**/{*,}test.js'",
-    "client:test:coverage": "nyc node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- 'client/source/**/{*,}test.js'",
+    "client:test": "NODE_ENV=test jest",
+    "client:test:watch": "NODE_ENV=test jest --watch",
     "e2e": "nightwatch",
     "lint": "npm run client:lint",
     "pree2e": "sh ./test/e2e/nightwatch.sh",
-    "test": "npm run client:test:coverage",
+    "test": "npm run client:test",
     "postinstall": "npm run client:build"
   },
   "dependencies": {},
   "devDependencies": {
     "eslint": "3.9.1",
-    "babel-eslint": "^7.1.1",
-    "nsp": "^2.6.3"
+    "babel-eslint": "7.1.1",
+    "nsp": "2.6.3"
   },
   "engines": {
     "node": ">= 6.2"
+  },
+  "jest": {
+    "rootDir": "./client/source",
+    "moduleNameMapper": {
+      "^.+\\.(css|less)$": "<rootDir>/CSSStub.js"
+    },
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/../../coverage",
+    "verbose": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/../../node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts|jsx|tsx)?$",
+    "globals": {
+      "__TS_CONFIG__": "<rootDir>/../tsconfig.json"
+    },
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js",
+      "\\.(js|jsx)$": "<rootDir>/../../node_modules/babel-jest"
+    }
   }
 }
