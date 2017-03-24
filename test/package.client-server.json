@@ -40,20 +40,10 @@
       "<rootDir>/../../node_modules/"
     ],
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
       "jsx",
       "json"
-    ],
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts|jsx|tsx)?$",
-    "globals": {
-      "__TS_CONFIG__": "<rootDir>/../tsconfig.json"
-    },
-    "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js",
-      "\\.(js|jsx)$": "<rootDir>/../../node_modules/babel-jest"
-    }
+    ]
   },
   "devDependencies": {
     "eslint": "2.5.3",

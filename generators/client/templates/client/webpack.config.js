@@ -30,14 +30,6 @@ module.exports = {
         },
       },
       {
-        test: /\.(ts|tsx)$/,
-        loader: 'awesome-typescript-loader?configFileName=./client/tsconfig.json',
-        include: [
-          path.join(clientPath, 'source'),
-        ],
-        exclude: /node_modules/,
-      },
-      {
         test: /\.json$/,
         loader: 'json',
       },
