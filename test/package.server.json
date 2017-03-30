@@ -4,7 +4,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node .",
-    "server:watch": "nodemon server/server.js --ignore client/",
+    "server:watch": "nodemon --inspect server/server.js --ignore client/",
     "pretest": "eslint .",
     "posttest": "nsp check"
   },

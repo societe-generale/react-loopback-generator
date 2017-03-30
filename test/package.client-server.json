@@ -8,7 +8,7 @@
     "client:watch": "webpack-dev-server --config client/webpack/webpack.config.dev.js --hot",
     "client:test": "NODE_ENV=test jest",
     "client:test:watch": "NODE_ENV=test jest --watch",
-    "server:watch": "nodemode server/server.js --ignore client/",
+    "server:watch": "nodemon --inspect server/server.js --ignore client/",
     "package-push": "docker-compose exec package-push ./opt/app-packager/package-and-push.sh --rpm-name=plop --version=$npm_package_version --repository=$(git remote get-url origin)",
     "package": "npm install; npm run client:build",
     "pretest": "eslint .",
