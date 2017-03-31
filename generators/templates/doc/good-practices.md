@@ -46,7 +46,7 @@ Mixins with Loopback are used to **apply common logic to a set of __models__**: 
 
 Examples: upload field, createdAt/updatedAt attributes, count instances, etc
 
- * Define your miwin: that is common logic
+ * Define your mixin: that is common logic
  * For each model, enable mixin in Model.js
 
 See:

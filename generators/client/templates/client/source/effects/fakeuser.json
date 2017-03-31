@@ -1,0 +1,15 @@
+{
+  "data": {
+    "user": {
+      "firstName": "nico",
+      "roles": [
+        {
+          "name": "lambda"
+        }, 
+        {
+          "name": "guest"
+        }
+      ]
+    }
+  }
+}
