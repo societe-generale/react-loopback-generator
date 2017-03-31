@@ -1,6 +1,7 @@
 'use strict';
 
 const sgAuthApi = require('sg-auth-api').boot;
+const logger = require('../services/winston-config.js')();
 
 module.exports = function (server) {
   server.use(sgAuthApi({
@@ -8,5 +9,5 @@ module.exports = function (server) {
       user: () => server.models.SgUser,
       token: () => server.models.AccessToken
     }
-  }));
+  }, logger));
 };
