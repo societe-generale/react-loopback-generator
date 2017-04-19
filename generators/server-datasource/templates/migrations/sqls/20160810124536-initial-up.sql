@@ -13,7 +13,8 @@ create table sguser (
   firstname text,
   lastname text,
   roles json,
-  uid text
+  uid text,
+  igg bigint
 );
 
 create table accesstoken (

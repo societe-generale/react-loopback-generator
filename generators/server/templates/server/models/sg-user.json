@@ -9,7 +9,8 @@
     "firstName": "string",
     "lastName": "string",
     "roles": "object",
-    "uid": "string"
+    "uid": "string",
+    "igg": "number"
   },
   "validations": [],
   "relations": {},
