@@ -130,7 +130,7 @@ module.exports = generators.Base.extend({
       'clean-webpack-plugin@0.1.16',
       'css-loader@0.27.2',
       'enzyme@2.7.1',
-      'eslint@3.18.0',
+      'eslint@3.19.0',
       'eslint-config-airbnb@14.1.0',
       'eslint-loader@1.6.3',
       'eslint-plugin-import@2.2.0',
