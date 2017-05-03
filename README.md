@@ -9,7 +9,6 @@ It provides following features:
  * Docker environment
  * Quick configuration for PostgreSQL and MondoDB
  * Scripts to quick deploy on staging and homologation environments
- * Auto-configure Gaia-Mock locally
 
 Prerequisites
 =============
@@ -58,14 +57,7 @@ docker login -u PepiniereRegistryUser -p LetMeInThePepiniereRegistry https://reg
 docker-compose up
 ```
 
-You can now access to your application: https://localhost:8000/your-project-name/ with following [Gaia-Mock](https://github.com/theodo/pepiniere-gaia-mock/blob/prod/documentation/gaia-mock-docker.md) credientials:
- * Login: `user@socgen.com`
- * Sesame ID : `user`
- * Password by default: `1212121`
-
-If your reset your password, your activation code is defined in docker-compose logs:
-
-![Gaia Mock Activation Code](documentation/Gaia Mock Activation Code.png)
+You can now access to your application: https://localhost:8000/your-project-name/ 
 
 How to add a database?
 ======================
