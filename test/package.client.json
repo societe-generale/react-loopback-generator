@@ -12,7 +12,7 @@
     "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
     "start": "node .",
     "posttest": "npm run lint && nsp check",
-    "client:build": "webpack --config client/webpack/webpack.config.js",
+    "client:build": "webpack --config client/webpack/webpack.config.js --bail",
     "client:watch": "webpack-dev-server --config client/webpack/webpack.config.dev.js --hot",
     "client:lint": "eslint --ext .jsx,.js -c client/.eslintrc client/source",
     "client:test": "NODE_ENV=test jest",

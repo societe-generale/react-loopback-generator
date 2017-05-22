@@ -268,7 +268,7 @@ module.exports = generators.Base.extend({
       if (this.options['client-required']) {
         _.merge(content, {
           scripts: {
-            'client:build': 'webpack --config client/webpack/webpack.config.js',
+            'client:build': 'webpack --config client/webpack/webpack.config.js --bail',
             'client:watch': 'webpack-dev-server --config client/webpack/webpack.config.dev.js --hot',
             'client:lint' : 'eslint --ext .jsx,.js -c client/.eslintrc client/source',
             'client:test': "NODE_ENV=test jest",
