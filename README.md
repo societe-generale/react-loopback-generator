@@ -44,7 +44,7 @@ How to install in order to use it?
 
 ``` bash
 npm install -g yo
-npm install -g git+ssh://git@github.com:theodo/generator-sg-fastit.git
+npm install -g git+ssh://git@github.com:theodo/pepiniere-open-source-generator.git
 ```
 
 If you want to use your local version of sg-fastit generator, cd into generator-sg-fastit folder and run:
