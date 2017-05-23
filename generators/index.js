@@ -316,7 +316,7 @@ module.exports = generators.Base.extend({
             'loopback': '3.0.0',
             'loopback-boot': '2.23.0',
             'loopback-component-explorer': '2.4.0',
-            'helmet': '1.3.0',
+            'helmet': '3.6.1',
             'moment': '2.16.0',
             'serve-favicon': '2.0.1',
             'strong-error-handler': '1.0.1',
