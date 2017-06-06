@@ -27,7 +27,7 @@
     "helmet#ieNoOpen": {},
     "helmet#noSniff": {},
     "helmet#noCache": {
-      "enabled": false
+      "enabled": true
     }
   },
   "session": {},
