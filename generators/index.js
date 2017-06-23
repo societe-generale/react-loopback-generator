@@ -225,6 +225,8 @@ module.exports = generators.Base.extend({
         '.eslintignore',
         '.editorconfig',
         {src: 'gitignore', dest: '.gitignore'},
+        '.stylelintignore',
+        '.stylelintrc',
         'doc/contributing.md',
         'doc/data.md',
         'doc/good-practices.md',
@@ -268,9 +270,10 @@ module.exports = generators.Base.extend({
       if (this.options['client-required']) {
         _.merge(content, {
           scripts: {
-            'client:build': 'webpack --config client/webpack/webpack.config.js --bail',
-            'client:watch': 'webpack-dev-server --config client/webpack/webpack.config.dev.js --hot',
+            'client:build': 'webpack --config client/webpack/webpack.config.js',
+            'client:watch': 'webpack-dev-server --config client/webpack/webpack.config.dev.js',
             'client:lint' : 'eslint --ext .jsx,.js -c client/.eslintrc client/source',
+            'client:stylelint': 'stylelint client/source/**/*.css',
             'client:test': "NODE_ENV=test jest",
             'client:test:watch': "NODE_ENV=test jest --watch",
             'e2e': 'nightwatch',

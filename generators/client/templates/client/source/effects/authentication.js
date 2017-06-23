@@ -7,7 +7,7 @@ import fakeuser from './fakeuser.json';
 export const login = () =>
   dispatch =>
     dispatch(() => Promise.resolve(fakeuser))
-    .then((res) => dispatch(action.login(res.data)));
+    .then(res => dispatch(action.login(res.data)));
 
 export const logout = () =>
   dispatch =>

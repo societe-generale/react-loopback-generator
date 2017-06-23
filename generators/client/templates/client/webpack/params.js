@@ -48,4 +48,10 @@ module.exports = {
       template: path.join(clientPath, 'assets/index.html'),
     },
   },
+  // PostCss
+  postCss: {
+    // Autoprefixer
+    // https://github.com/ai/browserslist
+    browsers: ['last 2 versions'],
+  },
 };

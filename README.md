@@ -128,6 +128,11 @@ Full documentation available at: [Redux Devtools Extension @ GitHub](https://git
 #### Chrome Dev Tools
 Line by line debugging is available with the generator. More info on how to use it [here](https://blog.hospodarets.com/nodejs-debugging-in-chrome-devtools)
 
+Webpack
+=======
+
+Webpack configuration documentation available [here](documentation/webpack.md)
+
 How to contribute?
 ==================
 

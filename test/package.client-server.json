@@ -4,8 +4,8 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node .",
-    "client:build": "webpack --config client/webpack/webpack.config.js --bail",
-    "client:watch": "webpack-dev-server --config client/webpack/webpack.config.dev.js --hot",
+    "client:build": "webpack --config client/webpack/webpack.config.js",
+    "client:watch": "webpack-dev-server --config client/webpack/webpack.config.dev.js",
     "client:test": "NODE_ENV=test jest",
     "client:test:watch": "NODE_ENV=test jest --watch",
     "server:watch": "nodemon --inspect server/server.js --ignore client/",

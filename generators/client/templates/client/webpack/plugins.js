@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
+const isDev = !isProd;
 
 module.exports = (params) => {
   const plugins = [];
@@ -15,8 +16,24 @@ module.exports = (params) => {
     root: params.clientPath,
   }));
 
-  // Move all css "requires"" into a separate single file
-  const extractTextPluginOptions = '[name].css';
+  // -- Dev plugins
+  if (isDev) {
+    // enable HMR globally
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+    // prints more readable module names in the browser console on HMR updates
+    plugins.push(new webpack.NamedModulesPlugin());
+    //
+    plugins.push(new webpack.NoEmitOnErrorsPlugin());
+  }
+
+  // Move all css "requires" into a separate single file
+  const extractTextPluginOptions = {
+    filename: '[name].css',
+    allChunks: true,
+    // Only use ExtractTextPlugin for production build
+    // Note: ExtractTextPlugin break css hot reloading
+    disable: !isProd,
+  };
   plugins.push(new ExtractTextPlugin(extractTextPluginOptions));
 
   // Define global app variables
@@ -60,13 +77,26 @@ module.exports = (params) => {
 
   // Prod only plugins
   if (isProd) {
-    //
-    plugins.push(new webpack.optimize.DedupePlugin());
     // Uglify js code
     const uglifyJsPluginOptions = {
-      minimize: true,
       compress: {
-        warnings: true,
+        screw_ie8: true,
+        warnings: false,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true,
+      },
+      mangle: {
+        screw_ie8: true,
+      },
+      output: {
+        comments: false,
+        screw_ie8: true,
       },
     };
     plugins.push(new webpack.optimize.UglifyJsPlugin(uglifyJsPluginOptions));

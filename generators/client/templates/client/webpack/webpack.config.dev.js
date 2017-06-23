@@ -8,25 +8,48 @@ const mediaRules = require('./rules.media')(params);
 const styleRules = require('./rules.styles')(params);
 const wpPlugins = require('./plugins')(params);
 
-module.exports = {
+module.exports = () => ({
+  // Generate source maps
+  devtool: 'cheap-module-source-map',
   entry: [
+    // activate HMR for React
+    'react-hot-loader/patch',
+
+    // webpack-dev-server/client is injected be dev-server
+
+    // bundle the client for hot reloading
+    // only- means to only hot reload for successful updates
+    'webpack/hot/only-dev-server',
+
+    // ES6 polyfills
     'babel-polyfill',
-    'webpack/hot/dev-server',
-    'webpack-dev-server/client?http://localhost:8001',
-    path.join(params.clientPath, 'source/main.jsx'),
+
+    // App entry point
+    path.join(params.clientPath, 'source/index.dev.jsx'),
   ],
-  resolve: {
-    extensions: ['', '.js', '.jsx', '.json', '.ts', '.tsx'],
-  },
   output: {
     path: params.buildPath,
-    filename: './bundle.js',
+    filename: 'bundle.js',
   },
-  devtool: 'source-map',
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'],
+  },
   devServer: {
+    // match the output path
     contentBase: params.buildPath,
+    // Silence WebpackDevServer's own logs since they're generally not useful.
+    // It will still show compile warnings and errors with this setting.
+    clientLogLevel: 'none',
+    // enable HMR on the server
     hot: true,
+    // Enable SSL
     https: true,
+    // Enable gzip compression of generated files.
+    compress: true,
+    // Inject webpack-dev-server/client
+    inline: true,
+    // Server listen port
+    port: 8080,
   },
   externals: {
     'react/addons': true,
@@ -34,17 +57,11 @@ module.exports = {
     'react/lib/ReactContext': true,
   },
   module: {
-    loaders: [
+    rules: [
       ...jsRules,
       ...styleRules,
       ...mediaRules,
     ],
-    preLoaders: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: 'eslint',
-      },
-    ],
   },
   plugins: [...wpPlugins],
-};
+});

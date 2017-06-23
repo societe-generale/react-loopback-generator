@@ -8,24 +8,28 @@ const mediaRules = require('./rules.media')(params);
 const styleRules = require('./rules.styles')(params);
 const wpPlugins = require('./plugins')(params);
 
-module.exports = {
+module.exports = () => ({
+  // Don't attempt to continue if there are any errors.
+  bail: true,
   entry: [
+    // ES6 polyfills
     'babel-polyfill',
-    path.join(params.clientPath, 'source/main.jsx'),
+    // App entry point
+    path.join(params.clientPath, 'source/index.jsx'),
   ],
-  resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-  },
   output: {
     path: params.buildPath,
-    filename: './bundle.js',
+    filename: 'bundle.js',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'],
   },
   module: {
-    loaders: [
+    rules: [
       ...jsRules,
       ...styleRules,
       ...mediaRules,
     ],
   },
   plugins: [...wpPlugins],
-};
+});
