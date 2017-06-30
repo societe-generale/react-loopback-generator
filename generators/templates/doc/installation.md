@@ -23,7 +23,7 @@ Project installation
 --------------------
 To install the project, you must at first clone the code repository :
 ``` bash
-    git clone git@github.com:theodo/<%= applicationFolder %>.git
+    git clone git@github.com:yourrepository/<%= applicationFolder %>.git
 ```
 
 Then, this project can be installed by running the install script:

@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 let generator;
 const _ = require('lodash');
 
-describe('sg-fastit:crud', function () {
+describe('react-loopback:crud', function () {
 
   beforeEach(function(done) {
     generator = helpers

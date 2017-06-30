@@ -6,7 +6,7 @@ var fs = require('fs-extra');
 var _ = require('lodash');
 
 
-describe('sg-fastit:server-datasource', function () {
+describe('react-loopback:server-datasource', function () {
 
   let folder, generator;
 
@@ -70,7 +70,7 @@ describe('sg-fastit:server-datasource', function () {
         fs.ensureDir(path.join(dir, 'server'), err => {
           if (err) return done(err);
           fs.writeJSON(path.join(dir, '.yo-rc.json'), {
-            'generator-sg-fastit': {
+            'generator-react-loopback': {
               applicationName: 'test',
               applicationFolder: 'test',
               serverRequired: true,

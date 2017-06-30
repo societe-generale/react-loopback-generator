@@ -6,7 +6,7 @@ var generator;
 var _ = require('lodash');
 
 
-describe('sg-fastit:client-component', function () {
+describe('react-loopback:client-component', function () {
 
   beforeEach(function(done) {
     generator = helpers

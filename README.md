@@ -1,17 +1,15 @@
-SG Fast-IT Generator
+React Loopback Generator
 ====================
-![Build Status](https://circleci.com/gh/theodo/generator-sg-fastit.svg?style=shield&circle-token=ef4d0ddd693c572cc02fe25bb35d9d75a1a90573)
 
 What is this generator ?
 ========================
 
-This repository provides a [Yeoman](http://yeoman.io/) generator for FastIT.
+This repository provides a [Yeoman](http://yeoman.io/) generator for react as a frontend and loopback as a backend.
 It provides following features:
 
  * Generate Loopback server or/and React front client
  * Docker environment
  * Quick configuration for PostgreSQL and MondoDB
- * Scripts to quick deploy on staging and homologation environments
 
 Prerequisites
 =============
@@ -30,7 +28,7 @@ npm install -g yo
 npm install -g git@github.com:societe-generale/react-loopback-generator.git
 ```
 
-If you want to use your local version of sg-fastit generator, cd into generator-sg-fastit folder and run:
+If you want to use your local version of react-loopback generator, cd into react-loopback-generator folder and run:
 ``` bash
 npm link
 ```
@@ -41,7 +39,7 @@ How to generate a project?
 Go in folder where you want to generate the project, and run:
 
 ``` bash
-yo sg-fastit
+yo react-loopback
 ```
 
 Follow instructions:
@@ -61,7 +59,7 @@ PostgreSQL, MongoDB or Elasticsearch
 ------------------------------------
 
 ``` bash
-yo sg-fastit:server-datasource
+yo react-loopback:server-datasource
 ```
 
 Initially, the server comes with an in memory datasource. If you choose postgresql or mongodb, this in memory database will be replaced by the database, so it'll ask you if you want to override the datasource.json. Answer yes !
@@ -87,9 +85,9 @@ And then?
  * Init your Git repository `git init` and create a Github repository
  * Configure CircleCI: enable project, and update status badge in the generate README.mu
  * You can use [slc commands](https://docs.strongloop.com/display/public/LB/Command-line+reference), or use the following subgenerators:
-  * `yo sg-fastit:client-reducer`: Generator to create client reducer
-  * `yo sg-fastit:client-component`: Generator to create client component
-  * `yo sg-fastit:server-datasource`: Generator to add datasource
+  * `yo react-loopback:client-reducer`: Generator to create client reducer
+  * `yo react-loopback:client-component`: Generator to create client component
+  * `yo react-loopback:server-datasource`: Generator to add datasource
 
 Devtools
 ========================
