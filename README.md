@@ -70,16 +70,7 @@ Follow instructions:
  * **Server?**: generate a Loopback server?
  * **Server port?**: use an available port [see and update this list](https://github.com/theodo/pepiniere-mothership/blob/prod/doc/general/servers_and_components.md#ports-list-in-use)
 
-Wait few minutes while dependencies installation, and:
-
-``` bash
-cd <your-project-folder>
-npm install
-docker login -u PepiniereRegistryUser -p LetMeInThePepiniereRegistry https://registry.pepinie.re:5000
-docker-compose up
-```
-
-You can now access to your application: https://localhost:8000/your-project-name/ 
+Wait a few minutes while dependencies are installed and follow the generated documentation
 
 How to add a database?
 ======================
