@@ -14,7 +14,7 @@
     "user": "<%= applicationName %>",
     "password": "<%= applicationName %>",
     "schema": "<%= applicationName %>",
-    "host": "m4-db.pepinie.re",
+    "host": "fill me with staging db host",
     "port": 12400
   },
   "homologation": {

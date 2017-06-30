@@ -181,7 +181,7 @@ module.exports = generators.Base.extend({
 
     installClient: function(){
       if(!this.options['client-required']) return;
-      this.composeWith('sg-fastit:client', {
+      this.composeWith('react-loopback:client', {
         options: {
           test: this.options['skip-test'],
         }
@@ -190,7 +190,7 @@ module.exports = generators.Base.extend({
 
     installServer: function(){
       if (!this.options['server-required']) return;
-      this.composeWith('sg-fastit:server', {
+      this.composeWith('react-loopback:server', {
         options: {
           test: this.options['skip-test'],
         }
@@ -250,7 +250,6 @@ module.exports = generators.Base.extend({
           'ansible:pull': 'ansible-galaxy install -r provisioning/ansible/requirements.https.yml -p provisioning/ansible/roles',
           'ansible:provision': 'ansible-playbook -i provisioning/ansible/hosts/staging provisioning/ansible/provision.yml',
           'ansible:deploy': 'ansible-playbook -i provisioning/ansible/hosts/staging provisioning/ansible/deploy.yml -e app_version=$npm_package_version',
-          'fast-deploy': `ssh appli@sg-m4-edge \"fast-deploy --app-name=${this.options['application-name']} --repository=$(git remote get-url origin)\"`,
           'package': 'npm install; npm run client:build',
           'package-push': `docker-compose exec package-push ./opt/app-packager/package-and-push.sh --rpm-name=${this.options['application-name']} --version=$npm_package_version --repository=$(git remote get-url origin)`,
           'postdeploy': 'echo "Put here a command to be called during the deployment, like the database migration"',

@@ -1,14 +1,14 @@
 {
-  "name": "generator-sg-fastit",
+  "name": "generator-react-loopback",
   "version": "0.0.1",
-  "description": "FastIT generator",
+  "description": "React Loopback generator",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test nyc --require babel-core/register mocha test/**"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/theodo/generator-sg-fastit.git"
+    "url": "git+ssh://git@github.com/societe-generale/react-loopback-generator.git"
   },
   "keywords": [
     "yeoman-generator"
@@ -16,9 +16,9 @@
   "author": "Jérémie Drouet <jeremie.drouet@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/theodo/generator-sg-fastit/issues"
+    "url": "https://github.com/societe-generale/react-loopback-generator/issues"
   },
-  "homepage": "https://github.com/theodo/generator-sg-fastit#readme",
+  "homepage": "https://github.com/societe-generale/react-loopback-generator#readme",
   "dependencies": {
     "chalk": "^1.1.3",
     "fs": "0.0.2",
