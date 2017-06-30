@@ -8,12 +8,13 @@ export const start = () => ({ type: cst.START });
 export const stop = () => ({ type: cst.STOP });
 
 const getRequestOptions = (options, authentication) => {
+  let headers = {};
+  if (options && options.method === 'POST' && typeof options.body === 'string') {
+    headers = { 'Content-Type': 'application/json' };
+  }
   const requestOptions = merge({
     credentials: 'same-origin',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
   }, options);
   Object.keys(requestOptions.headers).forEach((key) => {
     if (requestOptions.headers[key] == null) {
