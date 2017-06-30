@@ -1,16 +1,18 @@
 machine:
   node:
-    version: 6.2
+    version: v6.9.5
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 dependencies:
   override:
-    - npm install
+    - yarn install --ignore-scripts
   cache_directories:
-    - "node_modules"
+    - ~/.cache/yarn
 
 test:
   override:
-    - npm test
+    - yarn test
 
 general:
   artifacts:
