@@ -11,10 +11,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import 'flexboxgrid';
 import './main.css';
 
-import routes from './routes';
-
 import localeFr from './locale/locale-fr.json';
 import localeEn from './locale/locale-en.json';
+
+import routes from './routes';
 
 moment.locale('en');
 moment.locale('fr');

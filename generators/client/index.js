@@ -47,6 +47,8 @@ module.exports = generators.Base.extend({
         'client/source/constants/language.json',
         'client/source/constants/url-config.json',
         'client/source/constants/networking.json',
+				'client/source/crud-routes/index.js',
+				'client/source/crud-routes/crud-routes.json',
         'client/source/actions/authentication.js',
         'client/source/actions/authentication.test.js',
         'client/source/actions/side-bar.js',

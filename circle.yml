@@ -1,10 +1,10 @@
 machine:
   node:
-    version: 6.2
+    version: 6.9
 
 dependencies:
   override:
-    - npm install --only=dev
+    - npm install
   cache_directories:
     - "node_modules"
 

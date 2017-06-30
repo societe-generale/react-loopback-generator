@@ -24,3 +24,12 @@ Generator Tests
 ``` bash
 npm test
 ```
+
+Coding Rules
+-----
+files that are templated should be name like this : myfile.tmpl.ext
+
+if I want to template a file that will end as : nicolas.js
+and this file is templated and created through the generator, it should be name nicolas.tmpl.js
+
+this will help identify files that will be only copied to the generated project without modification, and file that are modified by the generator!

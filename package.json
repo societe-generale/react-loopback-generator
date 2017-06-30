@@ -25,6 +25,7 @@
     "generator-loopback": "^1.23.2",
     "lodash": "^4.14",
     "loopback-workspace": "^3.32.0",
+    "moment": "2.15.0",
     "node-yaml": "^3.0.0",
     "util": "^0.10.3",
     "yeoman-generator": "^0.24.1"
