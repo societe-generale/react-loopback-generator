@@ -68,7 +68,7 @@ Follow instructions:
  * **Application folder**: name of the project folder
  * **Client?**: generate a React client?
  * **Server?**: generate a Loopback server?
- * **Server port?**: use an available port [see and update this list](https://github.com/theodo/pepiniere-mothership/blob/prod/doc/general/servers_and_components.md#ports-list-in-use)
+ * **Server port?**: choose the port of the generated app.
 
 Wait a few minutes while dependencies are installed and follow the generated documentation
 
