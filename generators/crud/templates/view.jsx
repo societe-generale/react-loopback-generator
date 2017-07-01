@@ -151,6 +151,7 @@ class <%= viewClassName -%> extends Component {
         <Table> selectable={false} >
           <TableHeader displaySelectAll={false}>
             <TableRow>
+              <TableHeaderColumn>id</TableHeaderColumn>
               <% properties.forEach(function(property) { %>
               <TableHeaderColumn><%= property.name %></TableHeaderColumn>
               <% }) %>
@@ -160,11 +161,11 @@ class <%= viewClassName -%> extends Component {
             {_.map(this.props.<%= propName %>, (data, index) => (
               <TableRow key={index}>
                 <TableRowColumn>
-                  id
+                  { data.id }
                 </TableRowColumn>
                 <% properties.forEach(function(property) { %>
                 <TableRowColumn>
-                  <%= property.name %>
+                  { data.<%= property.name %> }
                 </TableRowColumn>
                 <% }) %>
               </TableRow>
