@@ -73,6 +73,64 @@ module.exports = generators.Base.extend({
       routes.push(snakeCase(this.options.modelName));
       this.fs.writeJSON(this.destinationPath(jsonPath), routes);
     },
+    copyLoopbackModelJS: function () {
+      const modelFileName = snakeCase(this.options.modelName);
+      return this.fs.copyTpl(
+        this.templatePath('model/model.tmpl.js'),
+
+        this.destinationPath(`server/models/${modelFileName}.js`),
+        {}
+      );
+    },
+    createLoopbackModel: function () {
+      const modelFileName = snakeCase(this.options.modelName);
+      const jsonPath = `server/models/${modelFileName}.json`;
+      const modelDefinition = {
+        name: camelCase(this.options.modelName),
+        plural: snakeCase(this.options.modelPlural),
+        base: "PersistedModel",
+        idInjection: true,
+        options: {
+          validateUpsert: true,
+        },
+        properties: {
+          id: {
+            type: "number",
+            id: true
+          },
+        },
+        validations: [],
+        relations: {
+        },
+        "acls": [
+        ],
+        "methods": {}
+      }
+
+      for (const property of this.options.properties) {
+        modelDefinition.properties[property.name]={
+          type: property.type,
+          required: property.required
+        }
+      }
+      console.log('user-props',this.options.properties);
+      console.log('new-props',modelDefinition.properties);
+      this.fs.writeJSON(this.destinationPath(jsonPath), modelDefinition);
+    },
+    activateModelInLoopbackConfig: function(){
+      const modelFileName = snakeCase(this.options.modelName);
+      const modelConfigPath = 'server/model-config.json'
+      const modelConfig = this.fs.readJSON(modelConfigPath);
+      const newModel = {
+        [camelCase(this.options.modelName)]:{
+          "dataSource": "db",
+          "public": true
+        }
+      }
+      
+      const newModelConfig = Object.assign({}, modelConfig, newModel);
+      this.fs.writeJSON(this.destinationPath(modelConfigPath), newModelConfig);
+    },
     createView: function() {
       const hasString = this.options.properties.filter(property => property.type === 'string').length > 0;
       const hasNumber = this.options.properties.filter(property => property.type === 'number').length > 0;
@@ -99,7 +157,6 @@ module.exports = generators.Base.extend({
         }
       );
     },
-
     createAction: function () {
       const actionFileName = snakeCase(this.options.modelName);
       return this.fs.copyTpl(
