@@ -179,24 +179,6 @@ module.exports = generators.Base.extend({
       this.config.save();
     },
 
-    installClient: function(){
-      if(!this.options['client-required']) return;
-      this.composeWith('react-loopback:client', {
-        options: {
-          test: this.options['skip-test'],
-        }
-      })
-    },
-
-    installServer: function(){
-      if (!this.options['server-required']) return;
-      this.composeWith('react-loopback:server', {
-        options: {
-          test: this.options['skip-test'],
-        }
-      })
-    },
-
     createDocker: function () {
       let files = [
         'Dockerfile',
@@ -247,9 +229,6 @@ module.exports = generators.Base.extend({
         version: '0.0.1',
         main: 'server/server.js',
         scripts: {
-          'ansible:pull': 'ansible-galaxy install -r provisioning/ansible/requirements.https.yml -p provisioning/ansible/roles',
-          'ansible:provision': 'ansible-playbook -i provisioning/ansible/hosts/staging provisioning/ansible/provision.yml',
-          'ansible:deploy': 'ansible-playbook -i provisioning/ansible/hosts/staging provisioning/ansible/deploy.yml -e app_version=$npm_package_version',
           'package': 'npm install; npm run client:build',
           'package-push': `docker-compose exec package-push ./opt/app-packager/package-and-push.sh --rpm-name=${this.options['application-name']} --version=$npm_package_version --repository=$(git remote get-url origin)`,
           'postdeploy': 'echo "Put here a command to be called during the deployment, like the database migration"',
@@ -309,21 +288,7 @@ module.exports = generators.Base.extend({
             'test': 'npm run server:test:coverage',
             'server:lint' : 'eslint -c server/.eslintrc server',
             'lint': 'npm run server:lint',
-          },
-          dependencies: {
-            'compression': '1.6.2',
-            'cors': '2.5.2',
-            'debug': '2.4.5',
-            'healthcheck-fastit': 'git+ssh://git@github.com:fastit/health-check.git#1.0.1',
-            'loopback': '3.0.0',
-            'loopback-boot': '2.23.0',
-            'loopback-component-explorer': '2.4.0',
-            'helmet': '3.6.1',
-            'moment': '2.16.0',
-            'serve-favicon': '2.0.1',
-            'strong-error-handler': '1.0.1',
-            'winston': '2.3.0',
-          },
+          }
         })
       }
       if(this.options['client-required'] && this.options['server-required']){
@@ -338,12 +303,31 @@ module.exports = generators.Base.extend({
         let existingPackage = this.fs.readJSON('package.json');
         _.merge(content, existingPackage);
       } catch (e) {
+        console.log(e);
       }
 
       this.fs.writeJSON(this.destinationPath('package.json'), content);
     },
 
+    installClient: function(){
+      if(!this.options['client-required']) return;
+      this.composeWith('react-loopback:client', {
+        options: {
+          test: this.options['skip-test'],
+        }
+      });
+    },
+
+    installServer: function(){
+      if (!this.options['server-required']) return;
+      this.composeWith('react-loopback:server', {
+        options: {
+          test: this.options['skip-test'],
+        }
+      })
+    },
   },
+
 
   install: function () {
     this.installDependencies({npm: true, bower: false});

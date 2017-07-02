@@ -3,7 +3,6 @@ const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 
-
 module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
@@ -44,15 +43,37 @@ module.exports = generators.Base.extend({
   },
 
   installServerDependencies: function () {
-    let dependencies = [
-      'csurf@1.9.0', 
-      'cookie-parser@1.4.3', 
-      'nodemon@1.11.0',
-      'eslint-config-walmart@1.2.2', 
-      'eslint-plugin-filenames@1.1.0',
-    ];
-    if(this.options['test']) return;
-    return this.npmInstall(dependencies, {saveDev: true, saveExact: true, quiet: true});
+      
+    const newContent = {
+      dependencies: {
+        'compression': '1.6.2',
+        'cookie-parser': '1.4.3', 
+        'cors': '2.5.2',
+        'csurf': '1.9.0', 
+        'debug': '2.4.5',
+        'healthcheck-fastit': 'git+ssh://git@github.com:fastit/health-check.git#1.0.1',
+        'loopback': '3.0.0',
+        'loopback-boot': '2.23.0',
+        'loopback-component-explorer': '2.4.0',
+        'helmet': '3.6.1',
+        'moment': '2.16.0',
+        'serve-favicon': '2.0.1',
+        'strong-error-handler': '1.0.1',
+        'winston': '2.3.0',
+      },
+      devDependencies:{
+        'nodemon': '1.11.0',
+        'eslint-config-walmart': '1.2.2', 
+        'eslint-plugin-filenames': '1.1.0',
+      },
+    };
+
+    const packageJsonPath = 'package.json'
+    const currentPackageJson = this.fs.readJSON(packageJsonPath);
+    //const newPackageJson = Object.assign({}, currentPackageJson, newContent);
+    let newPackageJson = {};
+    _.merge(currentPackageJson, newContent)
+    return this.fs.writeJSON(this.destinationPath(packageJsonPath), currentPackageJson);
   },
 
 });
