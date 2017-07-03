@@ -71,8 +71,8 @@ class <%= viewClassName -%> extends Component {
       <% if (properties.length > 0) { %>
       creationContainer: {
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: 'column',
+        alignItems: 'left',
         justifyContent: 'flex-start',
       },
       <% if (hasNumber || hasString || hasJson || hasDate) {%>
@@ -97,7 +97,7 @@ class <%= viewClassName -%> extends Component {
             <% if (property.type === 'string') { %>
               <TextField
                 <% if (property.required) { %>
-                errorText="This field is required"
+                errorText={this.state.errorText['<%= property.name %>']}
                 <% } %>
                 hintText="<%= property.name %>"
                 onChange={(e, value) => this.handleChange(e, '<%= property.name %>', value)}
