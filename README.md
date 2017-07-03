@@ -15,6 +15,7 @@ Prerequisites
 =============
 
  * Install [nvm](https://github.com/creationix/nvm)
+ * Install [yarn](https://yarnpkg.com/fr/)
  * Install [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/)
  * With nvm install the v6 of Node, at user scope: `nvm install 6.9.5`
  * run `nvm use 6.9.5`
