@@ -4,10 +4,14 @@ const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 
 module.exports = function(server) {
+  let secure = true;
+  if (process.env.NODE_ENV === 'development') {
+    secure = false;
+  }
   server.use(cookieParser());
     server.use(csrf({cookie: {
         key: 'XSRF-SECRET',
-        secure: true,
+        secure,
         httpOnly: true,
         path: '/<%= applicationFolder %>'
     }}));
@@ -24,7 +28,7 @@ module.exports = function(server) {
   server.use((req, res, next) => {
     const token = req.csrfToken();
     res.header('x-powered-by', '');
-    res.cookie('XSRF-TOKEN', token, { secure: true, path: '/<%= applicationFolder %>' });
+    res.cookie('XSRF-TOKEN', token, { secure, path: '/<%= applicationFolder %>' });
     next();
   });
 };
