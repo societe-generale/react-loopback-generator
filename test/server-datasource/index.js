@@ -8,6 +8,7 @@ var _ = require('lodash');
 
 describe('react-loopback:server-datasource', function () {
 
+  var tmpFolders = []
   let folder, generator;
 
   beforeEach(function() {

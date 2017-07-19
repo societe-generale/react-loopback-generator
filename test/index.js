@@ -8,10 +8,15 @@ var _ = require('lodash');
 
 describe('react-loopback', function () {
 
+    var tmpFolders = []
+  
     beforeEach(function (done) {
+        var tmpFolder = path.join(__dirname, _.uniqueId('.tmp-'))
+
+        tmpFolders.push(tmpFolder)
         generator = helpers
             .run(path.join(__dirname, '../generators/index.js'))
-            .inDir(path.join(__dirname, _.uniqueId('.tmp-')))
+            .inDir(tmpFolder)
             .withOptions({
                 'skip-test':true,
             })
@@ -22,10 +27,13 @@ describe('react-loopback', function () {
     });
 
     after(function (done) {
-        
-      console.log(path.join(__dirname, '.tmp*'));
-        fs.removeSync(path.join(__dirname, '.tmp*/'));
-        done();
+      var promises = []
+      for(let tmpFolder of tmpFolders){
+          promises.push(fs.remove(tmpFolder));
+      }
+
+      Promise.all(promises).then(() => done());
+
     });
 
     it('should generate base files', function (done) {

@@ -2,23 +2,32 @@ var path = require('path');
 var helpers = require('yeoman-test');
 var assert = require('yeoman-assert');
 var fs = require('fs-extra');
-var generator;
 var _ = require('lodash');
 
+var generator;
 
 describe('react-loopback:client-component', function () {
 
+  var tmpFolders = []
+
   beforeEach(function(done) {
+    var tmpFolder = path.join(__dirname, _.uniqueId('.tmp-'))
+    tmpFolders.push(tmpFolder)
     generator = helpers
       .run(path.join( __dirname, '../../generators/client-component/index.js'))
-      .inTmpDir(path.join(__dirname, _.uniqueId('.tmp-')))
+      .inDir(tmpFolder)
       .withOptions({})
       .withArguments([]);
     done();
   });
 
   after(function(done) {
-    fs.remove(path.join(__dirname, '.tmp*'), done);
+      var promises = []
+      for(let tmpFolder of tmpFolders){
+          promises.push(fs.remove(tmpFolder));
+      }
+
+      Promise.all(promises).then(() => done());
   });
 
   it('should generate view', function (done) {
