@@ -11,15 +11,14 @@ describe('react-loopback:client-component', function () {
   beforeEach(function(done) {
     generator = helpers
       .run(path.join( __dirname, '../../generators/client-component/index.js'))
-      .inDir(path.join(__dirname, _.uniqueId('.tmp-')))
+      .inTmpDir(path.join(__dirname, _.uniqueId('.tmp-')))
       .withOptions({})
       .withArguments([]);
     done();
   });
 
   after(function(done) {
-    fs.removeSync(path.join(__dirname, '.tmp*'));
-    done();
+    fs.remove(path.join(__dirname, '.tmp*'), done);
   });
 
   it('should generate view', function (done) {

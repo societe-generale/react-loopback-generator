@@ -230,7 +230,6 @@ module.exports = generators.Base.extend({
         main: 'server/server.js',
         scripts: {
           'package': 'npm install; npm run client:build',
-          'package-push': `docker-compose exec package-push ./opt/app-packager/package-and-push.sh --rpm-name=${this.options['application-name']} --version=$npm_package_version --repository=$(git remote get-url origin)`,
           'postdeploy': 'echo "Put here a command to be called during the deployment, like the database migration"',
           'start': 'node .',
           'posttest': 'npm run lint && nsp check',
@@ -311,7 +310,10 @@ module.exports = generators.Base.extend({
 
     installClient: function(){
       if(!this.options['client-required']) return;
-      this.composeWith('react-loopback:client', {
+
+      var client = require.resolve('../generators/client');
+
+      this.composeWith(client, {
         options: {
           test: this.options['skip-test'],
         }
@@ -320,7 +322,10 @@ module.exports = generators.Base.extend({
 
     installServer: function(){
       if (!this.options['server-required']) return;
-      this.composeWith('react-loopback:server', {
+
+      var server = require.resolve('../generators/server');
+
+      this.composeWith(server, {
         options: {
           test: this.options['skip-test'],
         }
@@ -330,6 +335,7 @@ module.exports = generators.Base.extend({
 
 
   install: function () {
-    this.spawnCommand('yarn', ['install']);
+    if (process.env.NODE_ENV !== 'test')
+      this.spawnCommand('yarn', ['install']);
   },
 });

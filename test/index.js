@@ -22,7 +22,9 @@ describe('react-loopback', function () {
     });
 
     after(function (done) {
-        fs.removeSync(path.join(__dirname, '.tmp*'));
+        
+      console.log(path.join(__dirname, '.tmp*'));
+        fs.removeSync(path.join(__dirname, '.tmp*/'));
         done();
     });
 
@@ -113,7 +115,7 @@ describe('react-loopback', function () {
             });
     });
 
-    xit('should generate basic package.json file if server only', function (done) {
+    it('should generate basic package.json file if server only', function (done) {
         let serverPackageJson = fs.readFileSync(path.resolve(__dirname, 'package.server.json'), 'utf-8');
         generator
             .withPrompts({
@@ -132,8 +134,8 @@ describe('react-loopback', function () {
             });
     });
 
-    xit('should generate basic package.json file if server and client', function (done) {
-        completePackageJson = fs.readFileSync(path.resolve(__dirname, 'package.client-server.json'), 'utf-8');
+    it('should generate basic package.json file if server and client', function (done) {
+        var completePackageJson = fs.readFileSync(path.resolve(__dirname, 'package.client-server.json'), 'utf-8');
         generator
             .withPrompts({
                 'application-name': 'plop',
