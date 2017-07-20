@@ -7,10 +7,11 @@ const _ = require('lodash');
 
 describe('react-loopback:crud', function () {
    
-  var tmpFolders = []
+  const tmpFolders = []
+
   beforeEach(function(done) {
-    var tmpFolder = path.join(__dirname, _.uniqueId('.tmp-'))
-    tmpFolders.push(tmpFolder)
+    const tmpFolder = path.join(__dirname, _.uniqueId('.tmp-'));
+    tmpFolders.push(tmpFolder);
     generator = helpers
     .run(path.join( __dirname, '../../generators/crud/index.js'))
     .inDir(tmpFolder)
@@ -20,12 +21,10 @@ describe('react-loopback:crud', function () {
   });
 
   after(function(done) {
-    var promises = []
-    for(let tmpFolder of tmpFolders){
-        promises.push(fs.remove(tmpFolder));
-    }
-
-    Promise.all(promises).then(() => done());
+    const promises = tmpFolders.reduce(
+      (acc, tmpFolder) => acc.concat(fs.remove(tmpFolder)), []
+    );
+    Promise.all(promises).then(done());
   });
 
   it('should generate view', function (done) {

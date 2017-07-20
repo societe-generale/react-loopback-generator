@@ -311,7 +311,7 @@ module.exports = generators.Base.extend({
     installClient: function(){
       if(!this.options['client-required']) return;
 
-      var client = require.resolve('../generators/client');
+      const client = require.resolve('../generators/client');
 
       this.composeWith(client, {
         options: {
@@ -323,7 +323,7 @@ module.exports = generators.Base.extend({
     installServer: function(){
       if (!this.options['server-required']) return;
 
-      var server = require.resolve('../generators/server');
+      const server = require.resolve('../generators/server');
 
       this.composeWith(server, {
         options: {

@@ -1,14 +1,14 @@
-var path = require('path');
-var yaml = require('node-yaml');
-var helpers = require('yeoman-test');
-var assert = require('yeoman-assert');
-var fs = require('fs-extra');
-var _ = require('lodash');
+const path = require('path');
+const yaml = require('node-yaml');
+const helpers = require('yeoman-test');
+const assert = require('yeoman-assert');
+const fs = require('fs-extra');
+const _ = require('lodash');
 
 
 describe('react-loopback:server-datasource', function () {
 
-  var tmpFolders = []
+  const tmpFolders = []
   let folder, generator;
 
   beforeEach(function() {
