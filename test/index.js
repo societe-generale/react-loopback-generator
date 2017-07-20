@@ -1,17 +1,22 @@
-var path = require('path');
-var helpers = require('yeoman-test');
-var assert = require('yeoman-assert');
-var fs = require('fs-extra');
-var generator;
-var _ = require('lodash');
+const path = require('path');
+const helpers = require('yeoman-test');
+const assert = require('yeoman-assert');
+const fs = require('fs-extra');
+const _ = require('lodash');
 
+let generator;
 
 describe('react-loopback', function () {
 
+    const tmpFolders = []
+  
     beforeEach(function (done) {
+        const tmpFolder = path.join(__dirname, _.uniqueId('.tmp-'));
+
+        tmpFolders.push(tmpFolder);
         generator = helpers
             .run(path.join(__dirname, '../generators/index.js'))
-            .inDir(path.join(__dirname, _.uniqueId('.tmp-')))
+            .inDir(tmpFolder)
             .withOptions({
                 'skip-test':true,
             })
@@ -22,8 +27,10 @@ describe('react-loopback', function () {
     });
 
     after(function (done) {
-        fs.removeSync(path.join(__dirname, '.tmp*'));
-        done();
+      const promises = tmpFolders.reduce(
+        (acc, tmpFolder) => acc.concat(fs.remove(tmpFolder)), []
+      );
+      Promise.all(promises).then(done());
     });
 
     it('should generate base files', function (done) {
@@ -113,7 +120,7 @@ describe('react-loopback', function () {
             });
     });
 
-    xit('should generate basic package.json file if server only', function (done) {
+    it('should generate basic package.json file if server only', function (done) {
         let serverPackageJson = fs.readFileSync(path.resolve(__dirname, 'package.server.json'), 'utf-8');
         generator
             .withPrompts({
@@ -132,8 +139,8 @@ describe('react-loopback', function () {
             });
     });
 
-    xit('should generate basic package.json file if server and client', function (done) {
-        completePackageJson = fs.readFileSync(path.resolve(__dirname, 'package.client-server.json'), 'utf-8');
+    it('should generate basic package.json file if server and client', function (done) {
+        const completePackageJson = fs.readFileSync(path.resolve(__dirname, 'package.client-server.json'), 'utf-8');
         generator
             .withPrompts({
                 'application-name': 'plop',

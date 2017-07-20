@@ -1,25 +1,33 @@
-var path = require('path');
-var helpers = require('yeoman-test');
-var assert = require('yeoman-assert');
-var fs = require('fs-extra');
-var generator;
-var _ = require('lodash');
+const path = require('path');
+const helpers = require('yeoman-test');
+const assert = require('yeoman-assert');
+const fs = require('fs-extra');
+const _ = require('lodash');
 
+let generator;
 
 describe('react-loopback:client-component', function () {
 
+  const tmpFolders = []
+
   beforeEach(function(done) {
+    const tmpFolder = path.join(__dirname, _.uniqueId('.tmp-'));
+    tmpFolders.push(tmpFolder);
     generator = helpers
       .run(path.join( __dirname, '../../generators/client-component/index.js'))
-      .inDir(path.join(__dirname, _.uniqueId('.tmp-')))
+      .inDir(tmpFolder)
       .withOptions({})
       .withArguments([]);
     done();
   });
 
   after(function(done) {
-    fs.removeSync(path.join(__dirname, '.tmp*'));
-    done();
+      const promises = []
+      for(let tmpFolder of tmpFolders){
+          promises.push(fs.remove(tmpFolder));
+      }
+
+      Promise.all(promises).then(() => done());
   });
 
   it('should generate view', function (done) {
