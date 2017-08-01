@@ -1,6 +1,4 @@
 {
   "application-name": "<%= applicationName %>",
-  "authentication": {
-    "logout": "Logout"
-  }
+  "authentication.logout": "Logout"
 }

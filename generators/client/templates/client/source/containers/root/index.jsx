@@ -4,9 +4,20 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import HeaderBar from '../../components/header-bar';
 import SideBar from '../../components/side-bar';
+import { IntlProvider, addLocaleData, FormattedMessage } from 'react-intl';
+import fr from 'react-intl/locale-data/fr';
+import en from 'react-intl/locale-data/en';
+import frMessages from '../../locale/locale-fr.json';
+import enMessages from '../../locale/locale-en.json';
 
 import * as AuthenticationEffect from '../../effects/authentication';
 import * as SideBarAction from '../../actions/side-bar';
+
+
+const locales = {
+  fr: frMessages,
+  en: enMessages,
+};
 
 export class Root extends Component {
 
@@ -25,17 +36,19 @@ export class Root extends Component {
   render() {
     if (_.isEmpty(this.props.authentication)) return (<div />);
     return (
-      <div>
-        <HeaderBar
-          onOpenSideBar={this.props.sideBarActions.open}
-        />
-        <SideBar
-          open={this.props.sideBar.open}
-          onCloseSideBar={this.props.sideBarActions.close}
-          onLogout={this.props.authenticationEffects.logout}
-        />
-        {this.props.children}
-      </div>
+      <IntlProvider locale={this.props.languageSelected} messages={locales[this.props.languageSelected]}>
+        <div>
+          <HeaderBar
+            onOpenSideBar={this.props.sideBarActions.open}
+          />
+          <SideBar
+            open={this.props.sideBar.open}
+            onCloseSideBar={this.props.sideBarActions.close}
+            onLogout={this.props.authenticationEffects.logout}
+          />
+          {this.props.children}
+        </div>
+      </IntlProvider>
     );
   }
 
@@ -61,6 +74,7 @@ Root.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    languageSelected: state.language.selected,
     authentication: state.authentication,
     sideBar: state['side-bar'],
   };

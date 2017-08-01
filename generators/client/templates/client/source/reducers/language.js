@@ -1,13 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
-import counterpart from 'counterpart';
 
 import types from '../constants/language';
-
-function setLocale(lang) {
-  counterpart.setLocale(lang);
-  moment.locale(lang);
-}
 
 const initialState = {
   available: [
@@ -23,8 +17,6 @@ if (global.navigator && global.navigator.language) {
     initialState.selected = key;
   }
 }
-
-setLocale(initialState.selected);
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {

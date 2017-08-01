@@ -95,19 +95,18 @@ module.exports = generators.Base.extend({
   installClientDependencies: function () {
     const newContent = {
       dependencies: {
-      'counterpart': '0.17.5',
       'flexboxgrid': '6.3.1',
       'js-cookie': '2.1.3',
       'material-ui': '0.17.3',
       'moment': '2.15.0',
       'react': '15.4.2',
       'react-dom': '15.4.2',
+      'react-intl': '2.3.0',
       'react-interpolate-component': '0.10.0',
       'react-redux': '4.4.8',
       'react-router': '2.8.1',
       'react-router-redux': '4.0.5',
       'react-tap-event-plugin': '2.0.1',
-      'react-translate-component': '0.13.1',
       'redux': '3.6.0',
       'redux-localstorage': '1.0.0-rc4',
       'redux-localstorage-filter': '0.1.1',

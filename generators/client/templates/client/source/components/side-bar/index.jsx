@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import { List, ListItem } from 'material-ui/List';
-import Translate from 'react-translate-component';
+import { FormattedMessage } from 'react-intl';
 
 export default class SideBar extends Component {
   render() {
@@ -15,7 +15,7 @@ export default class SideBar extends Component {
         <List>
           <ListItem
             onTouchTap={this.props.onLogout}
-            primaryText={<Translate content="authentication.logout" />}
+            primaryText={<FormattedMessage id="authentication.logout" />}
           />
         </List>
       </Drawer>
