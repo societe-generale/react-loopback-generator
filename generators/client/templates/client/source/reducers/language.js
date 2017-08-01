@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import moment from 'moment';
 
 import types from '../constants/language';
 
@@ -21,7 +20,6 @@ if (global.navigator && global.navigator.language) {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.SELECT:
-      setLocale(action.lang);
       return {
         ...initialState,
         selected: action.lang,

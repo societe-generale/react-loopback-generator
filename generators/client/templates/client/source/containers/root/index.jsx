@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import HeaderBar from '../../components/header-bar';
-import SideBar from '../../components/side-bar';
-import { IntlProvider, addLocaleData, FormattedMessage } from 'react-intl';
+import { IntlProvider, addLocaleData } from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
+import HeaderBar from '../../components/header-bar';
+import SideBar from '../../components/side-bar';
 import frMessages from '../../locale/locale-fr.json';
 import enMessages from '../../locale/locale-en.json';
 
@@ -18,6 +18,8 @@ const locales = {
   fr: frMessages,
   en: enMessages,
 };
+
+addLocaleData([...fr, ...en]);
 
 export class Root extends Component {
 
@@ -55,6 +57,7 @@ export class Root extends Component {
 }
 
 Root.propTypes = {
+  languageSelected: PropTypes.string,
   authentication: PropTypes.shape({
     id: PropTypes.string,
   }),
