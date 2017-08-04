@@ -17,7 +17,7 @@ global.document = doc;
 global.window = doc.defaultView;
 
 const middleware = [thunk];
-const initialState = {};
+const initialState = { language: { selected: 'en' } };
 const mockStore = configureMockStore(middleware);
 const store = mockStore(initialState);
 
@@ -28,6 +28,7 @@ describe('<Root/>', () => {
   login.resolves({});
   const logout = sinon.spy();
   const props = {
+    languageSelected: 'en',
     sideBar: {
       open: false,
     },
