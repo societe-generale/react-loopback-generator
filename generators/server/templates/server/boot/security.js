@@ -16,12 +16,12 @@ module.exports = function(server) {
         path: '/<%= applicationFolder %>'
     }}));
 
-  server.use(function (err, req, res, next) {
+  server.use((err, req, res, next) => {  //eslint-disable-line
     if (err.code !== 'EBADCSRFTOKEN') {
       return next(err);
     }
     // handle CSRF token errors here
-    res.status(403);
+    res.status(403);  //eslint-disable-line no-magic-numbers
     res.send('invalid csrf token');
   });
 

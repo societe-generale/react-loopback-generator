@@ -7,30 +7,30 @@ module.exports = function (server) {
   const config = {};
 
   const addDatasourceConfig = function (adapter) {
-    let connectorName = adapter.settings.connector;
+    const connectorName = adapter.settings.connector;
 
     if (connectorName === 'postgresql') {
       config.postgres = {
-        client: function () {
+        client() {
           return adapter.connector.pg;
         }
       };
     } else if (connectorName === 'mongodb') {
       config.mongo = {
-        client: function () {
+        client() {
           return adapter.connector.db;
         }
       };
     } else if (connectorName === 'es') {
       config.elasticsearch = {
-        client: function () {
+        client() {
           return adapter.connector.db;
         }
       };
     }
   };
 
-  _.each(server.datasources, function (adapter) {
+  _.each(server.datasources, (adapter) => {
     addDatasourceConfig(adapter);
   });
 
