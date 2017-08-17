@@ -1,6 +1,6 @@
 {
   "extends": [
-    "walmart/configurations/es6",
+    "walmart/configurations/es6-node",
     "walmart/rules/eslint/node/on"
   ],
   "parser":"babel-eslint",
