@@ -229,7 +229,7 @@ module.exports = generators.Base.extend({
         version: '0.0.1',
         main: 'server/server.js',
         scripts: {
-          'package': 'npm install; npm run client:build',
+          'package': 'npm install; npm run client:build; npm prune --production',
           'postdeploy': 'echo "Put here a command to be called during the deployment, like the database migration"',
           'start': 'node .',
           'posttest': 'npm run lint && nsp check',
