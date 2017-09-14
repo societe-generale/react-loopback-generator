@@ -50,6 +50,9 @@ module.exports = () => ({
     inline: true,
     // Server listen port
     port: 8080,
+    historyApiFallback: {
+      index: '/<%= applicationName %>/',
+    },
   },
   externals: {
     'react/addons': true,

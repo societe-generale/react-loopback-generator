@@ -1,15 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-
+import { BrowserRouter, Route } from 'react-router-dom';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import 'flexboxgrid';
 import './main.css';
-
-import routes from './routes';
+import RootConnected from './containers/root';
 
 const muiTheme = getMuiTheme(lightBaseTheme);
 
@@ -20,16 +18,13 @@ class AppRoot extends React.Component {
     history: React.PropTypes.object.isRequired, // eslint-disable-line
   };
 
-  constructor(props) {
-    super(props);
-    this.routes = routes;
-  }
-
   render() {
     return (
       <Provider store={this.props.store}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <Router history={this.props.history} routes={this.routes} />
+          <BrowserRouter basename="/" >
+            <Route path="/" component={RootConnected} />
+          </BrowserRouter>
         </MuiThemeProvider>
       </Provider>
     );
