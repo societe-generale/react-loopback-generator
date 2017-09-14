@@ -1,4 +1,5 @@
 {
   "AUTH":"api/auth",
-  "AUTH_LOGOUT": "logout"
+  "AUTH_LOGOUT": "logout",
+  "BASE_API": "api"
 }
