@@ -2,16 +2,16 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
-import { hashHistory } from 'react-router';
+import { createBrowserHistory } from 'history';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import AppRootContainer from './main';
 
 import configureStore from './stores/configure-store';
 
-const store = configureStore(hashHistory);
-const history = syncHistoryWithStore(hashHistory, store);
+const browserHistory = createBrowserHistory();
+const store = configureStore(browserHistory);
+const history = syncHistoryWithStore(browserHistory, store);
 
 injectTapEventPlugin();
 
