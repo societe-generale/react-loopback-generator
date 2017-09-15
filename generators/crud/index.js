@@ -20,9 +20,10 @@ module.exports = generators.Base.extend({
         if (!isEmpty(errors)) {
           this.log('----------INVALID JSON-----------');
           this.log(errors.join('\n'));
+          done();
+          return;
         }
         assign(this.options, file);
-        this.log('HERE');
       })
     },
   },
@@ -30,7 +31,6 @@ module.exports = generators.Base.extend({
   writing: {
     copyLoopbackModelJS: function () {
       const modelFileName = snakeCase(this.options.name);
-      this.log('HERE3');
       return this.fs.copyTpl(
         this.templatePath('model/model.tmpl.js'),
         this.destinationPath(`server/models/${modelFileName}.js`),
@@ -56,8 +56,8 @@ module.exports = generators.Base.extend({
         },
         validations: [],
         relations: {},
-        "acls": [],
-        "methods": {}
+        acls: [],
+        methods: {}
       }
 
       for (const property of this.options.properties) {
@@ -68,13 +68,12 @@ module.exports = generators.Base.extend({
       }
       this.fs.writeJSON(this.destinationPath(jsonPath), modelDefinition);
     },
-    /**
     activateModelInLoopbackConfig: function(){
-      const modelFileName = snakeCase(this.options.modelName);
+      const modelFileName = snakeCase(this.options.name);
       const modelConfigPath = 'server/model-config.json'
       const modelConfig = this.fs.readJSON(modelConfigPath);
       const newModel = {
-        [camelCase(this.options.modelName)]:{
+        [camelCase(this.options.name)]:{
           "dataSource": "db",
           "public": true
         }
@@ -83,7 +82,6 @@ module.exports = generators.Base.extend({
       const newModelConfig = Object.assign({}, modelConfig, newModel);
       this.fs.writeJSON(this.destinationPath(modelConfigPath), newModelConfig);
     },
-    **/
   },
 });
 
@@ -254,95 +252,4 @@ module.exports = generators.Base.extend({
         }
       }));
     },
-**/
-
-/**
-function askForProperty() {
-  const prompt = [
-    {
-      type: 'input',
-      name: 'propertyName',
-      message: 'Property name:',
-    },
-  ];
-
-  return this.prompt(prompt).then(function (answer) {
-    this.options = props;
-    this.async();
-  }.bind(this));
-}
-**/
-
-/**
-function askForProperties() {
-  const done = this.async();
-  askForProperty.call(this, done);
-}
-
-function askForProperty(done) {
-  const prompt = [
-    {
-      type: 'input',
-      name: 'propertyName',
-      message: 'Property name:',
-    },
-  ];
-  this.prompt(prompt).then(function(answer) {
-    if (answer.propertyName === null || answer.propertyName === '' || typeof answer.propertyName === 'undefined') {
-      return done();
-    }
-
-    const propertyPrompts = [
-      {
-        type: 'list',
-        name: 'propertyType',
-        message: 'Property type:',
-        choices: ['string', 'date', 'json', 'boolean', 'number'],
-      },
-      {
-        type: 'confirm',
-        name: 'propertyRequired',
-        message: 'Property required:',
-        default: false,
-      }
-    ];
-
-    this.prompt(propertyPrompts).then(function(answers) {
-      let defaultValue;
-      switch (answers.propertyType) {
-        case 'string':
-          defaultValue = '\'\'';
-          break;
-        case 'date':
-          defaultValue = 'moment().format(\'YYYY-MM-DD\')';
-          break;
-        case 'json':
-          defaultValue = '{}';
-          break;
-        case 'boolean':
-          defaultValue = true;
-          break;
-        case 'number':
-          defaultValue = 0;
-          break;
-        default:
-          defaultValue = null;
-      }
-      const properties = {
-        name: kebabCase(answer.propertyName),
-        type: answers.propertyType,
-        required: answers.propertyRequired,
-        defaultValue,
-      };
-      if (this.options.properties) {
-        assign(this.options, { properties: this.options.properties.concat(properties) });
-      } else {
-        assign(this.options, { properties: [properties] });
-      }
-
-      this.log(`\nLet's add another ${this.options.modelName} property.`);
-      askForProperty.call(this, done);
-    }.bind(this));
-  }.bind(this));
-}
 **/
