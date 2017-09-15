@@ -1,44 +1,93 @@
 const generators = require('yeoman-generator');
-const { assign, kebabCase, snakeCase, camelCase } = require('lodash');
+const { assign, kebabCase, snakeCase, camelCase, isEmpty } = require('lodash');
 const moment = require('moment');
 
+const { validateCrudJSON } = require('./validation.js');
 const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 
 module.exports = generators.Base.extend({
   prompting: {
-    model: function () {
+    pathToConfig: function () {
       return this.prompt([
         {
           type: 'input',
-          name: 'modelName',
-          message: 'Enter the model name:',
+          name: 'configFile',
+          message: 'Enter the path to the model config (JSON):',
         },
-        {
-          type: 'input',
-          name: 'modelPlural',
-          message: 'Custom plural form (used to build REST URL):',
-        },
-      ]).then(answers => {
-        assign(this.options, answers);
-      });
+      ]).then(userPrompt => {
+        const file = this.fs.readJSON(userPrompt.configFile);
+        const errors = validateCrudJSON(file);
+        if (!isEmpty(errors)) {
+          this.log('----------INVALID JSON-----------');
+          this.log(errors.join('\n'));
+        }
+        assign(this.options, file);
+        this.log('HERE');
+      })
     },
-
-    delim: function () {
-      this.log(`Let\'s add some ${this.options.modelName} properties now.\n`);
-    },
-
-    properties: askForProperties,
   },
 
   writing: {
-    writeYorc: function() {
-      let entities = this.config.get('crudEntites');
-      if(entities === undefined)
-        entities = [];
-      entities.push(capitalize(kebabCase(this.options.modelName)))
-      this.config.set('crudEntites', entities);
-      this.config.save();
+    copyLoopbackModelJS: function () {
+      const modelFileName = snakeCase(this.options.name);
+      this.log('HERE3');
+      return this.fs.copyTpl(
+        this.templatePath('model/model.tmpl.js'),
+        this.destinationPath(`server/models/${modelFileName}.js`),
+        {}
+      );
     },
+    createLoopbackModel: function () {
+      const modelFileName = snakeCase(this.options.name);
+      const jsonPath = `server/models/${modelFileName}.json`;
+      const modelDefinition = {
+        name: camelCase(this.options.name),
+        plural: snakeCase(this.options.plural),
+        base: "PersistedModel",
+        idInjection: true,
+        options: {
+          validateUpsert: true,
+        },
+        properties: {
+          id: {
+            type: "number",
+            id: true
+          },
+        },
+        validations: [],
+        relations: {},
+        "acls": [],
+        "methods": {}
+      }
+
+      for (const property of this.options.properties) {
+        modelDefinition.properties[property.name]={
+          type: property.type,
+          required: property.required || false
+        }
+      }
+      this.fs.writeJSON(this.destinationPath(jsonPath), modelDefinition);
+    },
+    /**
+    activateModelInLoopbackConfig: function(){
+      const modelFileName = snakeCase(this.options.modelName);
+      const modelConfigPath = 'server/model-config.json'
+      const modelConfig = this.fs.readJSON(modelConfigPath);
+      const newModel = {
+        [camelCase(this.options.modelName)]:{
+          "dataSource": "db",
+          "public": true
+        }
+      }
+      
+      const newModelConfig = Object.assign({}, modelConfig, newModel);
+      this.fs.writeJSON(this.destinationPath(modelConfigPath), newModelConfig);
+    },
+    **/
+  },
+});
+
+/**
     createCrudRoutes: function() {
       const hasString = this.options.properties.filter(property => property.type === 'string').length > 0;
       const hasNumber = this.options.properties.filter(property => property.type === 'number').length > 0;
@@ -72,66 +121,9 @@ module.exports = generators.Base.extend({
       const routes = this.fs.readJSON(jsonPath) || [];
       routes.push(snakeCase(this.options.modelName));
       this.fs.writeJSON(this.destinationPath(jsonPath), routes);
-    },
-    copyLoopbackModelJS: function () {
-      const modelFileName = snakeCase(this.options.modelName);
-      return this.fs.copyTpl(
-        this.templatePath('model/model.tmpl.js'),
+    }, 
 
-        this.destinationPath(`server/models/${modelFileName}.js`),
-        {}
-      );
-    },
-    createLoopbackModel: function () {
-      const modelFileName = snakeCase(this.options.modelName);
-      const jsonPath = `server/models/${modelFileName}.json`;
-      const modelDefinition = {
-        name: camelCase(this.options.modelName),
-        plural: snakeCase(this.options.modelPlural),
-        base: "PersistedModel",
-        idInjection: true,
-        options: {
-          validateUpsert: true,
-        },
-        properties: {
-          id: {
-            type: "number",
-            id: true
-          },
-        },
-        validations: [],
-        relations: {
-        },
-        "acls": [
-        ],
-        "methods": {}
-      }
-
-      for (const property of this.options.properties) {
-        modelDefinition.properties[property.name]={
-          type: property.type,
-          required: property.required
-        }
-      }
-      console.log('user-props',this.options.properties);
-      console.log('new-props',modelDefinition.properties);
-      this.fs.writeJSON(this.destinationPath(jsonPath), modelDefinition);
-    },
-    activateModelInLoopbackConfig: function(){
-      const modelFileName = snakeCase(this.options.modelName);
-      const modelConfigPath = 'server/model-config.json'
-      const modelConfig = this.fs.readJSON(modelConfigPath);
-      const newModel = {
-        [camelCase(this.options.modelName)]:{
-          "dataSource": "db",
-          "public": true
-        }
-      }
-      
-      const newModelConfig = Object.assign({}, modelConfig, newModel);
-      this.fs.writeJSON(this.destinationPath(modelConfigPath), newModelConfig);
-    },
-    createView: function() {
+     createView: function() {
       const hasString = this.options.properties.filter(property => property.type === 'string').length > 0;
       const hasNumber = this.options.properties.filter(property => property.type === 'number').length > 0;
       const hasBoolean = this.options.properties.filter(property => property.type === 'boolean').length > 0;
@@ -202,7 +194,7 @@ module.exports = generators.Base.extend({
       this.fs.writeJSON(this.destinationPath('client/source/reducers/reducers.json'), reducers);
     },
 
-    createMigration: function() {
+        createMigration: function() {
       const migrationName = `${moment().format('YYYYMMDDHHmmSS')}-create-${snakeCase(this.options.modelName)}`;
       return Promise.all([
         'up',
@@ -262,9 +254,9 @@ module.exports = generators.Base.extend({
         }
       }));
     },
-  },
-});
+**/
 
+/**
 function askForProperty() {
   const prompt = [
     {
@@ -279,7 +271,9 @@ function askForProperty() {
     this.async();
   }.bind(this));
 }
+**/
 
+/**
 function askForProperties() {
   const done = this.async();
   askForProperty.call(this, done);
@@ -351,3 +345,4 @@ function askForProperty(done) {
     }.bind(this));
   }.bind(this));
 }
+**/
