@@ -16,7 +16,7 @@ import TableManager from '../../../../components/crud-view/table-manager';
 import TableActionCell from '../../../../components/crud-view/table-action-cell';
 import styles from './styles.css';
 
-import modelActions from '../../../../actions/<%= modelName %>';
+import modelActions from '../../../../actions/models/<%= modelName %>';
 
 import model from '../../../../../../server/models/<%= modelName %>.json';
 

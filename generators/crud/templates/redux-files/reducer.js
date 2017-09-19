@@ -1,4 +1,4 @@
-import cst from '../constants/<%= constantFileName %>.json';
+import cst from '../../constants/models/<%= constantFileName %>.json';
 
 const initialState = {
   loading: false,

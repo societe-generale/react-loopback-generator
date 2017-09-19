@@ -1,9 +1,8 @@
 const generators = require('yeoman-generator');
-const { assign, kebabCase, snakeCase, camelCase, isEmpty } = require('lodash');
+const { assign, kebabCase, snakeCase, camelCase, capitalize, isEmpty } = require('lodash');
 const moment = require('moment');
 
 const { validateCrudJSON } = require('./validation.js');
-const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 
 module.exports = generators.Base.extend({
   prompting: {
@@ -146,7 +145,7 @@ module.exports = generators.Base.extend({
       const constantFileName = snakeCase(this.options.name);
       return this.fs.copyTpl(
         this.templatePath('redux-files/constant.json'),
-        this.destinationPath(`client/source/constants/${constantFileName}.json`),
+        this.destinationPath(`client/source/constants/models/${constantFileName}.json`),
         {
           actionPrefix: this.options.name.toUpperCase(),
         }
@@ -156,7 +155,7 @@ module.exports = generators.Base.extend({
       const actionFileName = snakeCase(this.options.name);
       return this.fs.copyTpl(
         this.templatePath('redux-files/action.js'),
-        this.destinationPath(`client/source/actions/${actionFileName}.js`),
+        this.destinationPath(`client/source/actions/models/${actionFileName}.js`),
         {
           constantFileName: snakeCase(this.options.name),
           apiUrl: `api/${this.options.plural}`
@@ -167,17 +166,12 @@ module.exports = generators.Base.extend({
       const reducerFileName = snakeCase(this.options.name);
       return this.fs.copyTpl(
         this.templatePath('redux-files/reducer.js'),
-        this.destinationPath(`client/source/reducers/${reducerFileName}.js`),
+        this.destinationPath(`client/source/reducers/models/${reducerFileName}.js`),
         {
           constantFileName: snakeCase(this.options.name),
           actionReduxName: this.options.name.toUpperCase(),
         }
       );
-    },
-    addReducerToReducerList: function () {
-      const reducers = this.fs.readJSON('client/source/reducers/reducers.json') || [];
-      reducers.push(snakeCase(this.options.name));
-      return this.fs.writeJSON(this.destinationPath('client/source/reducers/reducers.json'), reducers);
     },
     listView: function(){
       const containerFolder = snakeCase(this.options.name);
@@ -191,7 +185,7 @@ module.exports = generators.Base.extend({
         ),
         this.fs.copy(
           this.templatePath('crud-views/list-view.css'),
-          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/style.css`)
+          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/styles.css`)
         ),
         this.fs.copy(
           this.templatePath('crud-views/list-view.test.js'),
@@ -201,29 +195,73 @@ module.exports = generators.Base.extend({
     },
     editView: function(){
       const containerFolder = snakeCase(this.options.name);
-      return this.fs.copyTpl(
-        this.templatePath('crud-views/edit-view.tmpl.js'),
-        this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/index.jsx`),
-        {
-          modelName: snakeCase(this.options.name),
-        }
-      );
+      return Promise.all([
+        this.fs.copyTpl(
+          this.templatePath('crud-views/edit-view.tmpl.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/index.jsx`),
+          {
+            modelName: snakeCase(this.options.name),
+          }
+        ),
+        this.fs.copy(
+          this.templatePath('crud-views/edit-view.css'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/styles.css`)
+        ),
+        this.fs.copy(
+          this.templatePath('crud-views/edit-view.test.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/index.test.js`)
+        ),
+      ]);
     },
     createView: function(){
       const containerFolder = snakeCase(this.options.name);
+      return Promise.all([
+        this.fs.copyTpl(
+          this.templatePath('crud-views/create-view.tmpl.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/index.jsx`),
+          {
+            modelName: snakeCase(this.options.name),
+          }
+        ),
+        this.fs.copy(
+          this.templatePath('crud-views/create-view.css'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/styles.css`)
+        ),
+        this.fs.copy(
+          this.templatePath('crud-views/create-view.test.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/index.test.js`)
+        )
+      ]);
+    },
+    generateComponentIndex: function(){
+      // Regenerate the model index to add this model
+      // TODO: Get the list of models from the yo-rc.json
+      const viewTypes = ['list', 'edit', 'create'];
+      const viewTypesCapitalized = ['List', 'Edit', 'Create'];
+      const modelNameSnakeCase = snakeCase(this.options.name);
+      const modelNameCamelCase = capitalize(camelCase(this.options.name));
       return this.fs.copyTpl(
-        this.templatePath('crud-views/create-view.tmpl.js'),
-        this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/index.jsx`),
+        this.templatePath('model/model-index.tmpl.js'),
+        this.destinationPath(`client/source/containers/models/index.js`),
         {
-          modelName: snakeCase(this.options.name),
+          viewTypes,
+          viewTypesCapitalized,
+          modelNameSnakeCase,
+          modelNameCamelCase
         }
       );
-    },
+    }
   },
 });
 
 /**
- *     addCrudToRouteList: function () {
+ * 
+ *     addReducerToReducerList: function () {
+      const reducers = this.fs.readJSON('client/source/reducers/reducers.json') || [];
+      reducers.push(snakeCase(this.options.name));
+      return this.fs.writeJSON(this.destinationPath('client/source/reducers/reducers.json'), reducers);
+    },
+ *   addCrudToRouteList: function () {
       const jsonPath = 'client/source/crud-routes/crud-routes.json';
       const routes = this.fs.readJSON(jsonPath) || [];
       routes.push(snakeCase(this.options.name));

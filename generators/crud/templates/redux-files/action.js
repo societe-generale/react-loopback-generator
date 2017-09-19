@@ -1,9 +1,9 @@
 import { initialize, reset } from 'redux-form';
 
-import cst from '../constants/<%= constantFileName %>.json';
-import notificationCst from '../constants/notification.json';
+import cst from '../../constants/models/<%= constantFileName %>.json';
+import notificationCst from '../../constants/notification.json';
 
-import { request, getUrl } from './networking';
+import { request, getUrl } from '../networking';
 
 export default {
   find(params) {
