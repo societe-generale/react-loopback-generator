@@ -5,6 +5,7 @@ const {
   kebabCase,
   camelCase,
   capitalize,
+  lowerCase,
   isEmpty,
   pick
 } = require('lodash');
@@ -249,62 +250,17 @@ module.exports = generators.Base.extend({
         )
       ]);
     },
-    generateComponentIndex: function(){
-      // Regenerate the model index to add this model
-      // TODO: Get the list of models from the yo-rc.json
-      const viewTypes = ['list', 'edit', 'create'];
-      const viewTypesCapitalized = ['List', 'Edit', 'Create'];
-      const modelNameSnakeCase = kebabCase(this.options.name);
-      const modelNameCamelCase = capitalize(camelCase(this.options.name));
-      return this.fs.copyTpl(
-        this.templatePath('model/model-index.tmpl.js'),
-        this.destinationPath(`client/source/containers/models/index.js`),
-        {
-          viewTypes,
-          viewTypesCapitalized,
-          modelNameSnakeCase,
-          modelNameCamelCase
-        }
-      );
-    }
-  },
-});
-
-/**
- * 
- *   addCrudToRouteList: function () {
+    addCrudToJSON: function () {
       const jsonPath = 'client/source/crud-routes/crud-routes.json';
-      const routes = this.fs.readJSON(jsonPath) || [];
-      routes.push(snakeCase(this.options.name));
+      const routes = this.fs.readJSON(jsonPath) || { active: [], inactive: [] };
+      const name = kebabCase(this.options.name);
+      const newCrudEntry = {
+        path: `/${name}`,
+        componentName: name,
+        name: capitalize(lowerCase(this.options.name)),
+      }
+      routes.active.push(newCrudEntry);
       return this.fs.writeJSON(this.destinationPath(jsonPath), routes);
     },
-
-    genericCrudHelpers: function(){
-
-    },
-
-    genericCrudHelpers: function(){
-      return Promise.all([
-        this.fs.copy(
-          this.templatePath('crud-views/list-view.css'),
-          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/style.css`),
-        ),
-        this.fs.copy(
-          this.templatePath('crud-views/list-view.test.js'),
-          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/index.test.js`),
-        ),
-        this.fs.copy(
-          this.templatePath('crud-views/list-view.test.js'),
-          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/index.test.js`),
-        ),
-        this.fs.copy(
-          this.templatePath('crud-views/list-view.test.js'),
-          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/index.test.js`),
-        ),
-        this.fs.copy(
-          this.templatePath('crud-views/list-view.test.js'),
-          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/index.test.js`),
-        ),
-      ]);
-    },
-**/
+  },
+});
