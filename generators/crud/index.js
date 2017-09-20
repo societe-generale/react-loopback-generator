@@ -1,6 +1,14 @@
 const generators = require('yeoman-generator');
-const { assign, kebabCase, snakeCase, camelCase, capitalize, isEmpty } = require('lodash');
 const moment = require('moment');
+const {
+  assign,
+  kebabCase,
+  camelCase,
+  capitalize,
+  isEmpty,
+  pick
+} = require('lodash');
+
 
 const { validateCrudJSON } = require('./validation.js');
 
@@ -28,8 +36,16 @@ module.exports = generators.Base.extend({
   },
 
   writing: {
+    writeYorc: function() {
+      let entities = this.config.get('generated_models');
+      if(entities === undefined)
+        entities = [];
+      entities.push(pick(this.options, ['name', 'plural', 'properties']));
+      this.config.set('generated_models', entities);
+      this.config.save();
+    },
     copyLoopbackModelJS: function () {
-      const modelFileName = snakeCase(this.options.name);
+      const modelFileName = kebabCase(this.options.name);
       return this.fs.copyTpl(
         this.templatePath('model/model.tmpl.js'),
         this.destinationPath(`server/models/${modelFileName}.js`),
@@ -37,11 +53,11 @@ module.exports = generators.Base.extend({
       );
     },
     createLoopbackModel: function () {
-      const modelFileName = snakeCase(this.options.name);
+      const modelFileName = kebabCase(this.options.name);
       const jsonPath = `server/models/${modelFileName}.json`;
       const modelDefinition = {
-        name: camelCase(this.options.name),
-        plural: snakeCase(this.options.plural),
+        name: capitalize(camelCase(this.options.name)),
+        plural: kebabCase(this.options.plural),
         base: "PersistedModel",
         idInjection: true,
         options: {
@@ -68,11 +84,11 @@ module.exports = generators.Base.extend({
       this.fs.writeJSON(this.destinationPath(jsonPath), modelDefinition);
     },
     activateModelInLoopbackConfig: function(){
-      const modelFileName = snakeCase(this.options.name);
+      const modelFileName = kebabCase(this.options.name);
       const LoopbackModelsConfigPath = 'server/model-config.json'
       const modelConfig = this.fs.readJSON(LoopbackModelsConfigPath);
       const newModel = {
-        [camelCase(this.options.name)]:{
+        [capitalize(camelCase(this.options.name))]:{
           "dataSource": "db",
           "public": true
         }
@@ -82,7 +98,7 @@ module.exports = generators.Base.extend({
       this.fs.writeJSON(this.destinationPath(LoopbackModelsConfigPath), newModelConfig);
     },
     createMigration: function() {
-      const migrationName = `${moment().format('YYYYMMDDHHmmSS')}-create-${snakeCase(this.options.name)}`;
+      const migrationName = `${moment().format('YYYYMMDDHHmmSS')}-create-${kebabCase(this.options.name)}`;
       return Promise.all([
         'up',
         'down',
@@ -142,7 +158,7 @@ module.exports = generators.Base.extend({
       }));
     },
     createConstant: function () {
-      const constantFileName = snakeCase(this.options.name);
+      const constantFileName = kebabCase(this.options.name);
       return this.fs.copyTpl(
         this.templatePath('redux-files/constant.json'),
         this.destinationPath(`client/source/constants/models/${constantFileName}.json`),
@@ -152,35 +168,35 @@ module.exports = generators.Base.extend({
       );
     },
     createAction: function () {
-      const actionFileName = snakeCase(this.options.name);
+      const actionFileName = kebabCase(this.options.name);
       return this.fs.copyTpl(
         this.templatePath('redux-files/action.js'),
         this.destinationPath(`client/source/actions/models/${actionFileName}.js`),
         {
-          constantFileName: snakeCase(this.options.name),
-          apiUrl: `api/${this.options.plural}`
+          constantFileName: kebabCase(this.options.name),
+          apiUrl: `api/${kebabCase(this.options.plural)}`
         }
       );
     },
     createReducer: function () {
-      const reducerFileName = snakeCase(this.options.name);
+      const reducerFileName = kebabCase(this.options.name);
       return this.fs.copyTpl(
         this.templatePath('redux-files/reducer.js'),
         this.destinationPath(`client/source/reducers/models/${reducerFileName}.js`),
         {
-          constantFileName: snakeCase(this.options.name),
+          constantFileName: kebabCase(this.options.name),
           actionReduxName: this.options.name.toUpperCase(),
         }
       );
     },
     listView: function(){
-      const containerFolder = snakeCase(this.options.name);
+      const containerFolder = kebabCase(this.options.name);
       return Promise.all([
         this.fs.copyTpl(
           this.templatePath('crud-views/list-view.tmpl.js'),
           this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/index.jsx`),
           {
-            modelName: snakeCase(this.options.name),
+            modelName: kebabCase(this.options.name),
           }
         ),
         this.fs.copy(
@@ -194,13 +210,13 @@ module.exports = generators.Base.extend({
       ]);
     },
     editView: function(){
-      const containerFolder = snakeCase(this.options.name);
+      const containerFolder = kebabCase(this.options.name);
       return Promise.all([
         this.fs.copyTpl(
           this.templatePath('crud-views/edit-view.tmpl.js'),
           this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/index.jsx`),
           {
-            modelName: snakeCase(this.options.name),
+            modelName: kebabCase(this.options.name),
           }
         ),
         this.fs.copy(
@@ -214,13 +230,13 @@ module.exports = generators.Base.extend({
       ]);
     },
     createView: function(){
-      const containerFolder = snakeCase(this.options.name);
+      const containerFolder = kebabCase(this.options.name);
       return Promise.all([
         this.fs.copyTpl(
           this.templatePath('crud-views/create-view.tmpl.js'),
           this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/index.jsx`),
           {
-            modelName: snakeCase(this.options.name),
+            modelName: kebabCase(this.options.name),
           }
         ),
         this.fs.copy(
@@ -238,7 +254,7 @@ module.exports = generators.Base.extend({
       // TODO: Get the list of models from the yo-rc.json
       const viewTypes = ['list', 'edit', 'create'];
       const viewTypesCapitalized = ['List', 'Edit', 'Create'];
-      const modelNameSnakeCase = snakeCase(this.options.name);
+      const modelNameSnakeCase = kebabCase(this.options.name);
       const modelNameCamelCase = capitalize(camelCase(this.options.name));
       return this.fs.copyTpl(
         this.templatePath('model/model-index.tmpl.js'),
@@ -256,11 +272,6 @@ module.exports = generators.Base.extend({
 
 /**
  * 
- *     addReducerToReducerList: function () {
-      const reducers = this.fs.readJSON('client/source/reducers/reducers.json') || [];
-      reducers.push(snakeCase(this.options.name));
-      return this.fs.writeJSON(this.destinationPath('client/source/reducers/reducers.json'), reducers);
-    },
  *   addCrudToRouteList: function () {
       const jsonPath = 'client/source/crud-routes/crud-routes.json';
       const routes = this.fs.readJSON(jsonPath) || [];
