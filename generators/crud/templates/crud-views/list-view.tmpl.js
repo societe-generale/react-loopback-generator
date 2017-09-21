@@ -21,7 +21,7 @@ import model from '../../../../../../server/models/<%= modelName %>.json';
 
 const modelKeyId = findKey(
   model.properties,
-  property => property.id === 'true',
+  property => property.id !== undefined,
 );
 
 export class ListView extends Component {

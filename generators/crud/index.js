@@ -62,18 +62,17 @@ module.exports = generators.Base.extend({
         plural: kebabCase(this.options.plural),
         base: "PersistedModel",
         idInjection: true,
+        mixins: {
+          Fullsearch: {},
+          ExcelExport: {}
+        },
         options: {
           validateUpsert: true,
           postgresql: {
             table: snakeCase(this.options.name)
           }
         },
-        properties: {
-          id: {
-            type: "number",
-            id: true
-          },
-        },
+        properties: {},
         validations: [],
         relations: {},
         acls: [],
@@ -251,9 +250,12 @@ module.exports = generators.Base.extend({
           this.templatePath('crud-views/create-view.css'),
           this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/styles.css`)
         ),
-        this.fs.copy(
+        this.fs.copyTpl(
           this.templatePath('crud-views/create-view.test.js'),
-          this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/index.test.js`)
+          this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/index.test.js`),
+          {
+            modelName: kebabCase(this.options.name),
+          }
         )
       ]);
     },

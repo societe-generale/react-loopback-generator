@@ -17,7 +17,7 @@ import modelActions from '../../../../actions/models/<%= modelName %>';
 
 const modelKeyId = findKey(
   model.properties,
-  property => property.id === 'true',
+  property => property.id !== undefined,
 );
 
 export class CreateView extends Component {

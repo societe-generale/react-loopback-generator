@@ -54,7 +54,7 @@ describe('[Component] CreateView', () => {
       });
 
       shallowWrapper.find(IconButton).simulate('click');
-      expect(routeSpy.calledWith('/ae-data/list')).to.be.true; // eslint-disable-line
+      expect(routeSpy.calledWith('/<%= modelName %>/list')).to.be.true; // eslint-disable-line
     });
   });
 });
