@@ -1,6 +1,6 @@
 import { initialize, reset } from 'redux-form';
 
-import cst from '../../constants/models/ae-data.json';
+import cst from '../../constants/models/<%= constantFileName %>.json';
 import notificationCst from '../../constants/notification.json';
 
 import { request, getUrl } from '../networking';
@@ -63,7 +63,9 @@ export default {
   },
   delete(id, modelKeyId) {
     return dispatch =>
-      dispatch(request(`<%= apiUrl %>/${id}`, { method: 'DELETE' }))
+      dispatch(
+        request(`<%= apiUrl %>/${id}`, { method: 'DELETE' })
+      )
         .then(() => {
           dispatch(this.deleteSuccess(id, modelKeyId));
           dispatch(this.notifySuccess('notification.delete.success'));
