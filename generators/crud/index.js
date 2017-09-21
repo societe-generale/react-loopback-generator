@@ -4,6 +4,7 @@ const {
   assign,
   kebabCase,
   camelCase,
+  snakeCase,
   capitalize,
   lowerCase,
   isEmpty,
@@ -63,6 +64,9 @@ module.exports = generators.Base.extend({
         idInjection: true,
         options: {
           validateUpsert: true,
+          "postgresql": {
+            "table": snakeCase(this.options.name)
+          }
         },
         properties: {
           id: {
