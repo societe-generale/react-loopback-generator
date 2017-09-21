@@ -32,7 +32,9 @@ export default function reducer(state = initialState, action) {
     case cst.DELETE_ELEMENT:
       return {
         ...state,
-        list: state.list.filter(el => el.id !== action.idToDelete),
+        list: state.list.filter(
+          el => el[action.payload.modelKeyId] !== action.payload.id,
+        ),
       };
     default:
       return state;

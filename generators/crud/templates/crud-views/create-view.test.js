@@ -12,11 +12,11 @@ describe('[Component] CreateView', () => {
   const defaultProps = {
     navigateTo: () => {},
     intl: {
-      formatMessage: obj => (obj.id),
+      formatMessage: obj => obj.id,
     },
   };
 
-  const setup = (propsOverride) => {
+  const setup = propsOverride => {
     const finalProps = Object.assign(defaultProps, propsOverride);
     const shallowWrapper = shallow(<CreateView {...finalProps} />);
     return {
@@ -58,3 +58,4 @@ describe('[Component] CreateView', () => {
     });
   });
 });
+

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { map } from 'lodash';
+import { map, findKey } from 'lodash';
 import { push } from 'react-router-redux';
 
 import ReactTable from 'react-table';
@@ -17,32 +17,38 @@ import TableActionCell from '../../../../components/crud-view/table-action-cell'
 import styles from './styles.css';
 
 import modelActions from '../../../../actions/models/<%= modelName %>';
-
 import model from '../../../../../../server/models/<%= modelName %>.json';
+
+const modelKeyId = findKey(
+  model.properties,
+  property => property.id === 'true',
+);
 
 export class ListView extends Component {
   constructor(props, context) {
     super(props, context);
 
     const properties = Object.keys(model.properties);
-    const modelColumns = map(properties, property => ({ Header: property, accessor: property }));
+    const modelColumns = map(properties, property => ({
+      Header: property,
+      accessor: property,
+    }));
     const customColumns = [
       {
         Header: this.props.intl.formatMessage({ id: 'list.header.actions' }),
-        accessor: 'id',
-        Cell: row => (<TableActionCell
-          row={row}
-          navigateTo={this.props.navigateTo}
-          deleteElement={this.setElementToDelete}
-          modelBasePath="<%= modelName %>"
-        />),
+        accessor: modelKeyId,
+        Cell: row => (
+          <TableActionCell
+            row={row}
+            navigateTo={this.props.navigateTo}
+            deleteElement={this.setElementToDelete}
+            modelBasePath="<%= modelName %>"
+          />
+        ),
       },
     ];
 
-    this.tableColumns = [
-      ...modelColumns,
-      ...customColumns,
-    ];
+    this.tableColumns = [...modelColumns, ...customColumns];
 
     this.state = {
       deletePopinIsOpen: false,
@@ -54,12 +60,16 @@ export class ListView extends Component {
     this.props.getList();
   }
 
-  setElementToDelete = (id) => {
+  setElementToDelete = id => {
     this.setState({
       elementIdToDelete: id,
       deletePopinIsOpen: true,
     });
-  }
+  };
+
+  export = () => {
+    this.props.export(this.props.authentication);
+  };
 
   render() {
     const formatMessage = this.props.intl.formatMessage;
@@ -68,13 +78,15 @@ export class ListView extends Component {
         label={formatMessage({ id: 'common.action.confirm' })}
         style={{ color: 'red' }}
         onClick={() => {
-          this.props.deleteItem(this.state.elementIdToDelete);
+          this.props.deleteItem(this.state.elementIdToDelete, modelKeyId);
           this.setState({ deletePopinIsOpen: false, elementIdToDelete: null });
         }}
       />,
       <FlatButton
         label={formatMessage({ id: 'common.action.cancel' })}
-        onClick={() => { this.setState({ deletePopinIsOpen: false, elementIdToDelete: null }); }}
+        onClick={() => {
+          this.setState({ deletePopinIsOpen: false, elementIdToDelete: null });
+        }}
       />,
     ];
 
@@ -82,6 +94,7 @@ export class ListView extends Component {
       <div className={styles.container}>
         <TableManager
           navigateTo={this.props.navigateTo}
+          export={this.export}
           modelBasePath="<%= modelName %>"
         />
         <ReactTable
@@ -115,9 +128,11 @@ export class ListView extends Component {
 
 ListView.propTypes = {
   data: PropTypes.array, // eslint-disable-line
+  authentication: PropTypes.object, // eslint-disable-line
   intl: intlShape.isRequired,
   navigateTo: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
+  export: PropTypes.func.isRequired,
   getList: PropTypes.func.isRequired,
 };
 
@@ -130,15 +145,18 @@ const mapDispatchToProps = dispatch => ({
   getList: () => {
     dispatch(modelActions.find());
   },
-  deleteItem: (id) => {
-    dispatch(modelActions.delete(id));
+  deleteItem: (id, modelKeyIdentifier) => {
+    dispatch(modelActions.delete(id, modelKeyIdentifier));
   },
-  navigateTo: (path) => {
+  export: authentication => {
+    dispatch(modelActions.export(authentication));
+  },
+  navigateTo: path => {
     dispatch(push(path));
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(injectIntl(ListView));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  injectIntl(ListView),
+);
+

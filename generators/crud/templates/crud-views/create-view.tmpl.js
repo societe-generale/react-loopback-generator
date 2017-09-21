@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { findKey } from 'lodash';
 
 import IconButton from 'material-ui/IconButton';
 import ActionList from 'material-ui/svg-icons/action/list';
@@ -14,15 +15,19 @@ import styles from './styles.css';
 import model from '../../../../../../server/models/<%= modelName %>.json';
 import modelActions from '../../../../actions/models/<%= modelName %>';
 
-export class CreateView extends Component {
+const modelKeyId = findKey(
+  model.properties,
+  property => property.id === 'true',
+);
 
-  submitModelCreate = (values) => {
+export class CreateView extends Component {
+  submitModelCreate = values => {
     this.props.createNewEntry(values);
-  }
+  };
 
   returnToList = () => {
     this.props.navigateTo('/<%= modelName %>/list');
-  }
+  };
 
   render() {
     const { formatMessage } = this.props.intl;
@@ -43,6 +48,8 @@ export class CreateView extends Component {
           <ModelForm
             modelProperties={model.properties}
             onSubmit={this.submitModelCreate}
+            modelKeyId={modelKeyId}
+            disableModelKeyId={false}
           />
         </div>
       </div>
@@ -62,14 +69,16 @@ const mapStateToProps = state => ({
   authentication: state.authentication,
 });
 
-const mapDispatchToProps = dispatch => (
-  {
-    navigateTo: (path) => { dispatch(push(path)); },
-    createNewEntry: (formValues) => { dispatch(modelActions.create(formValues)); },
-  }
+const mapDispatchToProps = dispatch => ({
+  navigateTo: path => {
+    dispatch(push(path));
+  },
+  createNewEntry: formValues => {
+    dispatch(modelActions.create(formValues));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  injectIntl(CreateView),
 );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(injectIntl(CreateView));

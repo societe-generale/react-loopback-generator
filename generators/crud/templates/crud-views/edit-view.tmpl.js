@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import { findKey } from 'lodash';
 import { push } from 'react-router-redux';
 
 import IconButton from 'material-ui/IconButton';
@@ -14,20 +15,24 @@ import styles from './styles.css';
 import model from '../../../../../../server/models/<%= modelName %>.json';
 import modelActions from '../../../../actions/models/<%= modelName %>';
 
-export class EditView extends Component {
+const modelKeyId = findKey(
+  model.properties,
+  property => property.id === 'true',
+);
 
+export class EditView extends Component {
   componentWillMount() {
     const id = this.props.params.id;
     this.props.findEntry(id);
   }
 
-  submitModelEdit = (values) => {
-    this.props.editEntry(values, parseInt(this.props.params.id, 10));
-  }
+  submitModelEdit = values => {
+    this.props.editEntry(values, this.props.params.id);
+  };
 
   returnToList = () => {
     this.props.navigateTo('/<%= modelName %>/list');
-  }
+  };
 
   render() {
     const { formatMessage } = this.props.intl;
@@ -40,14 +45,14 @@ export class EditView extends Component {
           >
             <ActionList />
           </IconButton>
-          <h2>
-            {`${formatMessage({ id: 'edit.view.title' })} ${model.name}`}
-          </h2>
+          <h2>{`${formatMessage({ id: 'edit.view.title' })} ${model.name}`}</h2>
         </div>
         <div>
           <ModelForm
             modelProperties={model.properties}
             onSubmit={this.submitModelEdit}
+            modelKeyId={modelKeyId}
+            disableModelKeyId={true}
           />
         </div>
       </div>
@@ -71,15 +76,18 @@ const mapStateToProps = state => ({
   authentication: state.authentication,
 });
 
-const mapDispatchToProps = dispatch => (
-  {
-    navigateTo: (path) => { dispatch(push(path)); },
-    editEntry: (formValues, id) => { dispatch(modelActions.edit(formValues, id)); },
-    findEntry: (id) => { dispatch(modelActions.findOne(id)); },
-  }
-);
+const mapDispatchToProps = dispatch => ({
+  navigateTo: path => {
+    dispatch(push(path));
+  },
+  editEntry: (formValues, id) => {
+    dispatch(modelActions.edit(formValues, id));
+  },
+  findEntry: id => {
+    dispatch(modelActions.findOne(id));
+  },
+});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(injectIntl(EditView));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  injectIntl(EditView),
+);

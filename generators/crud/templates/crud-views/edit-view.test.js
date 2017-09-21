@@ -11,7 +11,7 @@ import ModelForm from '../../../../components/crud-view/model-form';
 describe('[Component] EditView', () => {
   const defaultProps = {
     intl: {
-      formatMessage: obj => (obj.id),
+      formatMessage: obj => obj.id,
     },
     navigateTo: () => {},
     editEntry: () => {},
@@ -21,7 +21,7 @@ describe('[Component] EditView', () => {
     },
   };
 
-  const setup = (propsOverride) => {
+  const setup = propsOverride => {
     const finalProps = Object.assign(defaultProps, propsOverride);
     const shallowWrapper = shallow(<EditView {...finalProps} />);
     return {
