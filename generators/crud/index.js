@@ -64,8 +64,8 @@ module.exports = generators.Base.extend({
         idInjection: true,
         options: {
           validateUpsert: true,
-          "postgresql": {
-            "table": snakeCase(this.options.name)
+          postgresql: {
+            table: snakeCase(this.options.name)
           }
         },
         properties: {
@@ -228,9 +228,12 @@ module.exports = generators.Base.extend({
           this.templatePath('crud-views/edit-view.css'),
           this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/styles.css`)
         ),
-        this.fs.copy(
+        this.fs.copyTpl(
           this.templatePath('crud-views/edit-view.test.js'),
-          this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/index.test.js`)
+          this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/index.test.js`),
+          {
+            modelName: kebabCase(this.options.name),
+          }
         ),
       ]);
     },
