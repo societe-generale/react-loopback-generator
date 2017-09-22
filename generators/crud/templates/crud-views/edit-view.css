@@ -1,0 +1,9 @@
+.container {
+  margin: 30px;
+  background-color: white;
+  padding: 20px;
+}
+
+.headerTitle button {
+  vertical-align: sub;
+}

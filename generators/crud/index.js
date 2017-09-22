@@ -1,110 +1,82 @@
 const generators = require('yeoman-generator');
-const { assign, kebabCase, snakeCase, camelCase } = require('lodash');
 const moment = require('moment');
+const {
+  assign,
+  kebabCase,
+  camelCase,
+  snakeCase,
+  capitalize,
+  lowerCase,
+  isEmpty,
+  pick
+} = require('lodash');
 
-const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+
+const { validateCrudJSON } = require('./validation.js');
 
 module.exports = generators.Base.extend({
   prompting: {
-    model: function () {
+    pathToConfig: function () {
       return this.prompt([
         {
           type: 'input',
-          name: 'modelName',
-          message: 'Enter the model name:',
+          name: 'configFile',
+          message: 'Enter the path to the model config (JSON):',
         },
-        {
-          type: 'input',
-          name: 'modelPlural',
-          message: 'Custom plural form (used to build REST URL):',
-        },
-      ]).then(answers => {
-        assign(this.options, answers);
-      });
+      ]).then(userPrompt => {
+        const file = this.fs.readJSON(userPrompt.configFile);
+        const errors = validateCrudJSON(file);
+        if (!isEmpty(errors)) {
+          this.log('----------INVALID JSON-----------');
+          this.log(errors.join('\n'));
+          done();
+          return;
+        }
+        assign(this.options, file);
+      })
     },
-
-    delim: function () {
-      this.log(`Let\'s add some ${this.options.modelName} properties now.\n`);
-    },
-
-    properties: askForProperties,
   },
 
   writing: {
     writeYorc: function() {
-      let entities = this.config.get('crudEntites');
+      let entities = this.config.get('generated_models');
       if(entities === undefined)
         entities = [];
-      entities.push(capitalize(kebabCase(this.options.modelName)))
-      this.config.set('crudEntites', entities);
+      entities.push(pick(this.options, ['name', 'plural', 'properties']));
+      this.config.set('generated_models', entities);
       this.config.save();
     },
-    createCrudRoutes: function() {
-      const hasString = this.options.properties.filter(property => property.type === 'string').length > 0;
-      const hasNumber = this.options.properties.filter(property => property.type === 'number').length > 0;
-      const hasBoolean = this.options.properties.filter(property => property.type === 'boolean').length > 0;
-      const hasDate = this.options.properties.filter(property => property.type === 'date').length > 0;
-      const hasJson = this.options.properties.filter(property => property.type === 'json').length > 0;
-      const entityFileName = snakeCase(this.options.modelName);
-      return this.fs.copyTpl(
-        this.templatePath('crud-routes/crud-route.tmpl.js'),
-
-        this.destinationPath(`client/source/crud-routes/${entityFileName}.js`),
-        {
-          entityFileName: entityFileName,
-          viewClassName: capitalize(kebabCase(this.options.modelName)),
-          actionName: kebabCase(this.options.modelName),
-          getActionName: `get${capitalize(kebabCase(this.options.modelName))}`,
-          createActionName: `create${capitalize(kebabCase(this.options.modelName))}`,
-          propName: kebabCase(this.options.modelPlural),
-          properties: this.options.properties || [],
-          reduxFileName: snakeCase(this.options.modelName),
-          hasString,
-          hasNumber,
-          hasBoolean,
-          hasDate,
-          hasJson,
-        }
-      );
-    },
-    addCrudRoute: function () {
-      const jsonPath = 'client/source/crud-routes/crud-routes.json';
-      const routes = this.fs.readJSON(jsonPath) || [];
-      routes.push(snakeCase(this.options.modelName));
-      this.fs.writeJSON(this.destinationPath(jsonPath), routes);
-    },
     copyLoopbackModelJS: function () {
-      const modelFileName = snakeCase(this.options.modelName);
+      const modelFileName = kebabCase(this.options.name);
       return this.fs.copyTpl(
         this.templatePath('model/model.tmpl.js'),
-
         this.destinationPath(`server/models/${modelFileName}.js`),
         {}
       );
     },
     createLoopbackModel: function () {
-      const modelFileName = snakeCase(this.options.modelName);
+      const modelFileName = kebabCase(this.options.name);
       const jsonPath = `server/models/${modelFileName}.json`;
       const modelDefinition = {
-        name: camelCase(this.options.modelName),
-        plural: snakeCase(this.options.modelPlural),
+        name: capitalize(camelCase(this.options.name)),
+        plural: kebabCase(this.options.plural),
         base: "PersistedModel",
         idInjection: true,
+        mixins: {
+          Fullsearch: {},
+          ExcelExport: {}
+        },
         options: {
           validateUpsert: true,
+          postgresql: {
+            table: snakeCase(this.options.name)
+          }
         },
-        properties: {
-          id: {
-            type: "number",
-            id: true
-          },
-        },
+        properties: {},
         validations: [],
-        relations: {
-        },
-        "acls": [
-        ],
-        "methods": {}
+        relations: {},
+        acls: [],
+        methods: {}
       }
 
       for (const property of this.options.properties) {
@@ -113,97 +85,24 @@ module.exports = generators.Base.extend({
           required: property.required
         }
       }
-      console.log('user-props',this.options.properties);
-      console.log('new-props',modelDefinition.properties);
       this.fs.writeJSON(this.destinationPath(jsonPath), modelDefinition);
     },
     activateModelInLoopbackConfig: function(){
-      const modelFileName = snakeCase(this.options.modelName);
-      const modelConfigPath = 'server/model-config.json'
-      const modelConfig = this.fs.readJSON(modelConfigPath);
+      const modelFileName = kebabCase(this.options.name);
+      const LoopbackModelsConfigPath = 'server/model-config.json'
+      const modelConfig = this.fs.readJSON(LoopbackModelsConfigPath);
       const newModel = {
-        [camelCase(this.options.modelName)]:{
+        [capitalize(camelCase(this.options.name))]:{
           "dataSource": "db",
           "public": true
         }
       }
       
       const newModelConfig = Object.assign({}, modelConfig, newModel);
-      this.fs.writeJSON(this.destinationPath(modelConfigPath), newModelConfig);
+      this.fs.writeJSON(this.destinationPath(LoopbackModelsConfigPath), newModelConfig);
     },
-    createView: function() {
-      const hasString = this.options.properties.filter(property => property.type === 'string').length > 0;
-      const hasNumber = this.options.properties.filter(property => property.type === 'number').length > 0;
-      const hasBoolean = this.options.properties.filter(property => property.type === 'boolean').length > 0;
-      const hasDate = this.options.properties.filter(property => property.type === 'date').length > 0;
-      const hasJson = this.options.properties.filter(property => property.type === 'json').length > 0;
-      const viewFolderName = snakeCase(this.options.modelName);
-      return this.fs.copyTpl(
-        this.templatePath('view.jsx'),
-        this.destinationPath(`client/source/containers/${viewFolderName}/index.jsx`),
-        {
-          viewClassName: capitalize(kebabCase(this.options.modelName)),
-          actionName: kebabCase(this.options.modelName),
-          getActionName: `get${capitalize(kebabCase(this.options.modelName))}`,
-          createActionName: `create${capitalize(kebabCase(this.options.modelName))}`,
-          propName: kebabCase(this.options.modelPlural),
-          properties: this.options.properties || [],
-          reduxFileName: snakeCase(this.options.modelName),
-          hasString,
-          hasNumber,
-          hasBoolean,
-          hasDate,
-          hasJson,
-        }
-      );
-    },
-    createAction: function () {
-      const actionFileName = snakeCase(this.options.modelName);
-      return this.fs.copyTpl(
-        this.templatePath('action.js'),
-        this.destinationPath(`client/source/actions/${actionFileName}.js`),
-        {
-          constantFileName: snakeCase(this.options.modelName),
-          createActionName: `create${capitalize(kebabCase(this.options.modelName))}`,
-          getActionName: `get${capitalize(kebabCase(this.options.modelName))}`,
-          actionReduxName: this.options.modelName.toUpperCase(),
-          apiUrl: `api/${this.options.modelPlural}`
-        }
-      );
-    },
-
-    createConstant: function () {
-      const constantFileName = snakeCase(this.options.modelName);
-      return this.fs.copyTpl(
-        this.templatePath('constant.json'),
-        this.destinationPath(`client/source/constants/${constantFileName}.json`),
-        {
-          actionReduxName: this.options.modelName.toUpperCase(),
-        }
-      );
-    },
-
-    createReducer: function () {
-      const reducerFileName = snakeCase(this.options.modelName);
-      return this.fs.copyTpl(
-        this.templatePath('reducer.js'),
-        this.destinationPath(`client/source/reducers/${reducerFileName}.js`),
-        {
-          constantFileName: snakeCase(this.options.modelName),
-          actionReduxName: this.options.modelName.toUpperCase(),
-        }
-      );
-    },
-
-    
-    addReducer: function () {
-      const reducers = this.fs.readJSON('client/source/reducers/reducers.json') || [];
-      reducers.push(snakeCase(this.options.modelName));
-      this.fs.writeJSON(this.destinationPath('client/source/reducers/reducers.json'), reducers);
-    },
-
     createMigration: function() {
-      const migrationName = `${moment().format('YYYYMMDDHHmmSS')}-create-${snakeCase(this.options.modelName)}`;
+      const migrationName = `${moment().format('YYYYMMDDHHmmSS')}-create-${kebabCase(this.options.name)}`;
       return Promise.all([
         'up',
         'down',
@@ -240,10 +139,10 @@ module.exports = generators.Base.extend({
           });
           const filePath = `migrations/sqls/${migrationName}-${file}.sql`;
           return this.fs.copyTpl(
-            this.templatePath(`migration-${file}.sql`),
+            this.templatePath(`model/migration-${file}.sql`),
             this.destinationPath(filePath),
             {
-              tableName: camelCase(this.options.modelName),
+              tableName: camelCase(this.options.name),
               properties: sqlProperties || [],
             }
           );
@@ -252,7 +151,7 @@ module.exports = generators.Base.extend({
           const fileNameMigrationDown = `${migrationName}-down.sql`;
           const filePath = `migrations/${migrationName}.js`;
           return this.fs.copyTpl(
-            this.templatePath(`migration-${file}.js`),
+            this.templatePath(`model/migration-${file}.js`),
             this.destinationPath(filePath),
             {
               fileNameMigrationDown,
@@ -262,92 +161,115 @@ module.exports = generators.Base.extend({
         }
       }));
     },
+    createConstant: function () {
+      const constantFileName = kebabCase(this.options.name);
+      return this.fs.copyTpl(
+        this.templatePath('redux-files/constant.json'),
+        this.destinationPath(`client/source/constants/models/${constantFileName}.json`),
+        {
+          actionPrefix: this.options.name.toUpperCase(),
+        }
+      );
+    },
+    createAction: function () {
+      const actionFileName = kebabCase(this.options.name);
+      return this.fs.copyTpl(
+        this.templatePath('redux-files/action.js'),
+        this.destinationPath(`client/source/actions/models/${actionFileName}.js`),
+        {
+          constantFileName: kebabCase(this.options.name),
+          apiUrl: `api/${kebabCase(this.options.plural)}`
+        }
+      );
+    },
+    createReducer: function () {
+      const reducerFileName = kebabCase(this.options.name);
+      return this.fs.copyTpl(
+        this.templatePath('redux-files/reducer.js'),
+        this.destinationPath(`client/source/reducers/models/${reducerFileName}.js`),
+        {
+          constantFileName: kebabCase(this.options.name),
+          actionReduxName: this.options.name.toUpperCase(),
+        }
+      );
+    },
+    listView: function(){
+      const containerFolder = kebabCase(this.options.name);
+      return Promise.all([
+        this.fs.copyTpl(
+          this.templatePath('crud-views/list-view.tmpl.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/index.jsx`),
+          {
+            modelName: kebabCase(this.options.name),
+          }
+        ),
+        this.fs.copy(
+          this.templatePath('crud-views/list-view.css'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/styles.css`)
+        ),
+        this.fs.copy(
+          this.templatePath('crud-views/list-view.test.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/list-view/index.test.js`)
+        ),
+      ]);
+    },
+    editView: function(){
+      const containerFolder = kebabCase(this.options.name);
+      return Promise.all([
+        this.fs.copyTpl(
+          this.templatePath('crud-views/edit-view.tmpl.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/index.jsx`),
+          {
+            modelName: kebabCase(this.options.name),
+          }
+        ),
+        this.fs.copy(
+          this.templatePath('crud-views/edit-view.css'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/styles.css`)
+        ),
+        this.fs.copyTpl(
+          this.templatePath('crud-views/edit-view.test.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/edit-view/index.test.js`),
+          {
+            modelName: kebabCase(this.options.name),
+          }
+        ),
+      ]);
+    },
+    createView: function(){
+      const containerFolder = kebabCase(this.options.name);
+      return Promise.all([
+        this.fs.copyTpl(
+          this.templatePath('crud-views/create-view.tmpl.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/index.jsx`),
+          {
+            modelName: kebabCase(this.options.name),
+          }
+        ),
+        this.fs.copy(
+          this.templatePath('crud-views/create-view.css'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/styles.css`)
+        ),
+        this.fs.copyTpl(
+          this.templatePath('crud-views/create-view.test.js'),
+          this.destinationPath(`client/source/containers/models/${containerFolder}/create-view/index.test.js`),
+          {
+            modelName: kebabCase(this.options.name),
+          }
+        )
+      ]);
+    },
+    addCrudToJSON: function () {
+      const jsonPath = 'client/source/crud-routes/crud-routes.json';
+      const routes = this.fs.readJSON(jsonPath) || { active: [], inactive: [] };
+      const name = kebabCase(this.options.name);
+      const newCrudEntry = {
+        path: `/${name}`,
+        componentName: name,
+        name: capitalize(lowerCase(this.options.name)),
+      }
+      routes.active.push(newCrudEntry);
+      return this.fs.writeJSON(this.destinationPath(jsonPath), routes);
+    },
   },
 });
-
-function askForProperty() {
-  const prompt = [
-    {
-      type: 'input',
-      name: 'propertyName',
-      message: 'Property name:',
-    },
-  ];
-
-  return this.prompt(prompt).then(function (answer) {
-    this.options = props;
-    this.async();
-  }.bind(this));
-}
-
-function askForProperties() {
-  const done = this.async();
-  askForProperty.call(this, done);
-}
-
-function askForProperty(done) {
-  const prompt = [
-    {
-      type: 'input',
-      name: 'propertyName',
-      message: 'Property name:',
-    },
-  ];
-  this.prompt(prompt).then(function(answer) {
-    if (answer.propertyName === null || answer.propertyName === '' || typeof answer.propertyName === 'undefined') {
-      return done();
-    }
-
-    const propertyPrompts = [
-      {
-        type: 'list',
-        name: 'propertyType',
-        message: 'Property type:',
-        choices: ['string', 'date', 'json', 'boolean', 'number'],
-      },
-      {
-        type: 'confirm',
-        name: 'propertyRequired',
-        message: 'Property required:',
-        default: false,
-      }
-    ];
-
-    this.prompt(propertyPrompts).then(function(answers) {
-      let defaultValue;
-      switch (answers.propertyType) {
-        case 'string':
-          defaultValue = '\'\'';
-          break;
-        case 'date':
-          defaultValue = 'moment().format(\'YYYY-MM-DD\')';
-          break;
-        case 'json':
-          defaultValue = '{}';
-          break;
-        case 'boolean':
-          defaultValue = true;
-          break;
-        case 'number':
-          defaultValue = 0;
-          break;
-        default:
-          defaultValue = null;
-      }
-      const properties = {
-        name: kebabCase(answer.propertyName),
-        type: answers.propertyType,
-        required: answers.propertyRequired,
-        defaultValue,
-      };
-      if (this.options.properties) {
-        assign(this.options, { properties: this.options.properties.concat(properties) });
-      } else {
-        assign(this.options, { properties: [properties] });
-      }
-
-      this.log(`\nLet's add another ${this.options.modelName} property.`);
-      askForProperty.call(this, done);
-    }.bind(this));
-  }.bind(this));
-}
