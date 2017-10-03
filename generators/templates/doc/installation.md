@@ -32,7 +32,7 @@ Then, this project can be installed by running the install script:
     npm install
     docker-compose up
 ```
-And then you can access to your application by this url : http://localhost/<%= applicationFolder %>/
+And then you can access to your application by this url : http://localhost/<%= applicationName %>/
 
 Application initialisation
 --------------------------
