@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import PropTypes from 'prop-types';
 
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -14,10 +15,9 @@ import routes from './routes';
 const muiTheme = getMuiTheme(lightBaseTheme);
 
 class AppRoot extends React.Component {
-
   static propTypes = {
-    store: React.PropTypes.object.isRequired, // eslint-disable-line
-    history: React.PropTypes.object.isRequired, // eslint-disable-line
+    store: PropTypes.object.isRequired, // eslint-disable-line
+    history: PropTypes.object.isRequired, // eslint-disable-line
   };
 
   constructor(props) {
