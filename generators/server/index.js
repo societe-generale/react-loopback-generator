@@ -43,19 +43,18 @@ module.exports = generators.Base.extend({
   },
 
   installServerDependencies: function () {
-      
     const newContent = {
       dependencies: {
-        'compression': '1.6.2',
+        'compression': '1.7.1',
         'cookie-parser': '1.4.3', 
-        'cors': '2.5.2',
+        'cors': '2.8.4',
         'csurf': '1.9.0', 
         'debug': '2.4.5',
         'healthcheck-fastit': 'git+ssh://git@github.com:fastit/health-check.git#1.0.1',
-        'loopback': '3.4.0',
-        'loopback-boot': '2.23.0',
-        'loopback-component-explorer': '2.4.0',
-        'helmet': '3.6.1',
+        'loopback': '3.14.0',
+        'loopback-boot': '2.26.2',
+        'loopback-component-explorer': '5.1.0',
+        'helmet': '3.8.2',
         'moment': '2.16.0',
         'serve-favicon': '2.0.1',
         'strong-error-handler': '1.0.1',
