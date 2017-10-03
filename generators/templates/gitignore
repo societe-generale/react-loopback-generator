@@ -3,3 +3,10 @@ node_modules/
 coverage/
 client/build
 *.retry
+.nyc_output/
+selenium-debug.log
+e2e_reports/
+.DS_STORE
+.idea
+yarn-error.log
+npm-debug.log
