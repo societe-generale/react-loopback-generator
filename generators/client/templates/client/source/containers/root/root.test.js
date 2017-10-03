@@ -35,9 +35,20 @@ describe('<Root/>', () => {
   const logout = sinon.spy();
   const props = {
     languageSelected: 'en',
+    sideBar: {
+      open: false,
+    },
     authenticationEffects: {
       login,
       logout,
+    },
+    sideBarActions: {
+      open() {
+        return true;
+      },
+      close() {
+        return false;
+      },
     },
   };
 
@@ -47,15 +58,6 @@ describe('<Root/>', () => {
     },
     doLogout() {
       return Promise.resolve('mockAuthenticationActions');
-    },
-  };
-
-  const sideBarActions = {
-    open() {
-      return true;
-    },
-    close() {
-      return false;
     },
   };
 
@@ -85,7 +87,6 @@ describe('<Root/>', () => {
         {...props}
         authenticationActions={authenticationActions}
         sideBarActions={sideBarActions}
-        sideBar={{ open: true }}
         authentication={{ authentication: { test: 'noEmpty' } }}
       />,
       {
