@@ -143,7 +143,7 @@ module.exports = generators.Base.extend({
         'chromedriver': '2.28.0',
         'clean-webpack-plugin': '0.1.16',
         'css-loader': '0.27.3',
-        'enzyme': '2.9.1',
+        'enzyme': '3.1.0',
         'enzyme-adapter-react-16': '1.0.0',
         'eslint-config-airbnb': '15.1.0',
         'eslint-config-prettier': '2.3.0',
