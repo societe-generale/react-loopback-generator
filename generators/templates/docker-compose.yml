@@ -21,7 +21,7 @@ services:
   client:
     build: .
     volumes:
-      - .:/code
+      - .:/code:cached
     command: npm run client:watch -- --host 0.0.0.0 --port 8080
     environment:
       - NODE_ENV=development
@@ -34,7 +34,7 @@ services:
   server:
     build: .
     volumes:
-      - .:/code
+      - .:/code:cached
 #    depends_on:
 #      - postgresql
 #      - mongodb
