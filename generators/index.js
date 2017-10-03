@@ -252,7 +252,7 @@ module.exports = generators.Base.extend({
             'client:lint' : 'eslint --ext .jsx,.js -c client/.eslintrc client/source',
             'client:lint:fix': 'eslint --fix --ext .jsx,.js -c client/.eslintrc client/source',
             'client:stylelint': 'stylelint client/source/**/*.css',
-            'client:test': "NODE_ENV=test jest",
+            'client:test': "NODE_ENV=test jest --maxWorkers=2",
             'client:test:watch': "NODE_ENV=test jest --watch",
             'e2e': 'nightwatch',
             'lint': 'npm run client:lint',
