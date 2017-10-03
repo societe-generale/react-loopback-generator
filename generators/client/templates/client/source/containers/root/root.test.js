@@ -2,6 +2,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import React from 'react';
+import PropTypes from 'prop-types';
 import expect from 'expect';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
@@ -76,7 +77,7 @@ describe('<Root/>', () => {
       <Root {...props} authenticationActions={authenticationActions} sideBarActions={sideBarActions} />,
       {
         context: { muiTheme },
-        childContextTypes: { muiTheme: React.PropTypes.object },
+        childContextTypes: { muiTheme: PropTypes.object },
       },
     );
     wrapper.setProps({
