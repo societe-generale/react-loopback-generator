@@ -101,7 +101,6 @@ describe('<Root/>', () => {
       authentication: {
         user: {
           firstName: 'Test',
-          roles: [{ name: 'ADMIN' }],
         },
       },
     });
