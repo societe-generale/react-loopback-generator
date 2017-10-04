@@ -252,8 +252,8 @@ module.exports = generators.Base.extend({
             'client:lint' : 'eslint --ext .jsx,.js -c client/.eslintrc client/source',
             'client:lint:fix': 'eslint --fix --ext .jsx,.js -c client/.eslintrc client/source',
             'client:stylelint': 'stylelint client/source/**/*.css',
-            'client:test': "NODE_ENV=test jest --maxWorkers=2 --setupTestFrameworkScriptFile ../setupTests.js",
-            'client:test:watch': "NODE_ENV=test jest --watch --setupTestFrameworkScriptFile ../setupTests.js",
+            'client:test': "NODE_ENV=test jest --maxWorkers=2",
+            'client:test:watch': "NODE_ENV=test jest --watch",
             'e2e': 'nightwatch',
             'lint': 'npm run client:lint',
             'pree2e': 'sh ./test/e2e/nightwatch.sh',
@@ -265,6 +265,7 @@ module.exports = generators.Base.extend({
             'moduleNameMapper': {
               '^.+\\.(css|less)$': '<rootDir>/CSSStub.js',
             },
+            'setupTestFrameworkScriptFile':  '../setupTests.js',
             'collectCoverage': true,
             'coverageDirectory': '<rootDir>/../../coverage',
             'verbose': true,
