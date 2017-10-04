@@ -49,8 +49,8 @@ module.exports = generators.Base.extend({
         'client/source/constants/language.json',
         'client/source/constants/url-config.json',
         'client/source/constants/networking.json',
-				'client/source/crud-routes/index.js',
-				'client/source/crud-routes/crud-routes.json',
+        'client/source/crud-routes/index.js',
+        'client/source/crud-routes/crud-routes.json',
         'client/source/actions/authentication.js',
         'client/source/actions/authentication.test.js',
         'client/source/actions/side-bar.js',
@@ -78,9 +78,6 @@ module.exports = generators.Base.extend({
         'client/webpack/webpack.config.js',
         'client/webpack/webpack.config.dev.js',
         'client/webpack/.eslintrc',
-        'test/e2e/sample.test.js',
-        'test/e2e/nightwatch.sh',
-        'test/e2e/createTestUserMongo.txt'
       ].map(file => {
         return this.fs.copyTpl(
           this.templatePath(file),
@@ -167,7 +164,6 @@ module.exports = generators.Base.extend({
         'jshint': '2.9.4',
         'json-loader': '0.5.4',
         'mocha': '3.2.0',
-        'nightwatch': '0.9.13',
         'nock': '9.0.9',
         'nodemon': '1.11.0',
         'nyc': '10.1.2',
@@ -179,7 +175,6 @@ module.exports = generators.Base.extend({
         'react-hot-loader': '3.0.0-beta.6',
         'react-tools': '0.13.3',
         'redux-mock-store': '1.2.2',
-        'selenium-server-standalone-jar': '3.0.1',
         'sinon': '2.0.0',
         'style-loader': '0.16.1',
         'stylelint-config-standard': '16.0.0',
