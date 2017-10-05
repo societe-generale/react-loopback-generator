@@ -86,7 +86,6 @@ describe('<Root/>', () => {
       <Root
         {...props}
         authenticationActions={authenticationActions}
-        sideBarActions={sideBarActions}
         authentication={{ authentication: { test: 'noEmpty' } }}
       />,
       {
