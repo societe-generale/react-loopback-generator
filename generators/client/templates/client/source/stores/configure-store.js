@@ -10,15 +10,18 @@ import rootReducer from '../reducers';
 export default function configureStore(history) {
   const reduxRouterMiddleware = routerMiddleware(history);
   const reducers = compose(mergePersistedState())(rootReducer);
-  const storageAuth = compose(filter('authentication'))(adapter(window.localStorage));
+  const storageAuth = compose(filter('authentication'))(
+    adapter(window.localStorage),
+  );
   const storageLang = compose(filter('language'))(adapter(window.localStorage));
 
   /* eslint-disable no-underscore-dangle */
   const composeEnhancers =
     process.env.NODE_ENV !== 'production' &&
-      typeof window === 'object' &&
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
+    typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      : compose;
   /* eslint-enable */
 
   let createCustomStore = composeEnhancers(
@@ -26,10 +29,7 @@ export default function configureStore(history) {
     persistState(storageLang, 'language'),
   )(createStore);
 
-  const middlewares = [
-    reduxRouterMiddleware,
-    thunk,
-  ];
+  const middlewares = [reduxRouterMiddleware, thunk];
 
   createCustomStore = applyMiddleware(...middlewares)(createCustomStore);
 

@@ -8,6 +8,7 @@ module.exports = function(server) {
   if (process.env.NODE_ENV === 'development') {
     secure = false;
   }
+
   server.use(cookieParser());
     server.use(csrf({cookie: {
         key: 'XSRF-SECRET',
@@ -16,12 +17,13 @@ module.exports = function(server) {
         path: '/<%= applicationFolder %>'
     }}));
 
-  server.use((err, req, res, next) => {  //eslint-disable-line
+  server.use((err, req, res, next) => { // eslint-disable-line
     if (err.code !== 'EBADCSRFTOKEN') {
       return next(err);
     }
+
     // handle CSRF token errors here
-    res.status(403);  //eslint-disable-line no-magic-numbers
+    res.status(403); // eslint-disable-line no-magic-numbers
     res.send('invalid csrf token');
   });
 

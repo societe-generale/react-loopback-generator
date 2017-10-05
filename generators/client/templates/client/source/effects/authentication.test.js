@@ -13,19 +13,20 @@ describe('Actions authentication', () => {
   it('should call request and  dispatch AUTHENTICATION_LOGIN', () => {
     url.AUTH = 'http://localhost/api/auth';
     const store = mockStore({});
-    const expected = [{
-      type: 'AUTHENTICATION_LOGIN',
-      payload: {
-        user: data.user,
+    const expected = [
+      {
+        type: 'AUTHENTICATION_LOGIN',
+        payload: {
+          user: data.user,
+        },
       },
-    }];
+    ];
     nock('http://localhost')
       .get('/api/auth')
       .reply(200, { user: 'myUser' });
 
-    return store.dispatch(effect.login())
-      .then(() => {
-        expect(store.getActions()).toEqual(expected);
-      });
+    return store.dispatch(effect.login()).then(() => {
+      expect(store.getActions()).toEqual(expected);
+    });
   });
 });

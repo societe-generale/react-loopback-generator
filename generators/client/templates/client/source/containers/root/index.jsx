@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -13,7 +14,6 @@ import enMessages from '../../locale/locale-en.json';
 import * as AuthenticationEffect from '../../effects/authentication';
 import * as SideBarAction from '../../actions/side-bar';
 
-
 const locales = {
   fr: frMessages,
   en: enMessages,
@@ -22,10 +22,8 @@ const locales = {
 addLocaleData([...fr, ...en]);
 
 export class Root extends Component {
-
   componentWillMount() {
-    this.props.authenticationEffects.login()
-    .catch(() => {
+    this.props.authenticationEffects.login().catch(() => {
       // To avoid 401 error when page loaded from cache
       window.location.reload(true);
     });
@@ -36,13 +34,14 @@ export class Root extends Component {
   }
 
   render() {
-    if (_.isEmpty(this.props.authentication)) return (<div />);
+    if (_.isEmpty(this.props.authentication)) return <div />;
     return (
-      <IntlProvider locale={this.props.languageSelected} messages={locales[this.props.languageSelected]}>
+      <IntlProvider
+        locale={this.props.languageSelected}
+        messages={locales[this.props.languageSelected]}
+      >
         <div>
-          <HeaderBar
-            onOpenSideBar={this.props.sideBarActions.open}
-          />
+          <HeaderBar onOpenSideBar={this.props.sideBarActions.open} />
           <SideBar
             open={this.props.sideBar.open}
             onCloseSideBar={this.props.sideBarActions.close}
@@ -53,7 +52,6 @@ export class Root extends Component {
       </IntlProvider>
     );
   }
-
 }
 
 Root.propTypes = {
@@ -90,7 +88,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Root);
+export default connect(mapStateToProps, mapDispatchToProps)(Root);
