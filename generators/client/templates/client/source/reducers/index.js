@@ -4,12 +4,14 @@ import { assign, merge } from 'lodash';
 
 import generatedReducers from './reducers.json';
 
-const reducers = merge(...generatedReducers.map(name =>
-  ({ [name]: require(`./${name}`).default })), // eslint-disable-line
+const reducers = merge(
+  ...generatedReducers.map(name => ({ [name]: require(`./${name}`).default })), // eslint-disable-line
 );
 
-const rootReducer = combineReducers(assign(reducers, {
-  routing: routerReducer,
-}));
+const rootReducer = combineReducers(
+  assign(reducers, {
+    routing: routerReducer,
+  }),
+);
 
 export default rootReducer;

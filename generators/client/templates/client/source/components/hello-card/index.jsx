@@ -13,7 +13,8 @@ class HelloCard extends Component {
             <h2>Your roles: {user.roles.map(role => role.name).join(', ')}</h2>
           </CardText>
         </Card>
-      </div>);
+      </div>
+    );
   }
 }
 
@@ -21,9 +22,10 @@ HelloCard.propTypes = {
   authentication: PropTypes.shape({
     user: PropTypes.shape({
       firstName: PropTypes.string,
-      roles: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-      }),
+      roles: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+        }),
       ),
     }),
   }),

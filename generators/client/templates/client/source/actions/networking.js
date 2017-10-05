@@ -9,14 +9,21 @@ export const stop = () => ({ type: cst.STOP });
 
 const getRequestOptions = (options, authentication) => {
   let headers = {};
-  if (options && options.method === 'POST' && typeof options.body === 'string') {
+  if (
+    options &&
+    options.method === 'POST' &&
+    typeof options.body === 'string'
+  ) {
     headers = { 'Content-Type': 'application/json' };
   }
-  const requestOptions = merge({
-    credentials: 'same-origin',
-    headers,
-  }, options);
-  Object.keys(requestOptions.headers).forEach((key) => {
+  const requestOptions = merge(
+    {
+      credentials: 'same-origin',
+      headers,
+    },
+    options,
+  );
+  Object.keys(requestOptions.headers).forEach(key => {
     if (requestOptions.headers[key] == null) {
       delete requestOptions.headers[key];
     }
@@ -39,21 +46,23 @@ export function request(url, options) {
 
     let status;
     return fetch(url, requestOptions)
-    .then((response) => {
-      status = response.status;
-      return status === 204 ? null : response.json();
-    })
-    .then((response) => {
-      const result = {
-        status,
-        data: response,
-      };
-      if (status >= 200 && status < 300) {
-        return result;
-      }
-      const err = new Error(response.error ? response.error.name : JSON.stringify(response));
-      err.data = response;
-      throw err;
-    });
+      .then(response => {
+        status = response.status;
+        return status === 204 ? null : response.json();
+      })
+      .then(response => {
+        const result = {
+          status,
+          data: response,
+        };
+        if (status >= 200 && status < 300) {
+          return result;
+        }
+        const err = new Error(
+          response.error ? response.error.name : JSON.stringify(response),
+        );
+        err.data = response;
+        throw err;
+      });
   };
 }

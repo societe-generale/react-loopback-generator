@@ -26,6 +26,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-)(HomeView);
+export default connect(mapStateToProps)(HomeView);
