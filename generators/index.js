@@ -204,6 +204,7 @@ module.exports = generators.Base.extend({
         'README.md',
         'circle.yml',
         '.jshintrc',
+        '.nsprc',
         '.eslintignore',
         '.editorconfig',
         {src: 'gitignore', dest: '.gitignore'},
