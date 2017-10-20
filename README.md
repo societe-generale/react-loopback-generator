@@ -109,3 +109,10 @@ How to contribute?
 ==================
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+License
+========
+
+License is under Apache-2.0  
+See [License](LICENSE.txt)  
+
