@@ -7,6 +7,7 @@ Requirements
 Before anything, you need the following software installed on your machine:
 
   * [Node](https://nodejs.org/en/download/current/) >= 6
+  * [Yarn](https://yarnpkg.com/en/docs/install)
   * [Docker](https://docs.docker.com/engine/installation/)
   * [Docker Compose](https://docs.docker.com/compose/install/)
 
