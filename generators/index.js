@@ -230,7 +230,7 @@ module.exports = generators.Base.extend({
         version: '0.0.1',
         main: 'server/server.js',
         scripts: {
-          'package': 'yarn && yarn client:build',
+          'package': 'yarn',
           'postdeploy': 'echo "Put here a command to be called during the deployment, like the database migration"',
           'start': 'node .',
           'posttest': 'yarn lint && nsp check',
