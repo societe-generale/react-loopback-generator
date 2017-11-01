@@ -3,19 +3,19 @@
   "version": "0.0.1",
   "main": "server/server.js",
   "scripts": {
-    "package": "npm install; npm run client:build",
+    "package": "yarn",
     "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
     "start": "node .",
-    "posttest": "npm run lint && nsp check",
+    "posttest": "yarn lint && nsp check",
     "client:build": "webpack --config client/webpack/webpack.config.js",
     "client:watch": "webpack-dev-server --config client/webpack/webpack.config.dev.js",
     "client:lint": "eslint --ext .jsx,.js -c client/.eslintrc client/source",
     "client:stylelint": "stylelint client/source/**/*.css",
     "client:test": "NODE_ENV=test jest --maxWorkers=2 --setupTestFrameworkScriptFile ../setupTests.js",
     "client:test:watch": "NODE_ENV=test jest --watch --setupTestFrameworkScriptFile ../setupTests.js",
-    "lint": "npm run client:lint",
-    "test": "npm run client:test",
-    "postinstall": "npm run client:build"
+    "lint": "yarn client:lint",
+    "test": "yarn client:test",
+    "postinstall": "yarn client:build"
   },
   "dependencies": {},
   "devDependencies": {

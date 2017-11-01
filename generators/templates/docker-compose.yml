@@ -22,7 +22,7 @@ services:
     build: .
     volumes:
       - .:/code:cached
-    command: npm run client:watch -- --host 0.0.0.0 --port 8080
+    command: yarn client:watch -- --host 0.0.0.0 --port 8080
     environment:
       - NODE_ENV=development
     ports:
@@ -39,7 +39,7 @@ services:
 #      - postgresql
 #      - mongodb
 #      - elasticsearch
-    command: npm run server:watch
+    command: yarn server:watch
     environment:
       - NODE_ENV=development
     ports:

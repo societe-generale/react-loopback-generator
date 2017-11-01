@@ -29,7 +29,7 @@ To install the project, you must at first clone the code repository :
 Then, this project can be installed by running the install script:
 ``` bash
     cd <%= applicationFolder %>/
-    npm install
+    yarn
     docker-compose up
 ```
 And then you can access to your application by this url : http://localhost/<%= applicationName %>/

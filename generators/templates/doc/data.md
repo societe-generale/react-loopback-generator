@@ -28,6 +28,6 @@ Run the initial migration
 
 Then, you need to run the initial migration:
 ``` bash
-npm run docker:db-migrate up
+yarn docker:db-migrate up
 ```
 

@@ -3,16 +3,16 @@
   "version": "0.0.1",
   "main": "server/server.js",
   "scripts": {
-    "package": "npm install; npm run client:build",
+    "package": "yarn",
     "postdeploy": "echo \"Put here a command to be called during the deployment, like the database migration\"",
     "start": "node .",
-    "posttest": "npm run lint && nsp check",
+    "posttest": "yarn lint && nsp check",
     "server:watch": "nodemon --inspect server/server.js --ignore client/",
     "server:test": "mocha --compilers js:babel-core/register 'server/**/{*,}test.js'",
     "server:test:coverage": "nyc node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- 'server/**/{*,}test.js'",
-    "test": "npm run server:test:coverage",
+    "test": "yarn server:test:coverage",
     "server:lint": "eslint -c server/.eslintrc server",
-    "lint": "npm run server:lint"
+    "lint": "yarn server:lint"
   },
   "dependencies": {
     "compression": "1.6.2",
