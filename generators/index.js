@@ -230,10 +230,10 @@ module.exports = generators.Base.extend({
         version: '0.0.1',
         main: 'server/server.js',
         scripts: {
-          'package': 'npm install; npm run client:build',
+          'package': 'yarn',
           'postdeploy': 'echo "Put here a command to be called during the deployment, like the database migration"',
           'start': 'node .',
-          'posttest': 'npm run lint && nsp check',
+          'posttest': 'yarn lint && nsp check',
         },
         dependencies: {},
         devDependencies: {
@@ -255,9 +255,9 @@ module.exports = generators.Base.extend({
             'client:stylelint': 'stylelint client/source/**/*.css',
             'client:test': "NODE_ENV=test jest --maxWorkers=2",
             'client:test:watch': "NODE_ENV=test jest --watch",
-            'lint': 'npm run client:lint',
-            'test': 'npm run client:test',
-            'postinstall': 'npm run client:build',
+            'lint': 'yarn client:lint',
+            'test': 'yarn client:test',
+            'postinstall': 'yarn client:build',
           },
           jest: {
             'rootDir': './client/source',
@@ -285,17 +285,17 @@ module.exports = generators.Base.extend({
             'server:watch': 'nodemon --inspect server/server.js --ignore client/',
             'server:test': 'mocha --compilers js:babel-core/register \'server/**/{*,}test.js\'',
             'server:test:coverage': 'nyc node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- \'server/**/{*,}test.js\'',
-            'test': 'npm run server:test:coverage',
+            'test': 'yarn server:test:coverage',
             'server:lint' : 'eslint -c server/.eslintrc server',
-            'lint': 'npm run server:lint',
+            'lint': 'yarn server:lint',
           }
         })
       }
       if(this.options['client-required'] && this.options['server-required']){
         _.merge(content, {
           scripts: {
-            'test': 'npm run client:test && npm run server:test:coverage',
-            'lint': 'npm run client:lint && npm run server:lint',
+            'test': 'yarn client:test && yarn server:test:coverage',
+            'lint': 'yarn client:lint && yarn server:lint',
           }
         })
       }

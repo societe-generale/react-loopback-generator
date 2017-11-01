@@ -7,6 +7,7 @@ Requirements
 Before anything, you need the following software installed on your machine:
 
   * [Node](https://nodejs.org/en/download/current/) >= 6
+  * [Yarn](https://yarnpkg.com/en/docs/install)
   * [Docker](https://docs.docker.com/engine/installation/)
   * [Docker Compose](https://docs.docker.com/compose/install/)
 
@@ -29,7 +30,7 @@ To install the project, you must at first clone the code repository :
 Then, this project can be installed by running the install script:
 ``` bash
     cd <%= applicationFolder %>/
-    npm install
+    yarn
     docker-compose up
 ```
 And then you can access to your application by this url : http://localhost/<%= applicationName %>/

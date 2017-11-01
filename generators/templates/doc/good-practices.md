@@ -13,13 +13,13 @@ Database migrations
  * Run missing migrations:
 
    ``` bash
-   npm run database:migrate`
+   yarn database:migrate`
    ```
 
  * Cancel last migration:
 
    ``` bash
-   npm run database:migrate:down
+   yarn database:migrate:down
    ```
 
 Logger
