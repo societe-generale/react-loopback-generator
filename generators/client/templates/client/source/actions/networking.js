@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie';
 import fetch from 'isomorphic-fetch';
-import { merge } from 'lodash';
 
 import cst from '../constants/networking';
 
@@ -16,14 +15,13 @@ const getRequestOptions = (options, authentication) => {
   ) {
     headers = { 'Content-Type': 'application/json' };
   }
-  const requestOptions = merge(
-    {
-      credentials: 'same-origin',
-      headers,
-    },
-    options,
-  );
-  Object.keys(requestOptions.headers).forEach(key => {
+  const requestOptions = {
+    credentials: 'same-origin',
+    headers,
+    ...options
+  };
+
+  Object.keys(requestOptions.headers).forEach((key) => {
     if (requestOptions.headers[key] == null) {
       delete requestOptions.headers[key];
     }

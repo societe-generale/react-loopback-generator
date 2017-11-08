@@ -39,7 +39,6 @@ module.exports = generators.Base.extend({
         'client/source/reducers/side-bar.test.js',
         'client/source/reducers/networking.js',
         'client/source/reducers/networking.test.js',
-        'client/source/reducers/reducers.json',
         'client/source/reducers/language.js',
         'client/source/reducers/language.test.js',
         'client/source/locale/locale-en.json',
@@ -191,11 +190,8 @@ module.exports = generators.Base.extend({
 
     const packageJsonPath = 'package.json'
     const currentPackageJson = this.fs.readJSON(packageJsonPath);
-    //const newPackageJson = Object.assign({}, currentPackageJson, newContent);
     let newPackageJson = {};
     _.merge(currentPackageJson, newContent)
     return this.fs.writeJSON(this.destinationPath(packageJsonPath), currentPackageJson);
-    //if (this.options['test']) return;
-    //return this.fs.writeJSON(this.destinationPath(packageJsonPath), newPackageJson);
   }
 });
