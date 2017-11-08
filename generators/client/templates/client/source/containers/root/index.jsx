@@ -77,7 +77,7 @@ function mapStateToProps(state) {
   return {
     languageSelected: state.language.selected,
     authentication: state.authentication,
-    sideBar: state['side-bar'],
+    sideBar: state.sideBar,
   };
 }
 
