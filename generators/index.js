@@ -249,6 +249,7 @@ module.exports = generators.Base.extend({
         _.merge(content, {
           scripts: {
             'client:build': 'webpack --config client/webpack/webpack.config.js',
+            "client:build:bundle-size": "ANALYSE_BUNDLE=true webpack --config client/webpack/webpack.config.js",
             'client:watch': 'webpack-dev-server --config client/webpack/webpack.config.dev.js',
             'client:lint' : 'eslint --ext .jsx,.js -c client/.eslintrc client/source',
             'client:lint:fix': 'eslint --fix --ext .jsx,.js -c client/.eslintrc client/source',

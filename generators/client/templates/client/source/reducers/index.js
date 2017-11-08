@@ -1,17 +1,16 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import { assign, merge } from 'lodash';
+import authentication from './authentication';
+import language from './language';
+import networking from './networking';
+import sideBar from './side-bar';
 
-import generatedReducers from './reducers.json';
-
-const reducers = merge(
-  ...generatedReducers.map(name => ({ [name]: require(`./${name}`).default })), // eslint-disable-line
-);
-
-const rootReducer = combineReducers(
-  assign(reducers, {
-    routing: routerReducer,
-  }),
-);
+const rootReducer = combineReducers({
+  routing: routerReducer,
+  authentication,
+  language,
+  networking,
+  sideBar,
+});
 
 export default rootReducer;
