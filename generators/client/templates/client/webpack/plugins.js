@@ -16,6 +16,9 @@ module.exports = (params) => {
     root: params.clientPath,
   }));
 
+  // scope hoisting
+  plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
+
   // -- Dev plugins
   if (isDev) {
     // enable HMR globally
