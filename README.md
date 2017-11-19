@@ -59,7 +59,7 @@ How to add a database?
 PostgreSQL, MongoDB or Elasticsearch
 ------------------------------------
 
-``` bash
+```bash
 yo react-loopback:server-datasource
 ```
 
@@ -78,6 +78,16 @@ Other database
  * Run `slc loopback:datasource`
  * Install corresponding Loopback connector
  * Add config in `server/boot/healtcheck.js`
+
+How to add a static type checker?
+=================================
+
+Only [flow](https://flow.org) is supported so far
+--------------------------------------------------
+
+```bash
+yo react-loopback:flow
+```
 
 And then?
 =========
@@ -115,4 +125,3 @@ License
 
 License is under Apache-2.0  
 See [License](LICENSE.txt)  
-

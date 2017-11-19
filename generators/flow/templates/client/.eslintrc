@@ -1,0 +1,60 @@
+{
+  "extends": ["airbnb", "prettier", "prettier/react", "plugin:flowtype/recommended"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react",
+    "prettier",
+    "flowtype"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false
+      }
+    ],
+    "strict": [2, "global"],
+    "no-var": 0,
+    "one-var": 0,
+    "func-names": 0,
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "max-len": ["error", 120, 2, {"ignoreUrls": true}],
+    "consistent-return": 0,
+    "class-methods-use-this": 0,
+    "no-bitwise": 0,
+    "no-underscore-dangle": 0,
+    "no-constant-condition": 0,
+    "no-duplicate-imports": 0,
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/extensions": 0,
+    "react/jsx-boolean-value": 0,
+    "react/jsx-filename-extension": 0,
+    "react/no-unused-prop-types": 0,
+    "react/prefer-stateless-function": 0,
+    "react/no-string-refs": 0,
+    "no-await-in-loop": 0,
+    "no-return-await": 0,
+    "react/require-default-props": 0,
+    "react/prop-types": 0
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  }
+}
