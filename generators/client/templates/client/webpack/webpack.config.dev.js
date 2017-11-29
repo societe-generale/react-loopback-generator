@@ -28,6 +28,7 @@ module.exports = () => ({
     path.join(params.clientPath, 'source/index.dev.jsx'),
   ],
   output: {
+    publicPath: '/<%= applicationName %>/',
     path: params.buildPath,
     filename: 'bundle.js',
   },
@@ -53,6 +54,7 @@ module.exports = () => ({
     historyApiFallback: {
       index: '/<%= applicationName %>/',
     },
+    disableHostCheck: true,
   },
   externals: {
     'react/addons': true,
