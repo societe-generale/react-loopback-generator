@@ -39,7 +39,6 @@ module.exports = generators.Base.extend({
         'client/source/reducers/side-bar.test.js',
         'client/source/reducers/networking.js',
         'client/source/reducers/networking.test.js',
-        'client/source/reducers/reducers.json',
         'client/source/reducers/language.js',
         'client/source/reducers/language.test.js',
         'client/source/locale/locale-en.json',
