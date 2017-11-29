@@ -1,4 +1,3 @@
-import expect from 'expect';
 import action from './language';
 
 describe('Actions language', () => {

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import reducer from './side-bar';
 import constants from '../constants/side-bar';
 

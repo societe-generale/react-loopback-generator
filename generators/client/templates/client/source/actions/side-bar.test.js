@@ -1,5 +1,3 @@
-import expect from 'expect';
-
 import * as action from './side-bar';
 
 describe('Actions side-bar', () => {
