@@ -60,11 +60,7 @@ module.exports = () => ({
     'react/lib/ReactContext': true,
   },
   module: {
-    rules: [
-      ...jsRules,
-      ...styleRules,
-      ...mediaRules,
-    ],
+    rules: [...jsRules, ...styleRules, ...mediaRules],
   },
   plugins: [...wpPlugins],
 });

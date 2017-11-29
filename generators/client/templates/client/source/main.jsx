@@ -22,7 +22,7 @@ class AppRoot extends React.Component {
     return (
       <Provider store={this.props.store}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <BrowserRouter basename="/" >
+          <BrowserRouter basename="/">
             <Route path="/" component={RootConnected} />
           </BrowserRouter>
         </MuiThemeProvider>
