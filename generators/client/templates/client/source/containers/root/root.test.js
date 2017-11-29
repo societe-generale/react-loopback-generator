@@ -3,7 +3,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import React from 'react';
 import PropTypes from 'prop-types';
-import expect from 'expect';
+import { MemoryRouter } from 'react-router';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -83,11 +83,20 @@ describe('<Root/>', () => {
   it('should display HeaderBar when connected', () => {
     const muiTheme = getMuiTheme();
     const wrapper = mount(
-      <Root
-        {...props}
-        authenticationActions={authenticationActions}
-        authentication={{ authentication: { test: 'noEmpty' } }}
-      />,
+      <MemoryRouter>
+        <Root
+          {...props}
+          authenticationActions={authenticationActions}
+          sideBar={{ open: true }}
+          authentication={{
+            user: {
+              firstName: 'foo',
+              lastName: 'bar',
+            },
+            test: 'noEmpty',
+          }}
+        />
+      </MemoryRouter>,
       {
         context: { muiTheme, store },
         childContextTypes: {
@@ -96,14 +105,8 @@ describe('<Root/>', () => {
         },
       },
     );
-    wrapper.setProps({
-      authentication: {
-        user: {
-          firstName: 'Test',
-        },
-      },
-    });
-    const headerBarWrapper = wrapper.find(HeaderBar);
+    const rootWrapper = wrapper.find(Root);
+    const headerBarWrapper = rootWrapper.find(HeaderBar);
     expect(headerBarWrapper.length).toEqual(1);
   });
 });
