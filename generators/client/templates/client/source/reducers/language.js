@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import find from 'lodash/find';
 
 import types from '../constants/language';
 
@@ -12,7 +12,7 @@ const initialState = {
 
 if (global.navigator && global.navigator.language) {
   const key = navigator.language.match(/^[a-z]{2}/)[0];
-  if (_.find(initialState.available, { key })) {
+  if (find(initialState.available, { key })) {
     initialState.selected = key;
   }
 }

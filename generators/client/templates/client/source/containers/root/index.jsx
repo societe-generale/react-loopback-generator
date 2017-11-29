@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
@@ -34,7 +34,7 @@ export class Root extends Component {
   }
 
   render() {
-    if (_.isEmpty(this.props.authentication)) return <div />;
+    if (isEmpty(this.props.authentication)) return (<div />);
     return (
       <IntlProvider
         locale={this.props.languageSelected}

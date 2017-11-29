@@ -1,4 +1,5 @@
 {
+  "plugins": ["lodash"],
   "presets": [
     // webpack understands the native import syntax, and uses it for tree shaking
     ["es2015", {
