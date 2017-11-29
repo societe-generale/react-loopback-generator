@@ -176,7 +176,6 @@ module.exports = generators.Base.extend({
         'prettier': '1.7.0',
         'react-addons-test-utils': '15.6.2',
         'react-hot-loader': '3.0.0-beta.6',
-        'react-tools': '0.13.3',
         'redux-mock-store': '1.2.2',
         'sinon': '2.0.0',
         'style-loader': '0.16.1',
