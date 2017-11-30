@@ -1,12 +1,18 @@
 process.env.NODE_ENV = 'production';
 
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const params = require('./params');
 const jsRules = require('./rules.javascript')(params);
 const mediaRules = require('./rules.media')(params);
 const styleRules = require('./rules.styles')(params);
 const wpPlugins = require('./plugins')(params);
+
+let plugins = [...wpPlugins];
+if (process.env.ANALYSE_BUNDLE) {
+  plugins = plugins.concat(new BundleAnalyzerPlugin());
+}
 
 module.exports = () => ({
   // Don't attempt to continue if there are any errors.
@@ -32,5 +38,5 @@ module.exports = () => ({
       ...mediaRules,
     ],
   },
-  plugins: [...wpPlugins],
+  plugins,
 });

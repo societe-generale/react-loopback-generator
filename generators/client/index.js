@@ -95,11 +95,10 @@ module.exports = generators.Base.extend({
     const newContent = {
       dependencies: {
       'flexboxgrid': '6.3.1',
-      'material-ui': '0.17.3',
       'history': '4.7.2',
-      'js-cookie': '2.1.3',
-      'material-ui': '0.19.3',
-      'moment': '2.15.0',
+      'js-cookie': '2.2.0',
+      'material-ui': '0.19.4',
+      'moment': '2.19.1',
       'prop-types': '15.6.0',
       'react': '16.0.0',
       'react-dom': '16.0.0',
@@ -136,6 +135,8 @@ module.exports = generators.Base.extend({
         'babel-loader': '6.4.1',
         'babel-plugin-transform-runtime': '6.23.0',
         'babel-polyfill': '6.23.0',
+        'babel-plugin-lodash': '3.2.11',
+        'babel-preset-env': '1.6.1',
         'babel-preset-es2015': '6.24.1',
         'babel-preset-react-hmre': '1.1.1',
         'babel-preset-react': '6.24.1',
@@ -185,16 +186,14 @@ module.exports = generators.Base.extend({
         'url-loader': '0.5.8',
         'webpack-dev-server': '2.9.4',
         'webpack': '3.8.1',
+        'webpack-bundle-analyzer': '2.9.0'
       },
     };
 
     const packageJsonPath = 'package.json'
     const currentPackageJson = this.fs.readJSON(packageJsonPath);
-    //const newPackageJson = Object.assign({}, currentPackageJson, newContent);
     let newPackageJson = {};
     _.merge(currentPackageJson, newContent)
     return this.fs.writeJSON(this.destinationPath(packageJsonPath), currentPackageJson);
-    //if (this.options['test']) return;
-    //return this.fs.writeJSON(this.destinationPath(packageJsonPath), newPackageJson);
   }
 });
