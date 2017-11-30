@@ -1,4 +1,3 @@
-import expect from 'expect';
 import reducer from './authentication';
 import * as type from '../constants/authentication.json';
 

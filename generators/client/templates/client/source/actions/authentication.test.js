@@ -1,4 +1,3 @@
-import expect from 'expect';
 import * as action from './authentication';
 
 describe('Actions authentication', () => {

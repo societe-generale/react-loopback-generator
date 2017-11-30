@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router';
 import isEmpty from 'lodash/isEmpty';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
 import HeaderBar from '../../components/header-bar';
 import SideBar from '../../components/side-bar';
+import HomeView from '../home-view';
 import frMessages from '../../locale/locale-fr.json';
 import enMessages from '../../locale/locale-en.json';
 
 import * as AuthenticationEffect from '../../effects/authentication';
 import * as SideBarAction from '../../actions/side-bar';
+import crudRoutes from '../../crud-routes/';
 
 const locales = {
   fr: frMessages,
@@ -47,7 +50,10 @@ export class Root extends Component {
             onCloseSideBar={this.props.sideBarActions.close}
             onLogout={this.props.authenticationEffects.logout}
           />
-          {this.props.children}
+          <Switch>
+            <Route path="/" component={HomeView} />
+            {crudRoutes.map(route => route)}
+          </Switch>
         </div>
       </IntlProvider>
     );

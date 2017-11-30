@@ -28,6 +28,7 @@ module.exports = () => ({
     path.join(params.clientPath, 'source/index.dev.jsx'),
   ],
   output: {
+    publicPath: '/<%= applicationName %>/',
     path: params.buildPath,
     filename: 'bundle.js',
   },
@@ -50,6 +51,10 @@ module.exports = () => ({
     inline: true,
     // Server listen port
     port: 8080,
+    historyApiFallback: {
+      index: '/<%= applicationName %>/',
+    },
+    disableHostCheck: true,
   },
   externals: {
     'react/addons': true,
@@ -57,11 +62,7 @@ module.exports = () => ({
     'react/lib/ReactContext': true,
   },
   module: {
-    rules: [
-      ...jsRules,
-      ...styleRules,
-      ...mediaRules,
-    ],
+    rules: [...jsRules, ...styleRules, ...mediaRules],
   },
   plugins: [...wpPlugins],
 });

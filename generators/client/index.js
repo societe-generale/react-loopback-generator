@@ -95,6 +95,7 @@ module.exports = generators.Base.extend({
     const newContent = {
       dependencies: {
       'flexboxgrid': '6.3.1',
+      'history': '4.7.2',
       'js-cookie': '2.2.0',
       'material-ui': '0.19.4',
       'moment': '2.19.1',
@@ -104,7 +105,8 @@ module.exports = generators.Base.extend({
       'react-intl': '2.4.0',
       'react-interpolate-component': '0.10.0',
       'react-redux': '5.0.6',
-      'react-router': '3.2.0',
+      'react-router': '4.2.0',
+      'react-router-dom': '4.2.2',
       'react-router-redux': '4.0.8',
       'react-test-renderer': '16.0.0',
       'react-tap-event-plugin': '3.0.2',
@@ -175,7 +177,6 @@ module.exports = generators.Base.extend({
         'prettier': '1.7.0',
         'react-addons-test-utils': '15.6.2',
         'react-hot-loader': '3.0.0-beta.6',
-        'react-tools': '0.13.3',
         'redux-mock-store': '1.2.2',
         'sinon': '2.0.0',
         'style-loader': '0.16.1',

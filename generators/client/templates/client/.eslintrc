@@ -16,6 +16,10 @@
     "react",
     "prettier"
   ],
+  "globals": {
+    "jest": false,
+    "expect": false
+  },
   "rules": {
     "prettier/prettier": [
       "error",

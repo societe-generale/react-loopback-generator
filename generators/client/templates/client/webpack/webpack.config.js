@@ -24,6 +24,7 @@ module.exports = () => ({
     path.join(params.clientPath, 'source/index.jsx'),
   ],
   output: {
+    publicPath: '/<%= applicationName %>/',
     path: params.buildPath,
     filename: 'bundle.js',
   },

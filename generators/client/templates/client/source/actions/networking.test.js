@@ -1,4 +1,3 @@
-import expect from 'expect';
 import * as action from './networking';
 
 describe('Actions networking', () => {
