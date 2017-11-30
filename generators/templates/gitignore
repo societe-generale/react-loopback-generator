@@ -10,3 +10,5 @@ e2e_reports/
 .idea
 yarn-error.log
 npm-debug.log
+.vscode
+technical.error.log
