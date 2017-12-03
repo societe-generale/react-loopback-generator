@@ -85,7 +85,20 @@ module.exports = generators.Base.extend({
           {
             applicationName: this.config.get('applicationName'),
             applicationFolder: this.config.get('applicationFolder'),
+            isFlow: this.config.get('typeChecker') === 'flow',
           }
+        );
+      }));
+    }
+    if (this.config.get('typeChecker') === 'flow') {
+      Promise.all([
+        '.flowconfig',
+        'client/source/common/user.js',
+      ].map(file => {
+        return this.fs.copyTpl(
+          this.templatePath(file),
+          this.destinationPath(file),
+          {}
         );
       }));
     }
@@ -96,7 +109,9 @@ module.exports = generators.Base.extend({
       dependencies: {
       'flexboxgrid': '6.3.1',
       'history': '4.7.2',
+      'isomorphic-fetch': '2.2.1',
       'js-cookie': '2.2.0',
+      'lodash': '4.17.4',
       'material-ui': '0.19.4',
       'moment': '2.19.3',
       'prop-types': '15.6.0',
@@ -126,7 +141,7 @@ module.exports = generators.Base.extend({
 
   installClientDevDependencies: function () {
     const newContent = {
-      devDependencies:{
+      devDependencies: {
         'babel-cli': '6.24.1',
         'babel-core': '6.24.1',
         'babel-eslint': '7.2.3',
@@ -190,6 +205,16 @@ module.exports = generators.Base.extend({
         'webpack-bundle-analyzer': '2.9.0'
       },
     };
+
+    if (this.config.get('typeChecker') === 'flow') {
+      _.merge(newContent, {
+        devDependencies: {
+          'flow-bin': '0.68.0',
+          'flow-typed': '2.4.0',
+          'babel-preset-flow': '6.23.0',
+        }
+      });
+    }
 
     const packageJsonPath = 'package.json'
     const currentPackageJson = this.fs.readJSON(packageJsonPath);

@@ -7,7 +7,8 @@
     }],
     // Transpile React components to JavaScript
     "react",
-    "stage-0"
+    "stage-0"<% if (isFlow) {%>,
+    "flow"<% } %>
   ],
   "env": {
     "development": {
@@ -25,7 +26,8 @@
       "presets": [
         "es2015",
         "react",
-        "stage-0"
+        "stage-0"<% if (isFlow) {%>,
+        "flow"<% } %>
       ]
     }
   }

@@ -1,3 +1,4 @@
+<% if (isFlow) { %>// @flow<% } %>
 import * as action from './side-bar';
 
 describe('Actions side-bar', () => {

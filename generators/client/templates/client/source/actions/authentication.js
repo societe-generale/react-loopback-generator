@@ -1,4 +1,9 @@
+<% if (isFlow) { %>// @flow<% } %>
 import cst from '../constants/authentication';
-
-export const login = token => ({ type: cst.LOGIN, payload: token });
+<%
+let tokenParam = 'token';
+if (isFlow) {
+  tokenParam = '(token: string)';
+}%>
+export const login = <%= tokenParam %> => ({ type: cst.LOGIN, payload: token });
 export const logout = () => ({ type: cst.LOGOUT });

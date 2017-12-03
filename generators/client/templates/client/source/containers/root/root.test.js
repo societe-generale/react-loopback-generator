@@ -1,3 +1,4 @@
+<% if (isFlow) { %>// @flow<% } %>
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -42,6 +43,12 @@ describe('<Root/>', () => {
       login,
       logout,
     },
+    authentication: {
+      id: '51',
+      user: {
+        firstName: 'foo',
+      },
+    },
     sideBarActions: {
       open() {
         return true;
@@ -49,19 +56,20 @@ describe('<Root/>', () => {
       close() {
         return false;
       },
+      toggle() {},
     },
   };
 
-  const authenticationActions = {
-    doLogin() {
-      return Promise.resolve('mockAuthenticationActions');
+  const authenticationEffects = {
+    login() {
+      return Promise.resolve('mockAuthenticationEffects');
     },
-    doLogout() {
-      return Promise.resolve('mockAuthenticationActions');
+    logout() {
+      return Promise.resolve('mockAuthenticationEffects');
     },
   };
 
-  it('should call action doLogin on mounting', () => {
+  it('should call action login on mounting', () => {
     const request = sinon.spy(network, 'request');
     mount(
       <MuiThemeProvider>
@@ -75,7 +83,7 @@ describe('<Root/>', () => {
 
   it('should display <div></div> with no authentication', () => {
     const wrapper = mount(
-      <Root {...props} authenticationActions={authenticationActions} />,
+      <Root {...props} authentication={{}} />,
     );
     expect(wrapper.html()).toEqual('<div></div>');
   });
@@ -86,14 +94,14 @@ describe('<Root/>', () => {
       <MemoryRouter>
         <Root
           {...props}
-          authenticationActions={authenticationActions}
+          authenticationEffects={authenticationEffects}
           sideBar={{ open: true }}
           authentication={{
+            id: '51',
             user: {
               firstName: 'foo',
               lastName: 'bar',
             },
-            test: 'noEmpty',
           }}
         />
       </MemoryRouter>,
