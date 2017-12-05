@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const healthcheck = require('healthcheck-fastit');
 
 module.exports = function (server) {
@@ -30,8 +29,8 @@ module.exports = function (server) {
     }
   };
 
-  _.each(server.datasources, (adapter) => {
-    addDatasourceConfig(adapter);
+  Object.keys(server.datasources).forEach(key => {
+    addDatasourceConfig(server.datasources[key]);
   });
 
   server.use(healthcheck(config));

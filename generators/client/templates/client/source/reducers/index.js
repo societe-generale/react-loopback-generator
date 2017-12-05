@@ -1,17 +1,17 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import { assign, merge } from 'lodash';
 
 import generatedReducers from './reducers.json';
 
-const reducers = merge(
-  ...generatedReducers.map(name => ({ [name]: require(`./${name}`).default })), // eslint-disable-line
-);
+const reducers = generatedReducers.reduce((acc, reducerkey) => {
+  // eslint-disable-next-line global-require,import/no-dynamic-require
+  const reducer = require(`./${reducerkey}`).default;
+  return { ...acc, ...{ [reducerkey]: reducer } };
+}, {});
 
-const rootReducer = combineReducers(
-  assign(reducers, {
-    routing: routerReducer,
-  }),
-);
+const rootReducer = combineReducers({
+  ...reducers,
+  ...{ routing: routerReducer },
+});
 
 export default rootReducer;

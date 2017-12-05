@@ -1,12 +1,12 @@
 'use strict';
 
-const _ = require('lodash');
 const logger = require('../services/winston-config')();
 
 module.exports = function (server) {
   server.log = {};
   // Add logging hooks on models
-  _.each(server.models, (model, name) => {
+  Object.keys(server.models).forEach(name => {
+    const model = server.models[name];
     model.beforeRemote('*', (ctx, instance, next) => {
       logger.log(`${name}.${ctx.method.name}#beforeRemote`, ctx.req.params);
       next();
