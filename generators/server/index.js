@@ -46,11 +46,11 @@ module.exports = generators.Base.extend({
     const newContent = {
       dependencies: {
         'compression': '1.7.1',
-        'cookie-parser': '1.4.3', 
+        'cookie-parser': '1.4.3',
         'cors': '2.8.4',
-        'csurf': '1.9.0', 
+        'csurf': '1.9.0',
         'debug': '3.1.0',
-        'healthcheck-fastit': 'git+ssh://git@github.com:fastit/health-check.git#1.0.1',
+        'healthcheck-fastit': 'git+ssh://git@github.com/fastit/health-check.git#1.0.1',
         'loopback': '3.14.0',
         'loopback-boot': '2.26.2',
         'loopback-component-explorer': '5.1.0',
@@ -62,7 +62,7 @@ module.exports = generators.Base.extend({
       },
       devDependencies:{
         'nodemon': '1.11.0',
-        'eslint-config-walmart': '1.2.2', 
+        'eslint-config-walmart': '1.2.2',
         'eslint-plugin-filenames': '1.1.0',
       },
     };
