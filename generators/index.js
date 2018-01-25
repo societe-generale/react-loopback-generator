@@ -258,7 +258,7 @@ module.exports = generators.Base.extend({
             'client:test:watch': "NODE_ENV=test jest --watch",
             'lint': 'yarn client:lint',
             'test': 'yarn client:test',
-            'postinstall': 'yarn client:build',
+            'postinstall': 'yarn client:lint --fix && yarn client:build',
           },
           jest: {
             'rootDir': './client/source',
