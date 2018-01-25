@@ -43,8 +43,6 @@ module.exports = () => ({
     clientLogLevel: 'none',
     // enable HMR on the server
     hot: true,
-    // Enable SSL
-    https: true,
     // Enable gzip compression of generated files.
     compress: true,
     // Inject webpack-dev-server/client

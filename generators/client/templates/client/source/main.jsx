@@ -6,7 +6,6 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import 'flexboxgrid';
 import './main.css';
 import RootConnected from './containers/root';
 
