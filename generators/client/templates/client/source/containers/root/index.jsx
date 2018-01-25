@@ -37,7 +37,7 @@ export class Root extends Component {
   }
 
   render() {
-    if (isEmpty(this.props.authentication)) return (<div />);
+    if (isEmpty(this.props.authentication)) return <div />;
     return (
       <IntlProvider
         locale={this.props.languageSelected}
