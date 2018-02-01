@@ -1,6 +1,6 @@
 # React Loopback Generator
 
-# What is this generator ?
+# What is this generator?
 
 This repository provides a [Yeoman](http://yeoman.io/) generator for react as a frontend and loopback as a backend.
 It provides following features:
