@@ -38,14 +38,25 @@ And then you can access to your application by this url : http://localhost/<%= a
 Application initialisation
 --------------------------
 
-Once you have everything required, you must:
+If you try to connect your app in local environment with postgres, you'll get a 500 error from the call to /api/auth.
+The reason is that the app tries to access <app_name>.sguser postgres table which does not exist yet.
 
+### Create the private schema
+
+Go in the postgres docker container:
 ``` bash
-# Describe steps to init your application
+docker-compose exec postgresql bash
+```
+Then run the following:
+``` bash
+psql -d <%= applicationName %> -U <%= applicationName %> -c 'CREATE SCHEMA IF NOT EXISTS AUTHORIZATION "<%= applicationName %>"'
 ```
 
-Database initialisation
------------------------
+Exit the docker container.
 
-The last thing to do to make the project work locally: you must generate a database filled with entities.
-For this purpose, see the [database documentation](data.md).
+### Run the initial migration
+
+Then, you need to run the initial migration:
+``` bash
+yarn docker:db-migrate up
+```

@@ -1,0 +1,28 @@
+import { connect } from 'react-redux';
+
+import {{ properCase name }} from './{{ properCase name }}.component';
+
+const mapStateToProps = (state, props) => ({
+
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    editThisFunction() {
+
+    },
+  };
+}
+
+const mergeProps = (state, dispatchProps, props) => ({
+  ...state,
+  ...dispatchProps,
+  ...props,
+  editThisFunction() {
+
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(
+  {{ properCase name }},
+);

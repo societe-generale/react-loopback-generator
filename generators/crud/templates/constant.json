@@ -1,6 +1,0 @@
-{
-  "CREATE_<%= actionReduxName %>_SUCCESS": "CREATE_<%= actionReduxName %>_SUCCESS",
-  "CREATE_<%= actionReduxName %>_ERROR": "CREATE_<%= actionReduxName %>_ERROR",
-  "GET_<%= actionReduxName %>_SUCCESS": "GET_<%= actionReduxName %>_SUCCESS",
-  "GET_<%= actionReduxName %>_ERROR": "GET_<%= actionReduxName %>_ERROR"
-}

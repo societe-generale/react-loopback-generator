@@ -1,0 +1,29 @@
+import React, { Component } from 'react';
+{{#if wantMessages}}
+import { FormattedMessage } from 'react-intl';
+{{/if}}
+
+{{#if wantCssStyle}}
+import styles from './{{ properCase name }}.style.css';
+{{/if}}
+{{#unless wantCssStyle}}
+import { style } from './{{ properCase name }}.style';
+{{/unless}}
+
+class {{ properCase name }} extends Component {
+  render() {
+    return (
+      <div>
+      {{#if wantMessages}}
+        <FormattedMessage id="" />
+      {{/if}}
+      </div>
+    );
+  }
+}
+
+{{ properCase name }}.propTypes = {
+
+};
+
+export default {{ properCase name }};

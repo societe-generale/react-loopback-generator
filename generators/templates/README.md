@@ -12,7 +12,6 @@ Documentation index
 
   * [Installation](doc/installation.md)
   * [Data model](doc/model.md)
-  * [Database](doc/data.md)
   * [Contributing](doc/contributing.md)
   * [Good practices](doc/good-practices.md)
 

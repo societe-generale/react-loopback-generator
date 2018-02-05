@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import HelloCard from '../../components/hello-card';
+import styles from './style.css';
 
 class HomeView extends Component {
   render() {
     const { authentication = {} } = this.props;
     return (
-      <div className="container">
-        <div className="row center-xs">
-          <div className="col-xs-12 col-md-6">
-            <HelloCard authentication={authentication} />
-          </div>
+      <div className={styles.homeViewContainer}>
+        <div className={styles.cardContainer}>
+          <HelloCard authentication={authentication} />
         </div>
       </div>
     );

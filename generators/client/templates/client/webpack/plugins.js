@@ -16,6 +16,11 @@ module.exports = (params) => {
     root: params.clientPath,
   }));
 
+  // Remove moment.js unused locales
+  plugins.push(
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fr|en/)
+  );
+
   // scope hoisting
   plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
 
