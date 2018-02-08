@@ -155,7 +155,6 @@ module.exports = generators.Base.extend({
         'eslint-plugin-prettier': '2.1.2',
         'eslint-plugin-react': '7.1.0',
         'eslint': '4.3.0',
-        'expect': '1.20.2',
         'extract-text-webpack-plugin': '3.0.2',
         'favicons-webpack-plugin': '0.0.7',
         'file-loader': '0.10.1',
