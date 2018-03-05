@@ -55,7 +55,7 @@ module.exports = generators.Base.extend({
         'loopback-boot': '2.26.2',
         'loopback-component-explorer': '5.1.0',
         'helmet': '3.9.0',
-        'moment': '2.19.1',
+        'moment': '2.19.3',
         'serve-favicon': '2.4.5',
         'strong-error-handler': '2.3.0',
         'winston': '2.4.0',

@@ -18,10 +18,10 @@ const getRequestOptions = (options, authentication) => {
   const requestOptions = {
     credentials: 'same-origin',
     headers,
-    ...options
+    ...options,
   };
 
-  Object.keys(requestOptions.headers).forEach((key) => {
+  Object.keys(requestOptions.headers).forEach(key => {
     if (requestOptions.headers[key] == null) {
       delete requestOptions.headers[key];
     }

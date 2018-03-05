@@ -98,7 +98,7 @@ module.exports = generators.Base.extend({
       'history': '4.7.2',
       'js-cookie': '2.2.0',
       'material-ui': '0.19.4',
-      'moment': '2.19.1',
+      'moment': '2.19.3',
       'prop-types': '15.6.0',
       'react': '16.0.0',
       'react-dom': '16.0.0',
