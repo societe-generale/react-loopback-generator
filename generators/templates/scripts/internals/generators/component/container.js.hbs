@@ -1,0 +1,23 @@
+import { connect } from 'react-redux';
+{{#if wantMessages}}
+import { injectIntl } from 'react-intl';
+{{/if}}
+
+import {{ properCase name }} from './{{ properCase name }}.component';
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    editThisFunction: () => dispatch(null),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  {{#if wantMessages}}
+  injectIntl({{ properCase name }}),
+  {{/if}}
+  {{#unless wantMessages}}
+  {{ properCase name }},
+  {{/unless}}
+);

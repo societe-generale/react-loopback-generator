@@ -1,0 +1,28 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+{{#if wantSnapshotTests}}
+import { createRendererWrapper } from '../../utils/snapshot';
+{{/if}}
+import {{ properCase name }} from './{{ properCase name }}.component';
+
+let wrapper = null;
+
+describe('[Component] <{{ properCase name }} />', () => {
+  const props = {};
+
+  beforeEach(() => {
+    wrapper = shallow(<{{ properCase name }} {...props} />);
+  });
+
+  {{#if wantSnapshotTests}}
+  it('should render correctly', () => {
+    const rendererWrapper = createRendererWrapper(<{{ properCase name }} {...props} />);
+    expect(rendererWrapper).toMatchSnapshot();
+  });
+
+  {{/if}}
+  it('should exist', () => {
+    expect(wrapper.find('Component').length).toEqual(1);
+  });
+});
