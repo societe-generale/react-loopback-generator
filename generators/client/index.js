@@ -171,6 +171,7 @@ module.exports = generators.Base.extend({
         'nock': '9.0.9',
         'nodemon': '1.11.0',
         'nyc': '10.1.2',
+        'plop': '1.9.1',
         'postcss-cssnext': '2.10.0',
         'postcss-import': '9.1.0',
         'postcss-loader': '1.3.3',

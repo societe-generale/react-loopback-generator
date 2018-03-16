@@ -256,6 +256,7 @@ module.exports = generators.Base.extend({
             'client:stylelint': 'stylelint client/source/**/*.css',
             'client:test': "NODE_ENV=test jest --maxWorkers=2",
             'client:test:watch': "NODE_ENV=test jest --watch",
+            'generate': 'plop --plopfile scripts/internals/generators/index.js',
             'lint': 'yarn client:lint',
             'test': 'yarn client:test',
             'postinstall': 'yarn client:build',
