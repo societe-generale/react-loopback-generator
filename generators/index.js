@@ -224,6 +224,27 @@ module.exports = generators.Base.extend({
       return copyAll.bind(this)(files, context);
     },
 
+    createScript: function () {
+      if(!this.options['client-required']) return;
+
+      let files = [
+        'scripts/internals/generators/index.js',
+        'scripts/internals/generators/component/component.js.hbs',
+        'scripts/internals/generators/component/component.pure.js.hbs',
+        'scripts/internals/generators/component/component.stateless.js.hbs',
+        'scripts/internals/generators/component/container.js.hbs',
+        'scripts/internals/generators/component/index.connect.js.hbs',
+        'scripts/internals/generators/component/index.js',
+        'scripts/internals/generators/component/index.js.hbs',
+        'scripts/internals/generators/component/style.css.hbs',
+        'scripts/internals/generators/component/style.js.hbs',
+        'scripts/internals/generators/component/test.js.hbs',
+        'scripts/internals/generators/utils/component-exists.js',
+      ];
+
+      return copyAll.bind(this)(files);
+    },
+
     createPackageJson: function () {
       let content = {
         name: this.options['application-name'],
