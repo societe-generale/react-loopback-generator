@@ -1,3 +1,16 @@
+Frontend development
+===================
+
+* In order to create new React components, use `yarn generate` and answer the following questions:
+
+  * Do you want a container or a component? *Containers are linked to the application pages whereas components tend to be reusable pieces of your application*
+  * What should it be called? *Specify the name of your React component*
+  * Select a type of component *Choose between PureComponents, Components and stateless functions for your Reach component*
+  * Do you want to connect your component to redux? *Use Redux to handle your global state*
+  * Do you want to use react-intl? *Use `react-intl` to handle the translations within your application*
+  * Do you want to use styled-components? *Use [styled-components](https://github.com/styled-components/styled-components) to easily style your components using a CSS syntax*
+  * Do you want snapshot tests? *Use [snapshot testing](https://facebook.github.io/jest/docs/en/snapshot-testing.html) to make sure your UI does not change unexpectedly*
+
 Database migrations
 ===================
 

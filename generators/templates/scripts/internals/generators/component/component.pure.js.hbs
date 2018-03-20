@@ -1,0 +1,42 @@
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+{{#if wantMessages}}
+import { intlShape, FormattedMessage } from 'react-intl';
+{{/if}}
+
+{{#unless wantStyledComponents}}
+import './{{ properCase name }}.style.css';
+{{/unless}}
+{{#if wantStyledComponents}}
+import Style from './{{ properCase name }}.style';
+{{/if}}
+
+class {{ properCase name }} extends PureComponent {
+  render() {
+    return (
+      {{#unless wantStyledComponents}}
+      <div className="{{ dashCase name }}-container">
+      {{/unless}}
+      {{#if wantStyledComponents}}
+      <Style>
+      {{/if}}
+        {{#if wantMessages}}
+        <FormattedMessage id="please.change.me" />
+        {{/if}}
+      {{#unless wantStyledComponents}}
+      </div>
+      {{/unless}}
+      {{#if wantStyledComponents}}
+      </Style>
+      {{/if}}
+    );
+  }
+}
+
+{{ properCase name }}.propTypes = {
+  {{#if wantMessages}}
+  intl: intlShape,
+  {{/if}}
+};
+
+export default {{ properCase name }};
