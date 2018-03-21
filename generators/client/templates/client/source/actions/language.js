@@ -1,3 +1,8 @@
+<% if (isFlow) { %>// @flow<% } %>
 import types from '../constants/language';
-
-export default lang => ({ type: types.SELECT, lang });
+<%
+let langParam = 'lang';
+if (isFlow) {
+  langParam = '(lang: string)';
+}%>
+export default <%= langParam %> => ({ type: types.SELECT, lang });

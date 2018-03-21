@@ -1,3 +1,4 @@
+<% if (isFlow) { %>// @flow<% } %>
 import action from './language';
 
 describe('Actions language', () => {

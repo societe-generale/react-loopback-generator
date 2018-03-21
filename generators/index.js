@@ -2,13 +2,13 @@ const generators = require('yeoman-generator');
 const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
-const {basename, join} = require('path');
+const { basename, join } = require('path');
 const logo = require('../tools/logo');
 const workspace = require('loopback-workspace');
 const Workspace = workspace.models.Workspace;
 
 const copyRecursive = function (copy, src, dest) {
-  let isDir = fs.statSync(src).isDirectory();
+  const isDir = fs.statSync(src).isDirectory();
   if (isDir) {
     let content = fs.readdirSync(src);
     return Promise.all(content.map(item => {
@@ -21,8 +21,8 @@ const copyRecursive = function (copy, src, dest) {
 
 const copyAll = function (files, context) {
   Promise.all(files.map(fileName => {
-    let src = _.isString(fileName) ? fileName : fileName.src;
-    let dest = _.isString(fileName) ? fileName : fileName.dest;
+    const src = _.isString(fileName) ? fileName : fileName.src;
+    const dest = _.isString(fileName) ? fileName : fileName.dest;
     return this.fs.copyTpl(
       this.templatePath(src),
       this.destinationPath(dest),
@@ -122,6 +122,24 @@ module.exports = generators.Base.extend({
       })
     },
 
+    promptTypeChecker: function(){
+      if (this.options['type-checker']) {
+        this.log('type-checker already specified');
+        return;
+      }
+      return this.prompt({
+        type: 'list',
+        name: 'type-checker',
+        message: 'Do you need a static type-checker?',
+        choices: ['No', 'Flow'],
+        filter: function(val) {
+          return val === 'No' ? undefined : val.toLowerCase();
+        }
+      }).then(answers => {
+        this.options['type-checker'] = answers['type-checker'];
+      })
+    },
+
     promptServerRequired: function () {
       if (this.options['server-required'] !== undefined) {
         this.log('server requirement already specified');
@@ -174,6 +192,7 @@ module.exports = generators.Base.extend({
       this.config.set('applicationFolder', this.options['application-folder']);
       this.config.set('clientRequired', this.options['client-required']);
       this.config.set('clientLanguage', this.options['client-language']);
+      this.config.set('typeChecker', this.options['type-checker']);
       this.config.set('serverRequired', this.options['server-required']);
       this.config.set('serverPort', this.options['server-port']);
       this.config.save();
@@ -197,7 +216,6 @@ module.exports = generators.Base.extend({
 
       return copyAll.bind(this)(files, context);
     },
-
 
     createDoc: function () {
       let files = [
@@ -302,6 +320,25 @@ module.exports = generators.Base.extend({
           },
         })
       }
+      if (this.options['type-checker'] === 'flow') {
+        _.merge(content, {
+          scripts: {
+            'flow': 'flow',
+            'flow-typed': 'flow-typed',
+            'postinstall': 'yarn flow-typed install --overwrite && yarn client:build',
+            'pretest': 'yarn flow && yarn lint && nsp check',
+          }
+        });
+        _.merge(content, {
+          devDependencies: {
+            'flow-bin': '0.68.0',
+            'flow-typed': '2.4.0',
+            'babel-preset-flow': '6.23.0',
+            'eslint-plugin-flowtype': '2.42.0',
+          }
+        });
+      }
+
       if (this.options['server-required']) {
         _.merge(content, {
           scripts: {
@@ -322,6 +359,7 @@ module.exports = generators.Base.extend({
           }
         })
       }
+
       try {
         let existingPackage = this.fs.readJSON('package.json');
         _.merge(content, existingPackage);
@@ -357,9 +395,9 @@ module.exports = generators.Base.extend({
     },
   },
 
-
   install: function () {
     if (process.env.NODE_ENV !== 'test')
       this.spawnCommand('yarn', ['install']);
   },
+
 });

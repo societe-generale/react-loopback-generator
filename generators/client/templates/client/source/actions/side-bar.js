@@ -1,3 +1,4 @@
+<% if (isFlow) { %>// @flow<% } %>
 import cst from '../constants/side-bar';
 
 export const open = () => ({ type: cst.OPEN });
