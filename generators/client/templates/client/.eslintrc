@@ -1,5 +1,11 @@
 {
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": [
+    "airbnb", 
+    "plugin:flowtype/recommended",
+    "prettier",
+    "prettier/react",
+    "prettier/flowtype"
+  ],
   "env": {
     "browser": true,
     "node": true,
@@ -13,6 +19,7 @@
     }
   },
   "plugins": [
+    "flowtype",
     "react",
     "prettier"
   ],
@@ -52,6 +59,10 @@
     "react/no-string-refs": 0,
     "no-await-in-loop": 0,
     "no-return-await": 0,
-    "react/require-default-props": 0
+    "react/require-default-props": 0,
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1,
+    "flowtype/delimiter-dangle": [1, "always-multiline"],
+    "flowtype/semi": [1, "always"]
   }
 }

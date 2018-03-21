@@ -334,6 +334,7 @@ module.exports = generators.Base.extend({
             'flow-bin': '0.68.0',
             'flow-typed': '2.4.0',
             'babel-preset-flow': '6.23.0',
+            'eslint-plugin-flowtype': '2.42.0',
           }
         });
       }
