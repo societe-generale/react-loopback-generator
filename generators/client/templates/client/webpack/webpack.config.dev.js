@@ -12,6 +12,9 @@ module.exports = () => ({
   // Generate source maps
   devtool: 'cheap-module-source-map',
   entry: [
+    // ES6 polyfills activated first for IE
+    'babel-polyfill',
+
     // activate HMR for React
     'react-hot-loader/patch',
 
@@ -20,9 +23,6 @@ module.exports = () => ({
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
     'webpack/hot/only-dev-server',
-
-    // ES6 polyfills
-    'babel-polyfill',
 
     // App entry point
     path.join(params.clientPath, 'source/index.dev.jsx'),
