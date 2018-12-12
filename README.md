@@ -1,4 +1,4 @@
-React Loopback Generator
+React Loopback Generator [DEPRECATED: This repository is no longer maintained]
 ====================
 
 What is this generator ?
