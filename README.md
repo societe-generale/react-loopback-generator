@@ -1,3 +1,5 @@
+# DEPRECATED
+
 React Loopback Generator
 ====================
 
