@@ -289,7 +289,7 @@ module.exports = generators.Base.extend({
           scripts: {
             'client:build': 'webpack --config client/webpack/webpack.config.js',
             "client:build:bundle-size": "ANALYSE_BUNDLE=true webpack --config client/webpack/webpack.config.js",
-            'client:watch': 'webpack-dev-server --config client/webpack/webpack.config.dev.js',
+            'client:watch': 'webpack-dev-server --config client/webpack/webpack.config.dev.js --color',
             'client:lint' : 'eslint --ext .jsx,.js -c client/.eslintrc client/source',
             'client:lint:fix': 'eslint --fix --ext .jsx,.js -c client/.eslintrc client/source',
             'client:stylelint': 'stylelint client/source/**/*.css',
