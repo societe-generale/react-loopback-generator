@@ -298,7 +298,7 @@ module.exports = generators.Base.extend({
             'generate': 'plop --plopfile scripts/internals/generators/index.js',
             'lint': 'yarn client:lint',
             'test': 'yarn client:test',
-            'postinstall': 'yarn client:build',
+            'postinstall': 'yarn client:lint --fix && yarn client:build',
           },
           jest: {
             'rootDir': './client/source',
